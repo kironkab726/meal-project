@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘 뭐 먹지</title>
+<script>
+  // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
+  (function () {
+    let theme = null;
+    try { theme = localStorage.getItem('menu-picker-theme'); } catch (e) {}
+    if (theme !== 'dark' && theme !== 'light') {
+      // 저장된 값이 없으면 컴퓨터 설정(다크/라이트)을 따름
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #fff;
+    --text: #222;
+    --muted: #666;
+    --subtle: #888;
+    --faint: #aaa;
+    --fainter: #bbb;
+    --chip-text: #444;
+    --border: #ccc;
+    --border-soft: #eee;
+    --surface: #fff;
+    --photo-bg: #f4f4f4;
+    --accent: #222;
+    --accent-text: #fff;
+    --accent-hover: #444;
+    --disabled: #888;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #161616;
+    --text: #e8e8e8;
+    --muted: #aaa;
+    --subtle: #999;
+    --faint: #777;
+    --fainter: #666;
+    --chip-text: #ccc;
+    --border: #444;
+    --border-soft: #2e2e2e;
+    --surface: #1f1f1f;
+    --photo-bg: #242424;
+    --accent: #e8e8e8;
+    --accent-text: #161616;
+    --accent-hover: #c8c8c8;
+    --disabled: #666;
+  }
+
+  [hidden] { display: none !important; }
+
+  body { font-family: Georgia, serif; max-width: 520px; margin: 60px auto; padding: 0 20px; line-height: 1.7; color: var(--text); background: var(--bg); text-align: center; transition: background-color 0.2s, color 0.2s; }
+  h1 { font-size: 2.2rem; margin-bottom: 0.3rem; }
+  .tagline { color: var(--muted); font-style: italic; margin-bottom: 1.8rem; }
+
+  .theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text); cursor: pointer; }
+  .theme-toggle:hover { border-color: var(--text); }
+  .theme-toggle svg { width: 20px; height: 20px; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  .account { position: fixed; top: 16px; left: 16px; z-index: 10; display: flex; align-items: center; gap: 0.6rem; max-width: calc(100vw - 100px); font-size: 0.85rem; }
+  .account .email { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--subtle); }
+  .pill-btn { flex-shrink: 0; height: 42px; padding: 0 1rem; font: inherit; font-size: 0.85rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; white-space: nowrap; }
+  .pill-btn:hover { border-color: var(--text); }
+
+  .meal-tabs { display: inline-flex; margin-bottom: 1.2rem; border: 1px solid var(--accent); border-radius: 10px; overflow: hidden; }
+  .meal-tabs button { font: inherit; font-size: 1.05rem; padding: 0.45rem 1.6rem; border: none; background: var(--surface); color: var(--text); cursor: pointer; }
+  .meal-tabs button + button { border-left: 1px solid var(--accent); }
+  .meal-tabs button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+  .meal-tabs button:disabled { cursor: default; }
+
+  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; margin-bottom: 1.5rem; }
+  .filters button { font: inherit; font-size: 0.95rem; padding: 0.2rem 1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--chip-text); cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+
+  #result { margin-bottom: 1.5rem; padding: 1rem 1rem 1.2rem; border: 1px solid var(--border-soft); border-radius: 12px; }
+  .photo { aspect-ratio: 4 / 3; margin-bottom: 1rem; border-radius: 8px; overflow: hidden; background: var(--photo-bg); display: flex; align-items: center; justify-content: center; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.3s; }
+  .photo img.loading { opacity: 0; }
+  .photo .empty { color: var(--fainter); font-size: 0.95rem; font-style: italic; }
+  .photo .empty.big { font-size: 3rem; font-style: normal; }
+  .menu { font-size: 2.2rem; font-weight: bold; line-height: 1.2; min-height: 2.7rem; }
+  .menu .placeholder { font-size: 1rem; font-weight: normal; font-style: italic; color: var(--faint); }
+  .category { color: var(--subtle); font-size: 0.95rem; margin-top: 0.3rem; min-height: 1.6rem; }
+  .credit { display: block; margin-top: 0.4rem; font-size: 0.75rem; color: var(--faint); }
+
+  .reactions { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.6rem; }
+  .reactions button { font: inherit; font-size: 0.9rem; padding: 0.2rem 1.1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--chip-text); cursor: pointer; }
+  .reactions button:hover { border-color: var(--text); }
+  .reactions button[data-reaction="like"][aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+  .reactions button[data-reaction="dislike"][aria-pressed="true"] { background: var(--photo-bg); border-color: var(--subtle); color: var(--subtle); text-decoration: line-through; }
+
+  #pick-btn { font: inherit; font-size: 1.1rem; padding: 0.8rem 2rem; border: none; border-radius: 8px; background: var(--accent); color: var(--accent-text); cursor: pointer; }
+  #pick-btn:hover { background: var(--accent-hover); }
+  #pick-btn:disabled { background: var(--disabled); cursor: default; }
+
+  .history { margin: 3rem 0 2rem; }
+  .history h2 { font-size: 1.1rem; margin: 0 0 0.6rem; }
+  .history ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border-soft); text-align: left; }
+  .history li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.55rem 0.2rem; border-bottom: 1px solid var(--border-soft); }
+  .history .h-menu { font-weight: bold; }
+  .history .h-meta { color: var(--subtle); font-size: 0.85rem; white-space: nowrap; }
+  .history-empty { color: var(--faint); font-size: 0.95rem; font-style: italic; }
+
+  dialog { width: min(360px, calc(100vw - 32px)); box-sizing: border-box; padding: 1.6rem 1.4rem 1.4rem; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); color: var(--text); text-align: left; }
+  dialog::backdrop { background: rgb(0 0 0 / 0.45); }
+  dialog form { position: relative; margin: 0; }
+  dialog h2 { margin: 0 0 0.3rem; font-size: 1.3rem; }
+  .auth-note { margin: 0 0 1rem; color: var(--muted); font-size: 0.9rem; }
+  dialog label { display: block; margin-bottom: 0.8rem; color: var(--muted); font-size: 0.9rem; }
+  dialog input { display: block; width: 100%; box-sizing: border-box; margin-top: 0.25rem; padding: 0.55rem 0.7rem; font: inherit; font-size: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); }
+  .auth-message { min-height: 1.4rem; margin: 0 0 0.6rem; font-size: 0.88rem; }
+  .auth-actions { display: flex; gap: 0.5rem; }
+  .auth-actions button { flex: 1; padding: 0.6rem; font: inherit; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); cursor: pointer; }
+  .auth-actions button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+  .auth-actions button:disabled { opacity: 0.6; cursor: default; }
+  .auth-close { position: absolute; top: -1rem; right: -0.7rem; width: 34px; height: 34px; padding: 0; border: none; background: none; color: var(--subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+</style>
+</head>
+<body>
+
+  <div class="account" id="account"></div>
+
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+    </svg>
+  </button>
+
+  <h1 id="heading">오늘 뭐 먹지?</h1>
+  <p class="tagline">메뉴 고민은 짧게. 끼니와 종류를 고르고 버튼을 누르세요.</p>
+
+  <div class="meal-tabs" id="meal-tabs"></div>
+  <div class="filters" id="filters"></div>
+
+  <div id="result" aria-live="polite">
+    <div class="photo" id="photo"></div>
+    <div class="menu" id="menu"></div>
+    <div class="category" id="category"></div>
+    <div class="reactions" id="reactions" hidden>
+      <button type="button" data-reaction="like" aria-pressed="false">좋아요</button>
+      <button type="button" data-reaction="dislike" aria-pressed="false">별로예요</button>
+    </div>
+    <a class="credit" id="credit" target="_blank" rel="noopener" hidden>사진: 위키미디어 공용</a>
+  </div>
+
+  <button id="pick-btn" type="button" disabled>추천받기</button>
+
+  <section class="history">
+    <h2>최근 추천 기록</h2>
+    <p class="history-empty" id="history-empty"></p>
+    <ol id="history-list"></ol>
+  </section>
+
+  <dialog id="auth-dialog">
+    <form id="auth-form">
+      <h2>로그인</h2>
+      <p class="auth-note" id="auth-note"></p>
+      <label>이메일
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>비밀번호 (6자 이상)
+        <input type="password" name="password" autocomplete="current-password" minlength="6" required>
+      </label>
+      <p class="auth-message" id="auth-message" role="status"></p>
+      <div class="auth-actions">
+        <button type="submit" value="login" class="primary">로그인</button>
+        <button type="submit" value="signup">회원가입</button>
+      </div>
+      <button type="button" class="auth-close" id="auth-close" aria-label="닫기">×</button>
+    </form>
+  </dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+  // Supabase 주소와 키는 config.js에 있음. 데이터 보호는 Supabase의 RLS 정책이 맡음
+  const config = window.APP_CONFIG || {};
+
+  // secret/service_role 키는 모든 권한을 우회하므로, 실수로 넣었더라도 쓰지 않음
+  function isSecretKey(key) {
+    if (key.startsWith('sb_secret_')) return true;
+    try {
+      const payload = JSON.parse(atob(key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      return payload.role === 'service_role';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  const secretKeyUsed = isSecretKey(config.supabaseKey || '');
+  const db = window.supabase && config.supabaseUrl && config.supabaseKey && !secretKeyUsed
+    ? window.supabase.createClient(config.supabaseUrl, config.supabaseKey)
+    : null;
+
+  const MEAL_ORDER = ['아침', '점심', '저녁'];
+  const HISTORY_LIMIT = 10;
+
+  const photoUrl = file => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=640`;
+  const photoPage = file => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file)}`;
+
+  const headingEl = document.getElementById('heading');
+  const mealTabsEl = document.getElementById('meal-tabs');
+  const filtersEl = document.getElementById('filters');
+  const btn = document.getElementById('pick-btn');
+  const photoEl = document.getElementById('photo');
+  const menuEl = document.getElementById('menu');
+  const categoryEl = document.getElementById('category');
+  const creditEl = document.getElementById('credit');
+  const reactionsEl = document.getElementById('reactions');
+  const accountEl = document.getElementById('account');
+  const historyListEl = document.getElementById('history-list');
+  const historyEmptyEl = document.getElementById('history-empty');
+  const authDialog = document.getElementById('auth-dialog');
+  const authForm = document.getElementById('auth-form');
+  const authNoteEl = document.getElementById('auth-note');
+  const authMessageEl = document.getElementById('auth-message');
+
+  let MEALS = {};             // Supabase menus 테이블에서 불러옴: 끼니 → 종류 → [{ id, meal, category, menu, photo }]
+  let meal;
+  let category = '전체';
+  let last = null;            // 직전에 나온 메뉴 id
+  let current = null;         // 지금 화면에 보이는 메뉴
+  let user = null;            // 로그인한 사람 (없으면 null)
+  let reactions = new Map();  // 메뉴 id → 'like' | 'dislike'
+  let historyRows = [];
+
+
+  // ── 메뉴 ──────────────────────────────────────────────
+
+  async function loadMenus() {
+    const { data, error } = await db.from('menus').select('id, meal, category, name, photo').order('id');
+    if (error) throw error;
+
+    const meals = {};
+    for (const row of data) {
+      const byCategory = meals[row.meal] || (meals[row.meal] = {});
+      const items = byCategory[row.category] || (byCategory[row.category] = []);
+      items.push({ id: row.id, meal: row.meal, category: row.category, menu: row.name, photo: row.photo });
+    }
+    return meals;
+  }
+
+  // 지금 시각에 맞는 끼니를 먼저 보여줌
+  function mealByTime() {
+    const h = new Date().getHours();
+    if (h >= 5 && h < 10) return '아침';
+    if (h >= 10 && h < 16) return '점심';
+    return '저녁';
+  }
+
+  function mealRank(name) {
+    const i = MEAL_ORDER.indexOf(name);
+    return i === -1 ? MEAL_ORDER.length : i;
+  }
+
+  function makeToggle(label, pressed, onClick) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.setAttribute('aria-pressed', pressed);
+    b.addEventListener('click', () => {
+      b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      onClick();
+    });
+    return b;
+  }
+
+  function showPlaceholder(text) {
+    const span = document.createElement('span');
+    span.className = 'placeholder';
+    span.textContent = text;
+    menuEl.replaceChildren(span);
+    categoryEl.textContent = '';
+  }
+
+  function selectMeal(name) {
+    meal = name;
+    category = '전체';
+    last = null;
+    current = null;
+
+    headingEl.textContent = `오늘 ${meal} 뭐 먹지?`;
+    document.title = `오늘 ${meal} 뭐 먹지`;
+    btn.textContent = `${meal} 추천받기`;
+
+    filtersEl.replaceChildren(...['전체', ...Object.keys(MEALS[meal])].map(c =>
+      makeToggle(c, c === category, () => { category = c; })
+    ));
+
+    emptyPhoto('?', true);
+    showPlaceholder('아직 고르지 않았습니다.');
+    renderReactions();
+  }
+
+  function candidates() {
+    const menus = MEALS[meal];
+    const cats = category === '전체' ? Object.keys(menus) : [category];
+    return cats.flatMap(c => menus[c]);
+  }
+
+  // 직전 메뉴와 '별로예요' 메뉴는 빼고, '좋아요' 메뉴는 두 번 넣어서 더 자주 나오게
+  function weightedPool(list) {
+    let pool = list.filter(x => x.id !== last && reactions.get(x.id) !== 'dislike');
+    if (!pool.length) pool = list.filter(x => x.id !== last);  // 전부 '별로예요'면 그냥 다 후보로
+    if (!pool.length) pool = list;
+    return pool.flatMap(x => reactions.get(x.id) === 'like' ? [x, x] : [x]);
+  }
+
+  function randomItem(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  function emptyPhoto(text, big) {
+    const span = document.createElement('span');
+    span.className = big ? 'empty big' : 'empty';
+    span.textContent = text;
+    photoEl.replaceChildren(span);
+    creditEl.hidden = true;
+  }
+
+  function showName(item) {
+    menuEl.textContent = item.menu;
+    categoryEl.textContent = `${item.meal} · ${item.category}`;
+  }
+
+  function showPhoto(item) {
+    if (!item.photo) return emptyPhoto('사진 없음');
+
+    const img = new Image();
+    img.alt = item.menu;
+    img.className = 'loading';
+    img.onload = () => img.classList.remove('loading');
+    img.onerror = () => {
+      // 그사이 다른 메뉴로 바뀌었으면 건드리지 않음
+      if (photoEl.contains(img)) emptyPhoto('사진을 불러오지 못했어요');
+    };
+    img.src = photoUrl(item.photo);
+    photoEl.replaceChildren(img);
+
+    creditEl.href = photoPage(item.photo);
+    creditEl.hidden = false;
+  }
+
+  function setRolling(rolling) {
+    btn.disabled = rolling;
+    mealTabsEl.querySelectorAll('button').forEach(b => { b.disabled = rolling; });
+  }
+
+  btn.addEventListener('click', () => {
+    const list = candidates();
+    const pick = randomItem(weightedPool(list));
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finish = () => {
+      showName(pick);
+      showPhoto(pick);
+      last = pick.id;
+      current = pick;
+      renderReactions();
+      setRolling(false);
+      btn.textContent = '다시 추천받기';
+      savePick(pick);
+    };
+
+    current = null;
+    renderReactions();
+
+    if (reduceMotion) return finish();
+
+    // 룰렛처럼 이름이 잠깐 섞였다가 멈추고, 사진은 멈춘 뒤에 불러옴
+    setRolling(true);
+    emptyPhoto('?', true);
+    let ticks = 0;
+    const timer = setInterval(() => {
+      showName(randomItem(list));
+      if (++ticks >= 12) {
+        clearInterval(timer);
+        finish();
+      }
+    }, 60);
+  });
+
+
+  // ── 좋아요 / 별로예요 ─────────────────────────────────
+
+  function renderReactions() {
+    reactionsEl.hidden = !current;
+    const mine = current ? reactions.get(current.id) : undefined;
+    reactionsEl.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.reaction === mine));
+  }
+
+  function setLocalReaction(menuId, value) {
+    if (value) reactions.set(menuId, value);
+    else reactions.delete(menuId);
+    renderReactions();
+  }
+
+  reactionsEl.addEventListener('click', async e => {
+    const b = e.target.closest('button[data-reaction]');
+    if (!b || !current) return;
+    if (!user) return openAuth('로그인하면 좋아요와 별로예요가 저장돼요.');
+
+    const item = current;
+    const prev = reactions.get(item.id);
+    const next = prev === b.dataset.reaction ? null : b.dataset.reaction;  // 같은 버튼을 다시 누르면 취소
+
+    // 화면을 먼저 바꾸고, 저장에 실패하면 되돌림
+    setLocalReaction(item.id, next);
+    const { error } = next
+      ? await db.from('reactions').upsert({ user_id: user.id, menu_id: item.id, reaction: next, updated_at: new Date().toISOString() })
+      : await db.from('reactions').delete().eq('user_id', user.id).eq('menu_id', item.id);
+
+    if (error) {
+      console.error(error);
+      setLocalReaction(item.id, prev);
+      alert('저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+    }
+  });
+
+
+  // ── 추천 기록 ─────────────────────────────────────────
+
+  async function savePick(item) {
+    if (!user) return;
+    const { data, error } = await db.from('picks')
+      .insert({ user_id: user.id, menu_id: item.id, meal: item.meal, category: item.category, menu_name: item.menu })
+      .select('id, meal, category, menu_name, created_at')
+      .single();
+    if (error) return console.error(error);
+
+    historyRows = [data, ...historyRows].slice(0, HISTORY_LIMIT);
+    renderHistory();
+  }
+
+  const relativeTime = new Intl.RelativeTimeFormat('ko', { numeric: 'auto' });
+
+  function timeAgo(iso) {
+    const seconds = (new Date(iso) - Date.now()) / 1000;
+    const abs = Math.abs(seconds);
+    if (abs < 60) return '방금 전';
+    if (abs < 3600) return relativeTime.format(Math.round(seconds / 60), 'minute');
+    if (abs < 86400) return relativeTime.format(Math.round(seconds / 3600), 'hour');
+    if (abs < 86400 * 7) return relativeTime.format(Math.round(seconds / 86400), 'day');
+    return new Date(iso).toLocaleDateString('ko', { month: 'long', day: 'numeric' });
+  }
+
+  function renderHistory() {
+    historyListEl.replaceChildren(...historyRows.map(row => {
+      const li = document.createElement('li');
+      const name = document.createElement('span');
+      name.className = 'h-menu';
+      name.textContent = row.menu_name;
+      const meta = document.createElement('span');
+      meta.className = 'h-meta';
+      meta.textContent = `${row.meal} · ${row.category} · ${timeAgo(row.created_at)}`;
+      li.append(name, meta);
+      return li;
+    }));
+    historyEmptyEl.hidden = historyRows.length > 0;
+    historyEmptyEl.textContent = user
+      ? '아직 기록이 없어요. 추천을 받아보세요.'
+      : '로그인하면 추천 기록이 여기에 저장돼요.';
+  }
+
+  // "3분 전" 같은 시간 표시를 1분마다 새로 고침
+  setInterval(renderHistory, 60 * 1000);
+
+
+  // ── 로그인 ────────────────────────────────────────────
+
+  async function loadUserData() {
+    const uid = user ? user.id : null;
+    reactions = new Map();
+    historyRows = [];
+
+    if (uid) {
+      const [r, h] = await Promise.all([
+        db.from('reactions').select('menu_id, reaction'),
+        db.from('picks').select('id, meal, category, menu_name, created_at')
+          .order('created_at', { ascending: false })
+          .limit(HISTORY_LIMIT),
+      ]);
+      // 불러오는 사이에 로그아웃했거나 다른 계정으로 바뀌었으면 버림
+      if ((user ? user.id : null) !== uid) return;
+
+      if (r.error) console.error(r.error);
+      else reactions = new Map(r.data.map(x => [x.menu_id, x.reaction]));
+      if (h.error) console.error(h.error);
+      else historyRows = h.data;
+    }
+
+    renderHistory();
+    renderReactions();
+  }
+
+  function renderAccount() {
+    if (!db) return accountEl.replaceChildren();
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'pill-btn';
+
+    if (user) {
+      const email = document.createElement('span');
+      email.className = 'email';
+      email.textContent = user.email;
+      button.textContent = '로그아웃';
+      button.addEventListener('click', () => db.auth.signOut());
+      accountEl.replaceChildren(email, button);
+    } else {
+      button.textContent = '로그인';
+      button.addEventListener('click', () => openAuth());
+      accountEl.replaceChildren(button);
+    }
+  }
+
+  const AUTH_ERRORS = {
+    invalid_credentials: '이메일 또는 비밀번호가 맞지 않아요.',
+    email_not_confirmed: '메일 인증을 먼저 끝내 주세요. 받은 메일의 링크를 누르면 돼요.',
+    user_already_exists: '이미 가입된 이메일이에요. 로그인해 주세요.',
+    weak_password: '비밀번호가 너무 쉬워요. 더 길게 정해 주세요.',
+    over_email_send_rate_limit: '메일을 너무 자주 보냈어요. 잠시 뒤 다시 시도해 주세요.',
+  };
+
+  function openAuth(note) {
+    authNoteEl.textContent = note || '로그인하면 추천 기록과 좋아요가 저장돼요.';
+    authMessageEl.textContent = '';
+    authDialog.showModal();
+  }
+
+  document.getElementById('auth-close').addEventListener('click', () => authDialog.close());
+
+  authForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const mode = e.submitter && e.submitter.value === 'signup' ? 'signup' : 'login';
+    const email = authForm.elements.email.value.trim();
+    const password = authForm.elements.password.value;
+    const buttons = authForm.querySelectorAll('.auth-actions button');
+
+    buttons.forEach(b => { b.disabled = true; });
+    authMessageEl.textContent = mode === 'signup' ? '가입하는 중…' : '로그인하는 중…';
+
+    const { data, error } = mode === 'signup'
+      ? await db.auth.signUp({ email, password })
+      : await db.auth.signInWithPassword({ email, password });
+
+    buttons.forEach(b => { b.disabled = false; });
+
+    if (error) {
+      authMessageEl.textContent = AUTH_ERRORS[error.code] || `오류: ${error.message}`;
+      return;
+    }
+    if (mode === 'signup' && !data.session) {
+      authMessageEl.textContent = '확인 메일을 보냈어요. 메일 속 링크를 누른 뒤, 여기서 로그인하세요.';
+      return;
+    }
+    authForm.reset();
+    authDialog.close();
+  });
+
+
+  // ── 다크/라이트 모드 ── 고른 모드는 브라우저에 저장해서 새로고침해도 유지
+
+  const themeBtn = document.getElementById('theme-toggle');
+
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    const label = theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환';
+    themeBtn.setAttribute('aria-label', label);
+    themeBtn.title = label;
+  }
+
+  themeBtn.addEventListener('click', () => {
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(theme);
+    try { localStorage.setItem('menu-picker-theme', theme); } catch (e) {}
+  });
+
+  applyTheme(document.documentElement.dataset.theme);
+
+
+  // ── 시작 ──────────────────────────────────────────────
+
+  function showLoadError(message) {
+    emptyPhoto('!', true);
+    showPlaceholder(message);
+  }
+
+  async function init() {
+    renderAccount();
+    renderHistory();
+    emptyPhoto('?', true);
+    showPlaceholder('메뉴를 불러오는 중이에요…');
+
+    if (!db) {
+      const message = secretKeyUsed ? 'config.js에 secret 키가 들어 있어요. 공개(publishable) 키로 바꿔 주세요.'
+        : !config.supabaseKey ? 'config.js를 찾지 못했어요. index.html과 같은 폴더에 있는지 확인해 주세요.'
+        : 'Supabase에 연결하지 못했어요. 인터넷 연결을 확인해 주세요.';
+      return showLoadError(message);
+    }
+
+    db.auth.onAuthStateChange((event, session) => {
+      const nextUser = session ? session.user : null;
+      const changed = (nextUser ? nextUser.id : null) !== (user ? user.id : null);
+      user = nextUser;
+      if (!changed) return;
+      renderAccount();
+      // 이 콜백 안에서 바로 Supabase를 부르면 멈출 수 있어서 한 박자 뒤에 불러옴
+      setTimeout(loadUserData, 0);
+    });
+
+    try {
+      MEALS = await loadMenus();
+    } catch (err) {
+      console.error(err);
+      return showLoadError('메뉴를 불러오지 못했어요. Supabase에 menus 테이블을 만들었는지 확인해 주세요.');
+    }
+
+    const mealNames = Object.keys(MEALS).sort((a, b) => mealRank(a) - mealRank(b));
+    if (!mealNames.length) return showLoadError('menus 테이블이 비어 있어요. 메뉴를 추가해 주세요.');
+
+    const byTime = mealByTime();
+    const initialMeal = mealNames.includes(byTime) ? byTime : mealNames[0];
+    mealTabsEl.append(...mealNames.map(m => makeToggle(m, m === initialMeal, () => selectMeal(m))));
+    selectMeal(initialMeal);
+    btn.disabled = false;
+  }
+
+  init();
+</script>
+
+</body>
+</html>
