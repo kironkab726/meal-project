@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오늘 뭐 먹지</title>
+<title>냥셰프의 오늘 뭐 먹지</title>
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
   (function () {
@@ -16,154 +16,469 @@
     document.documentElement.dataset.theme = theme;
   })();
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
 <style>
   :root {
     color-scheme: light;
-    --bg: #fff;
-    --text: #222;
-    --muted: #666;
-    --subtle: #888;
-    --faint: #aaa;
-    --fainter: #bbb;
-    --chip-text: #444;
-    --border: #ccc;
-    --border-soft: #eee;
-    --surface: #fff;
-    --photo-bg: #f4f4f4;
-    --accent: #222;
-    --accent-text: #fff;
-    --accent-hover: #444;
-    --disabled: #888;
+    --bg: #FBF3E4;
+    --paper: #FFFBF3;
+    --sunk: #F3E6CF;
+    --well: #FBF3E4;
+    --photo-bg: #F7E7C6;
+    --photo-dot: #EFD7AB;
+    --text: #4A3426;
+    --muted: #7A6352;
+    --quote: #7A5238;
+    --link: #8A5A3B;
+    --border: #E6D3B3;
+    --border-soft: #EBDDC5;
+    --shadow: #EAD9BF;
+    --chip-on-bg: #F6D78B;
+    --chip-on-border: #E9BE5E;
+    --chip-on-text: #4A3426;
+    --accent: #B8552F;
+    --accent-hover: #A34A28;
+    --accent-text: #FFFFFF;
+    --accent-soft: rgba(184, 85, 47, 0.28);
+    --btn-shadow: rgba(74, 52, 38, 0.45);
+    --plate: #F6E6CB;
+    --plate-ring: #E6D0AC;
+    --note: #FFF4CF;
+    --note-text: #5C4332;
+    --tape: rgba(242, 196, 109, 0.75);
+    --doodle: #E4CFAD;
+    --bubble-line: #4A3426;
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #161616;
-    --text: #e8e8e8;
-    --muted: #aaa;
-    --subtle: #999;
-    --faint: #777;
-    --fainter: #666;
-    --chip-text: #ccc;
-    --border: #444;
-    --border-soft: #2e2e2e;
-    --surface: #1f1f1f;
-    --photo-bg: #242424;
-    --accent: #e8e8e8;
-    --accent-text: #161616;
-    --accent-hover: #c8c8c8;
-    --disabled: #666;
+    --bg: #241C17;
+    --paper: #30261F;
+    --sunk: #3B2F26;
+    --well: #29201A;
+    --photo-bg: #3A2E24;
+    --photo-dot: #463829;
+    --text: #F4E7D4;
+    --muted: #C9B49D;
+    --quote: #E8C39A;
+    --link: #E8C39A;
+    --border: #54432F;
+    --border-soft: #45372B;
+    --shadow: #17110D;
+    --chip-on-bg: #F2C46D;
+    --chip-on-border: #F2C46D;
+    --chip-on-text: #2A1F18;
+    --accent-soft: rgba(184, 85, 47, 0.4);
+    --btn-shadow: rgba(0, 0, 0, 0.55);
+    --plate: #3A2D23;
+    --plate-ring: #54432F;
+    --note: #3D3222;
+    --note-text: #EAD9BF;
+    --tape: rgba(242, 196, 109, 0.45);
+    --doodle: #45372B;
+    --bubble-line: #E9D8BF;
   }
 
   [hidden] { display: none !important; }
+  *, *::before, *::after { box-sizing: border-box; }
 
-  body { font-family: Georgia, serif; max-width: 520px; margin: 60px auto; padding: 0 20px; line-height: 1.7; color: var(--text); background: var(--bg); text-align: center; transition: background-color 0.2s, color 0.2s; }
-  h1 { font-size: 2.2rem; margin-bottom: 0.3rem; }
-  .tagline { color: var(--muted); font-style: italic; margin-bottom: 1.8rem; }
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: 'Gowun Dodum', sans-serif; line-height: 1.6; transition: background-color 0.2s, color 0.2s; }
+  button { font: inherit; color: inherit; }
+  a { color: var(--link); }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-  .theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 10; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text); cursor: pointer; }
-  .theme-toggle:hover { border-color: var(--text); }
-  .theme-toggle svg { width: 20px; height: 20px; }
-  .theme-toggle .icon-sun { display: none; }
-  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
-  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  /* ── 일러스트 선과 아이콘 ── */
+  .ico { width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { stroke: #4A3426; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
+  .ink3 { stroke: #4A3426; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+  .ink-line { fill: none; stroke: #4A3426; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink-thin { fill: none; stroke: #4A3426; stroke-width: 3; stroke-linecap: round; }
+  .stripe { fill: none; stroke: #D9914A; stroke-width: 6; stroke-linecap: round; }
+  .pleat { fill: none; stroke: #E6D3B3; stroke-width: 3; stroke-linecap: round; }
+  .tail-out { fill: none; stroke: #4A3426; stroke-width: 24; stroke-linecap: round; }
+  .tail-in { fill: none; stroke: #F2B872; stroke-width: 16; stroke-linecap: round; }
+  .spoon-out { fill: none; stroke: #4A3426; stroke-width: 18; stroke-linecap: round; }
+  .spoon-in { fill: none; stroke: #C99466; stroke-width: 11; stroke-linecap: round; }
+  .scarf { fill: var(--accent); }
+  .steam { fill: none; stroke: #C9A882; stroke-width: 4; stroke-linecap: round; }
+  .chop { fill: none; stroke: #8A5A3B; stroke-width: 6; stroke-linecap: round; }
+  .bowl-band { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
 
-  .account { position: fixed; top: 16px; left: 16px; z-index: 10; display: flex; align-items: center; gap: 0.6rem; max-width: calc(100vw - 100px); font-size: 0.85rem; }
-  .account .email { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--subtle); }
-  .pill-btn { flex-shrink: 0; height: 42px; padding: 0 1rem; font: inherit; font-size: 0.85rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; white-space: nowrap; }
-  .pill-btn:hover { border-color: var(--text); }
+  /* ── 식탁보 띠, 낙서 ── */
+  .gingham { flex-shrink: 0; background-color: var(--bg); background-image: linear-gradient(90deg, var(--accent-soft) 50%, transparent 50%), linear-gradient(var(--accent-soft) 50%, transparent 50%); }
+  .gingham-top { height: 18px; background-size: 24px 24px; }
+  .gingham-bottom { height: 56px; margin-top: 64px; border-top: 3px solid var(--accent); background-size: 28px 28px; }
 
-  .meal-tabs { display: inline-flex; margin-bottom: 1.2rem; border: 1px solid var(--accent); border-radius: 10px; overflow: hidden; }
-  .meal-tabs button { font: inherit; font-size: 1.05rem; padding: 0.45rem 1.6rem; border: none; background: var(--surface); color: var(--text); cursor: pointer; }
-  .meal-tabs button + button { border-left: 1px solid var(--accent); }
+  .page { position: relative; flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 64px); }
+  .doodles { display: none; }
+  .doodle-svg { position: absolute; fill: none; stroke: var(--doodle); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── 머리글 ── */
+  .site-header { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 22px 0 10px; }
+  .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .brand-cat { width: 54px; height: 54px; flex-shrink: 0; }
+  .brand-text { display: flex; flex-direction: column; min-width: 0; }
+  .brand-name { font-family: 'Jua', sans-serif; font-size: 28px; line-height: 1.15; }
+  .brand-sub { font-size: 14px; color: var(--muted); }
+  .narrow-only { display: none; }
+  .header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .account { display: flex; align-items: center; gap: 10px; }
+  .account .email { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; color: var(--muted); }
+  .pill-btn { height: 46px; padding: 0 20px; display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); font-family: 'Jua', sans-serif; font-size: 17px; white-space: nowrap; cursor: pointer; }
+  .icon-btn { width: 46px; height: 46px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--border); border-radius: 50%; background: var(--paper); cursor: pointer; }
+  .pill-btn:hover, .icon-btn:hover { border-color: var(--text); }
+  .icon-sun { display: none; }
+  :root[data-theme="dark"] .icon-sun { display: block; }
+  :root[data-theme="dark"] .icon-moon { display: none; }
+
+  /* ── 본문: 휴대폰 기준, 넓은 화면은 아래에서 두 칸으로 ── */
+  .layout { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 6px; }
+
+  .chef { position: relative; display: flex; align-items: center; gap: 10px; }
+  .chef-art { position: relative; order: -1; width: 150px; height: 158px; flex-shrink: 0; }
+  .plate { position: absolute; left: 4px; top: 12px; width: 142px; height: 142px; border-radius: 50%; background: var(--plate); }
+  .plate-ring { display: none; }
+  .chef-cat { position: relative; display: block; width: 100%; height: 100%; }
+  .bubble { position: relative; flex: 1; margin: 0; padding: 12px 16px; background: var(--paper); border: 3px solid var(--bubble-line); border-radius: 22px; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 23px; line-height: 1.2; word-break: keep-all; }
+  .bubble::after { content: ""; position: absolute; left: -12px; top: 50%; width: 18px; height: 18px; margin-top: -9px; background: var(--paper); border-left: 3px solid var(--bubble-line); border-bottom: 3px solid var(--bubble-line); transform: rotate(45deg); }
+  .chef-caption, .note, .doodle-mid { display: none; }
+
+  .note { position: relative; width: 380px; margin-top: 18px; padding: 30px 28px 24px; flex-direction: column; gap: 4px; background: var(--note); color: var(--note-text); border-radius: 8px; box-shadow: 0 6px 0 var(--shadow); transform: rotate(-2deg); }
+  .note::before { content: ""; position: absolute; top: -12px; left: 50%; width: 96px; height: 26px; margin-left: -48px; background: var(--tape); transform: rotate(3deg); }
+  .note-title { font-family: 'Jua', sans-serif; font-size: 21px; color: var(--text); }
+  .note-line { font-family: 'Gaegu', cursive; font-size: 22px; line-height: 1.35; }
+
+  /* ── 추천 카드 ── */
+  .card { display: flex; flex-direction: column; gap: 16px; padding: 20px 18px 22px; background: var(--paper); border: 2px solid var(--border-soft); border-radius: 26px; box-shadow: 0 8px 0 var(--shadow); }
+  .card h1 { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 30px; line-height: 1.2; }
+
+  .meal-tabs { display: flex; gap: 4px; padding: 5px; background: var(--sunk); border-radius: 999px; }
+  .meal-tabs button { flex: 1; height: 46px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: none; border-radius: 999px; background: transparent; font-family: 'Jua', sans-serif; font-size: 17px; cursor: pointer; }
   .meal-tabs button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
   .meal-tabs button:disabled { cursor: default; }
 
-  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; margin-bottom: 1.5rem; }
-  .filters button { font: inherit; font-size: 0.95rem; padding: 0.2rem 1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--chip-text); cursor: pointer; }
-  .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filters button { height: 44px; padding: 0 14px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); font-size: 15px; cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--chip-on-bg); border-color: var(--chip-on-border); color: var(--chip-on-text); font-weight: 700; }
 
-  #result { margin-bottom: 1.5rem; padding: 1rem 1rem 1.2rem; border: 1px solid var(--border-soft); border-radius: 12px; }
-  .photo { aspect-ratio: 4 / 3; margin-bottom: 1rem; border-radius: 8px; overflow: hidden; background: var(--photo-bg); display: flex; align-items: center; justify-content: center; }
+  .result { display: flex; flex-direction: column; gap: 10px; padding: 12px; background: var(--well); border-radius: 20px; }
+  .photo-frame { position: relative; }
+  .photo-frame::before, .photo-frame::after { content: ""; position: absolute; z-index: 1; top: -9px; width: 70px; height: 22px; background: var(--tape); pointer-events: none; }
+  .photo-frame::before { left: 18px; transform: rotate(-7deg); }
+  .photo-frame::after { right: 18px; transform: rotate(6deg); }
+  .photo { aspect-ratio: 16 / 10; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 16px; background-color: var(--photo-bg); background-image: radial-gradient(var(--photo-dot) 2px, transparent 2px); background-size: 16px 16px; }
   .photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.3s; }
   .photo img.loading { opacity: 0; }
-  .photo .empty { color: var(--fainter); font-size: 0.95rem; font-style: italic; }
-  .photo .empty.big { font-size: 3rem; font-style: normal; }
-  .menu { font-size: 2.2rem; font-weight: bold; line-height: 1.2; min-height: 2.7rem; }
-  .menu .placeholder { font-size: 1rem; font-weight: normal; font-style: italic; color: var(--faint); }
-  .category { color: var(--subtle); font-size: 0.95rem; margin-top: 0.3rem; min-height: 1.6rem; }
-  .credit { display: block; margin-top: 0.4rem; font-size: 0.75rem; color: var(--faint); }
+  .photo-empty { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px; text-align: center; }
+  .bowl { width: 180px; height: auto; }
+  .photo-label { font-size: 13px; color: var(--muted); }
+  .photo-empty.cooking .steam { animation: steam 0.9s ease-in-out infinite; }
+  .photo-empty.cooking .steam:nth-child(2) { animation-delay: 0.3s; }
+  .photo-empty.cooking .steam:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes steam { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
 
-  .reactions { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.6rem; }
-  .reactions button { font: inherit; font-size: 0.9rem; padding: 0.2rem 1.1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--chip-text); cursor: pointer; }
+  .result-text { display: flex; flex-direction: column; gap: 2px; }
+  .tag { align-self: flex-start; padding: 2px 10px; border-radius: 999px; background: var(--sunk); font-size: 13px; color: var(--muted); }
+  .tag:empty { display: none; }
+  .menu { min-height: 48px; font-family: 'Jua', sans-serif; font-size: 40px; line-height: 1.2; word-break: keep-all; }
+  .menu .placeholder { font-family: 'Gowun Dodum', sans-serif; font-size: 16px; line-height: 48px; color: var(--muted); }
+  .cat-line { margin: 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.3; color: var(--quote); word-break: keep-all; }
+  .cat-line:empty { display: none; }
+
+  .result-actions { display: flex; flex-direction: column; gap: 8px; }
+  .reactions { display: flex; gap: 8px; }
+  .reactions button { flex: 1; height: 44px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); font-size: 15px; cursor: pointer; }
   .reactions button:hover { border-color: var(--text); }
-  .reactions button[data-reaction="like"][aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
-  .reactions button[data-reaction="dislike"][aria-pressed="true"] { background: var(--photo-bg); border-color: var(--subtle); color: var(--subtle); text-decoration: line-through; }
+  .reactions button .ico { width: 18px; height: 18px; }
+  .reactions button[data-reaction="like"][aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 700; }
+  .reactions button[data-reaction="dislike"][aria-pressed="true"] { background: var(--sunk); border-color: var(--muted); color: var(--muted); text-decoration: line-through; }
+  .credit { align-self: flex-end; font-size: 12px; }
 
-  #pick-btn { font: inherit; font-size: 1.1rem; padding: 0.8rem 2rem; border: none; border-radius: 8px; background: var(--accent); color: var(--accent-text); cursor: pointer; }
-  #pick-btn:hover { background: var(--accent-hover); }
-  #pick-btn:disabled { background: var(--disabled); cursor: default; }
+  .pick-btn { height: 60px; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; border-radius: 18px; background: var(--accent); color: var(--accent-text); font-family: 'Jua', sans-serif; font-size: 22px; box-shadow: 0 5px 0 var(--btn-shadow); cursor: pointer; transition: transform 0.08s, box-shadow 0.08s; }
+  .pick-btn:hover { background: var(--accent-hover); }
+  .pick-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--btn-shadow); }
+  .pick-btn:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: 0 5px 0 var(--btn-shadow); }
+  .pick-btn .ico { width: 24px; height: 24px; }
 
-  .history { margin: 3rem 0 2rem; }
-  .history h2 { font-size: 1.1rem; margin: 0 0 0.6rem; }
-  .history ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border-soft); text-align: left; }
-  .history li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.55rem 0.2rem; border-bottom: 1px solid var(--border-soft); }
-  .history .h-menu { font-weight: bold; }
-  .history .h-meta { color: var(--subtle); font-size: 0.85rem; white-space: nowrap; }
-  .history-empty { color: var(--faint); font-size: 0.95rem; font-style: italic; }
+  /* ── 최근 추천 ── */
+  .history { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 12px; }
+  .history-head { display: flex; flex-direction: column; gap: 2px; }
+  .history h2 { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 24px; }
+  .history-note { font-size: 13px; color: var(--muted); }
+  .history-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .history-item { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: "icon menu time" "icon meta time"; column-gap: 12px; align-items: center; padding: 12px 14px; background: var(--paper); border: 2px solid var(--border-soft); border-radius: 18px; }
+  .history-icon { grid-area: icon; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--photo-bg); color: var(--link); }
+  .h-menu { grid-area: menu; font-family: 'Jua', sans-serif; font-size: 20px; line-height: 1.2; }
+  .h-meta { grid-area: meta; font-size: 13px; color: var(--muted); }
+  .h-time { grid-area: time; font-size: 13px; color: var(--muted); white-space: nowrap; }
 
-  dialog { width: min(360px, calc(100vw - 32px)); box-sizing: border-box; padding: 1.6rem 1.4rem 1.4rem; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); color: var(--text); text-align: left; }
-  dialog::backdrop { background: rgb(0 0 0 / 0.45); }
+  /* ── 로그인 창 ── */
+  dialog { width: min(380px, calc(100vw - 32px)); padding: 28px 24px 24px; border: 3px solid var(--bubble-line); border-radius: 26px; background: var(--paper); color: var(--text); box-shadow: 0 10px 0 var(--shadow); }
+  dialog::backdrop { background: rgb(42 30 22 / 0.5); }
   dialog form { position: relative; margin: 0; }
-  dialog h2 { margin: 0 0 0.3rem; font-size: 1.3rem; }
-  .auth-note { margin: 0 0 1rem; color: var(--muted); font-size: 0.9rem; }
-  dialog label { display: block; margin-bottom: 0.8rem; color: var(--muted); font-size: 0.9rem; }
-  dialog input { display: block; width: 100%; box-sizing: border-box; margin-top: 0.25rem; padding: 0.55rem 0.7rem; font: inherit; font-size: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); }
-  .auth-message { min-height: 1.4rem; margin: 0 0 0.6rem; font-size: 0.88rem; }
-  .auth-actions { display: flex; gap: 0.5rem; }
-  .auth-actions button { flex: 1; padding: 0.6rem; font: inherit; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); cursor: pointer; }
+  dialog h2 { margin: 0 0 4px; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 28px; }
+  .auth-note { margin: 0 0 16px; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.3; color: var(--quote); word-break: keep-all; }
+  dialog label { display: block; margin-bottom: 12px; font-size: 15px; color: var(--muted); }
+  dialog input { display: block; width: 100%; height: 48px; margin-top: 4px; padding: 0 14px; font: inherit; font-size: 16px; color: var(--text); border: 2px solid var(--border); border-radius: 14px; background: var(--bg); }
+  dialog input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .auth-message { min-height: 1.5rem; margin: 0 0 10px; font-size: 14px; }
+  .auth-actions { display: flex; gap: 8px; }
+  .auth-actions button { flex: 1; height: 48px; border: 2px solid var(--border); border-radius: 14px; background: var(--paper); font-family: 'Jua', sans-serif; font-size: 18px; cursor: pointer; }
   .auth-actions button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
   .auth-actions button:disabled { opacity: 0.6; cursor: default; }
-  .auth-close { position: absolute; top: -1rem; right: -0.7rem; width: 34px; height: 34px; padding: 0; border: none; background: none; color: var(--subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+  .auth-close { position: absolute; top: -20px; right: -14px; width: 44px; height: 44px; padding: 0; border: none; background: none; color: var(--muted); font-size: 28px; line-height: 1; cursor: pointer; }
+
+  /* ── 태블릿 이상 ── */
+  @media (min-width: 700px) {
+    .card { gap: 20px; padding: 32px 36px 36px; border-radius: 32px; box-shadow: 0 10px 0 var(--shadow); }
+    .card h1 { font-size: 44px; line-height: 1.15; }
+    .meal-tabs { align-self: flex-start; gap: 6px; padding: 6px; }
+    .meal-tabs button { flex: none; height: 48px; padding: 0 22px; gap: 8px; font-size: 19px; }
+    .filters button { padding: 0 16px; font-size: 16px; }
+    .result { gap: 14px; padding: 18px; border-radius: 24px; }
+    .photo-frame::before, .photo-frame::after { top: -10px; width: 88px; height: 26px; }
+    .photo-frame::before { left: 26px; }
+    .photo-frame::after { right: 26px; }
+    .photo { border-radius: 18px; background-size: 18px 18px; }
+    .bowl { width: 240px; }
+    .photo-label { font-size: 14px; }
+    .tag { padding: 2px 12px; font-size: 14px; }
+    .menu { min-height: 60px; font-size: 52px; line-height: 1.15; }
+    .menu .placeholder { line-height: 60px; }
+    .cat-line { font-size: 23px; }
+    .result-actions { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+    .reactions button { flex: none; font-size: 16px; }
+    .credit { align-self: auto; margin-left: auto; font-size: 13px; }
+    .pick-btn { height: 66px; border-radius: 20px; font-size: 25px; box-shadow: 0 6px 0 var(--btn-shadow); }
+    .pick-btn:disabled { box-shadow: 0 6px 0 var(--btn-shadow); }
+    .pick-btn .ico { width: 26px; height: 26px; }
+    .history { margin-top: 56px; gap: 16px; }
+    .history-head { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; }
+    .history h2 { font-size: 30px; }
+    .history-note { font-size: 15px; }
+    .history-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .history-item { grid-template-columns: 40px minmax(0, 1fr); grid-template-areas: "icon time" "menu menu" "meta meta"; row-gap: 6px; padding: 16px 18px; border-radius: 22px; }
+    .h-time { justify-self: end; }
+    .h-menu { font-size: 24px; }
+    .h-meta { font-size: 14px; }
+  }
+
+  /* ── 넓은 화면: 왼쪽 냥셰프, 오른쪽 추천 카드 ── */
+  @media (min-width: 1200px) {
+    .doodles { display: block; }
+    .layout { max-width: none; grid-template-columns: 440px minmax(0, 640px); justify-content: center; align-items: start; gap: 52px; padding-top: 18px; }
+    .chef { flex-direction: column; gap: 14px; padding-top: 8px; }
+    .chef-art { order: 0; width: 440px; height: 430px; }
+    .plate { left: 20px; top: 24px; width: 400px; height: 400px; }
+    .plate-ring { display: block; position: absolute; left: 44px; top: 48px; width: 348px; height: 348px; border-radius: 50%; border: 3px dashed var(--plate-ring); }
+    .chef-cat { position: absolute; left: 30px; bottom: 0; width: 380px; height: 400px; }
+    .bubble { flex: none; padding: 14px 28px; border-radius: 28px; font-size: 32px; }
+    .bubble::after { left: 50%; top: auto; bottom: -12px; width: 20px; height: 20px; margin: 0 0 0 -10px; border-left: 0; border-right: 3px solid var(--bubble-line); border-bottom: 3px solid var(--bubble-line); }
+    .chef-caption { display: block; margin: 0; font-size: 18px; color: var(--muted); }
+    .note { display: flex; }
+    .doodle-mid { display: block; }
+    .history { max-width: 1152px; }
+  }
+
+  /* ── 휴대폰 ── */
+  @media (max-width: 699px) {
+    .gingham-top { height: 12px; background-size: 18px 18px; }
+    .gingham-bottom { height: 44px; margin-top: 48px; background-size: 22px 22px; }
+    .site-header { padding: 14px 0 6px; }
+    .brand { gap: 8px; }
+    .brand-cat { width: 42px; height: 42px; }
+    .brand-name { font-size: 22px; line-height: 1.1; }
+    .brand-sub { font-size: 12px; }
+    .wide-only { display: none; }
+    .narrow-only { display: inline; }
+    .header-actions { gap: 8px; }
+    .account .email { display: none; }
+    .pill-btn { height: 44px; padding: 0 14px; gap: 6px; font-size: 15px; }
+    .pill-btn .ico { width: 18px; height: 18px; }
+    .icon-btn { width: 44px; height: 44px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-empty.cooking .steam { animation: none; }
+    .pick-btn, body { transition: none; }
+  }
 </style>
 </head>
 <body>
 
-  <div class="account" id="account"></div>
+  <div class="gingham gingham-top" aria-hidden="true"></div>
 
-  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
-    </svg>
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="4"/>
-      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
-    </svg>
-  </button>
-
-  <h1 id="heading">오늘 뭐 먹지?</h1>
-  <p class="tagline">메뉴 고민은 짧게. 끼니와 종류를 고르고 버튼을 누르세요.</p>
-
-  <div class="meal-tabs" id="meal-tabs"></div>
-  <div class="filters" id="filters"></div>
-
-  <div id="result" aria-live="polite">
-    <div class="photo" id="photo"></div>
-    <div class="menu" id="menu"></div>
-    <div class="category" id="category"></div>
-    <div class="reactions" id="reactions" hidden>
-      <button type="button" data-reaction="like" aria-pressed="false">좋아요</button>
-      <button type="button" data-reaction="dislike" aria-pressed="false">별로예요</button>
+  <div class="page">
+    <div class="doodles" aria-hidden="true">
+      <svg class="doodle-svg" width="46" height="46" viewBox="0 0 48 48" style="left: 12px; top: 290px; transform: rotate(-18deg);">
+        <ellipse cx="24" cy="32" rx="10" ry="8"></ellipse><circle cx="11" cy="19" r="4"></circle><circle cx="19" cy="11" r="4"></circle><circle cx="29" cy="11" r="4"></circle><circle cx="37" cy="19" r="4"></circle>
+      </svg>
+      <svg class="doodle-svg" width="40" height="60" viewBox="0 0 40 60" style="left: 14px; top: 630px;">
+        <path d="M20 56 C8 46 32 36 20 26 C8 16 32 8 20 2"></path>
+      </svg>
+      <svg class="doodle-svg" width="56" height="34" viewBox="0 0 60 36" style="left: 6px; top: 950px; transform: rotate(12deg);">
+        <path d="M6 18 Q22 2 42 18 Q22 34 6 18 Z"></path><path d="M42 18 L56 8 L54 18 L56 28 Z"></path><circle cx="16" cy="16" r="1.5"></circle>
+      </svg>
+      <svg class="doodle-svg" width="56" height="34" viewBox="0 0 60 36" style="right: 4px; top: 240px; transform: rotate(-14deg);">
+        <path d="M6 18 Q22 2 42 18 Q22 34 6 18 Z"></path><path d="M42 18 L56 8 L54 18 L56 28 Z"></path><circle cx="16" cy="16" r="1.5"></circle>
+      </svg>
+      <svg class="doodle-svg" width="40" height="60" viewBox="0 0 48 72" style="right: 12px; top: 550px; transform: rotate(8deg);">
+        <ellipse cx="14" cy="14" rx="8" ry="11"></ellipse><path d="M14 25 L14 68"></path><path d="M30 4 L30 18 M36 4 L36 18 M42 4 L42 18 M30 18 Q36 26 42 18 M36 24 L36 68"></path>
+      </svg>
+      <svg class="doodle-svg" width="46" height="46" viewBox="0 0 48 48" style="right: 10px; top: 890px; transform: rotate(20deg);">
+        <ellipse cx="24" cy="32" rx="10" ry="8"></ellipse><circle cx="11" cy="19" r="4"></circle><circle cx="19" cy="11" r="4"></circle><circle cx="29" cy="11" r="4"></circle><circle cx="37" cy="19" r="4"></circle>
+      </svg>
     </div>
-    <a class="credit" id="credit" target="_blank" rel="noopener" hidden>사진: 위키미디어 공용</a>
+
+    <header class="site-header">
+      <div class="brand">
+        <svg class="brand-cat" viewBox="0 0 120 120" aria-hidden="true">
+          <path class="ink" d="M22 64 L28 22 L54 46 Z" fill="#F2B872"></path>
+          <path class="ink" d="M98 64 L92 22 L66 46 Z" fill="#F2B872"></path>
+          <ellipse class="ink" cx="60" cy="72" rx="44" ry="36" fill="#F2B872"></ellipse>
+          <circle class="ink" cx="43" cy="30" r="15" fill="#FFFFFF"></circle>
+          <circle class="ink" cx="60" cy="21" r="18" fill="#FFFFFF"></circle>
+          <circle class="ink" cx="77" cy="30" r="15" fill="#FFFFFF"></circle>
+          <rect class="ink" x="38" y="32" width="44" height="18" rx="5" fill="#FFFFFF"></rect>
+          <path class="ink-line" d="M40 72 Q47 65 54 72"></path>
+          <path class="ink-line" d="M66 72 Q73 65 80 72"></path>
+          <ellipse cx="36" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
+          <ellipse cx="84" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
+          <path d="M56 80 L64 80 L60 85 Z" fill="#E7837A"></path>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">냥셰프<span class="wide-only">의 오늘 뭐 먹지</span></span>
+          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">오늘 뭐 먹지</span></span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="account" id="account"></div>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
+          <svg class="ico icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          <svg class="ico icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="chef">
+        <svg class="doodle-svg doodle-mid" width="30" height="28" viewBox="0 0 32 30" aria-hidden="true" style="right: -42px; top: 40px; transform: rotate(10deg);">
+          <path d="M16 27 C4 18 2 10 7 6 C11 3 15 5 16 9 C17 5 21 3 25 6 C30 10 28 18 16 27 Z"></path>
+        </svg>
+        <svg class="doodle-svg doodle-mid" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" style="right: -40px; top: 560px;">
+          <path d="M16 2 L19 13 L30 16 L19 19 L16 30 L13 19 L2 16 L13 13 Z"></path>
+        </svg>
+
+        <p class="bubble">오늘은 뭘 만들어 줄까냥?</p>
+
+        <div class="chef-art">
+          <div class="plate" aria-hidden="true"></div>
+          <div class="plate-ring" aria-hidden="true"></div>
+          <svg class="chef-cat" viewBox="0 0 380 400" role="img" aria-label="요리사 모자를 쓰고 나무 국자를 든 고양이">
+            <path class="tail-out" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
+            <path class="tail-in" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
+            <ellipse class="ink" cx="190" cy="336" rx="112" ry="66" fill="#F2B872"></ellipse>
+            <path class="ink" d="M130 300 Q190 290 250 300 L240 402 L140 402 Z" fill="#FFFBF3"></path>
+            <path class="ink-thin" d="M165 350 L215 350 L212 378 Q190 384 168 378 Z"></path>
+            <path class="ink" d="M78 176 L86 88 L150 128 Z" fill="#F2B872"></path>
+            <path class="ink" d="M302 176 L294 88 L230 128 Z" fill="#F2B872"></path>
+            <path d="M94 150 L99 110 L128 129 Z" fill="#F4A28C"></path>
+            <path d="M286 150 L281 110 L252 129 Z" fill="#F4A28C"></path>
+            <ellipse class="ink" cx="190" cy="210" rx="122" ry="98" fill="#F2B872"></ellipse>
+            <path class="stripe" d="M170 130 Q175 146 172 160"></path>
+            <path class="stripe" d="M190 128 L190 158"></path>
+            <path class="stripe" d="M210 130 Q205 146 208 160"></path>
+            <path class="stripe" d="M74 198 L98 205"></path>
+            <path class="stripe" d="M72 218 L96 221"></path>
+            <path class="stripe" d="M306 198 L282 205"></path>
+            <path class="stripe" d="M308 218 L284 221"></path>
+            <circle class="ink" cx="140" cy="62" r="42" fill="#FFFFFF"></circle>
+            <circle class="ink" cx="240" cy="62" r="42" fill="#FFFFFF"></circle>
+            <circle class="ink" cx="190" cy="44" r="50" fill="#FFFFFF"></circle>
+            <rect class="ink" x="122" y="70" width="136" height="56" rx="12" fill="#FFFFFF"></rect>
+            <path class="pleat" d="M160 80 L160 116"></path>
+            <path class="pleat" d="M190 80 L190 116"></path>
+            <path class="pleat" d="M220 80 L220 116"></path>
+            <path class="ink-line" d="M132 208 Q148 190 164 208"></path>
+            <path class="ink-line" d="M216 208 Q232 190 248 208"></path>
+            <ellipse cx="122" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
+            <ellipse cx="258" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
+            <ellipse cx="190" cy="248" rx="44" ry="30" fill="#FFF1DC"></ellipse>
+            <path class="ink3" d="M180 232 Q190 228 200 232 L190 244 Z" fill="#E7837A"></path>
+            <path class="ink-thin" d="M190 244 Q184 258 172 254"></path>
+            <path class="ink-thin" d="M190 244 Q196 258 208 254"></path>
+            <path class="ink-thin" d="M120 242 L66 232"></path>
+            <path class="ink-thin" d="M120 254 L64 260"></path>
+            <path class="ink-thin" d="M260 242 L314 232"></path>
+            <path class="ink-thin" d="M260 254 L316 260"></path>
+            <path class="ink scarf" d="M146 300 Q190 318 234 300 L206 334 Q190 342 174 334 Z"></path>
+            <circle class="ink3 scarf" cx="190" cy="316" r="9"></circle>
+            <path class="spoon-out" d="M300 358 L338 216"></path>
+            <path class="spoon-in" d="M300 358 L338 216"></path>
+            <ellipse class="ink" cx="342" cy="196" rx="21" ry="28" transform="rotate(14 342 196)" fill="#D9A574"></ellipse>
+            <ellipse class="ink" cx="298" cy="352" rx="26" ry="22" fill="#F2B872"></ellipse>
+            <path class="ink-thin" d="M290 342 L290 354 M304 340 L304 354"></path>
+            <ellipse class="ink" cx="94" cy="360" rx="26" ry="22" fill="#F2B872"></ellipse>
+            <path class="ink-thin" d="M86 350 L86 362 M100 348 L100 362"></path>
+          </svg>
+        </div>
+
+        <p class="chef-caption">고민은 짧게, 한 끼는 맛있게.</p>
+
+        <div class="note">
+          <span class="note-title">냥셰프의 비밀 레시피</span>
+          <span class="note-line">좋아요한 메뉴는 더 자주 만들고,</span>
+          <span class="note-line">별로예요한 메뉴는 빼 둘게요냥.</span>
+        </div>
+      </aside>
+
+      <section class="card">
+        <h1 id="heading">오늘 뭐 먹지?</h1>
+        <div class="meal-tabs" id="meal-tabs"></div>
+        <div class="filters" id="filters"></div>
+
+        <div class="result" id="result" aria-live="polite">
+          <div class="photo-frame">
+            <div class="photo" id="photo"></div>
+          </div>
+          <div class="result-text">
+            <span class="tag" id="category"></span>
+            <div class="menu" id="menu"></div>
+            <p class="cat-line" id="cat-line"></p>
+          </div>
+          <div class="result-actions">
+            <div class="reactions" id="reactions" hidden>
+              <button type="button" data-reaction="like" aria-pressed="false">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-9-9a4.8 4.8 0 0 1 9-3 4.8 4.8 0 0 1 9 3c-2 4.6-9 9-9 9z"></path></svg>
+                좋아요
+              </button>
+              <button type="button" data-reaction="dislike" aria-pressed="false">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.7a2 2 0 0 0-2 1.7l-1.4 9A2 2 0 0 0 4.3 15H10z"></path><path d="M17 2h2.7A2.3 2.3 0 0 1 22 4v7a2.3 2.3 0 0 1-2.3 2H17"></path></svg>
+                별로예요
+              </button>
+            </div>
+            <a class="credit" id="credit" target="_blank" rel="noopener" hidden>사진: 위키미디어 공용</a>
+          </div>
+        </div>
+
+        <button class="pick-btn" id="pick-btn" type="button" disabled>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="16" r="4.5"></circle><circle cx="5.5" cy="10" r="2"></circle><circle cx="9.5" cy="5.5" r="2"></circle><circle cx="14.5" cy="5.5" r="2"></circle><circle cx="18.5" cy="10" r="2"></circle></svg>
+          <span id="pick-label">추천받기</span>
+        </button>
+      </section>
+    </main>
+
+    <section class="history">
+      <div class="history-head">
+        <h2>냥셰프의 최근 추천</h2>
+        <span class="history-note" id="history-note"></span>
+      </div>
+      <ol class="history-list" id="history-list"></ol>
+    </section>
   </div>
 
-  <button id="pick-btn" type="button" disabled>추천받기</button>
-
-  <section class="history">
-    <h2>최근 추천 기록</h2>
-    <p class="history-empty" id="history-empty"></p>
-    <ol id="history-list"></ol>
-  </section>
+  <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
   <dialog id="auth-dialog">
     <form id="auth-form">
@@ -183,6 +498,35 @@
       <button type="button" class="auth-close" id="auth-close" aria-label="닫기">×</button>
     </form>
   </dialog>
+
+  <!-- 자바스크립트가 복사해서 쓰는 그림 조각들 -->
+  <template id="icons">
+    <svg class="ico" data-icon="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+    <svg class="ico" data-icon="bowl" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18a9 7 0 0 1-18 0z"></path><path d="M8 8c0-1.5 1-2 1-3.5M12 8c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"></path></svg>
+    <svg class="ico" data-icon="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+    <svg class="ico" data-icon="user" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21 C4 16 8 14 12 14 C16 14 20 16 20 21"></path></svg>
+  </template>
+
+  <template id="bowl-art">
+    <div class="photo-empty">
+      <svg class="bowl" viewBox="0 0 260 190" aria-hidden="true">
+        <path class="steam" d="M100 70 C88 56 112 46 100 30 C92 20 104 12 100 6"></path>
+        <path class="steam" d="M130 66 C118 52 142 42 130 26"></path>
+        <path class="steam" d="M160 70 C148 56 172 46 160 30"></path>
+        <path class="chop" d="M170 62 L242 22"></path>
+        <path class="chop" d="M180 72 L248 36"></path>
+        <ellipse class="ink3" cx="130" cy="98" rx="92" ry="18" fill="#E9A46A"></ellipse>
+        <circle cx="142" cy="94" r="6" fill="#FFF1DC"></circle>
+        <circle cx="110" cy="100" r="5" fill="#FFF1DC"></circle>
+        <circle cx="164" cy="102" r="4" fill="#FFF1DC"></circle>
+        <ellipse cx="124" cy="92" rx="8" ry="3" fill="#8FAE6B"></ellipse>
+        <path class="ink3" d="M100 176 L104 188 L156 188 L160 176" fill="#FFFBF3"></path>
+        <path class="ink3" d="M38 98 H222 Q216 176 130 180 Q44 176 38 98 Z" fill="#FFFBF3"></path>
+        <path class="bowl-band" d="M58 128 Q130 146 202 128"></path>
+      </svg>
+      <span class="photo-label"></span>
+    </div>
+  </template>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -207,6 +551,7 @@
     : null;
 
   const MEAL_ORDER = ['아침', '점심', '저녁'];
+  const MEAL_ICON = { 아침: 'sun', 점심: 'bowl', 저녁: 'moon' };
   const HISTORY_LIMIT = 10;
 
   const photoUrl = file => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=640`;
@@ -216,18 +561,22 @@
   const mealTabsEl = document.getElementById('meal-tabs');
   const filtersEl = document.getElementById('filters');
   const btn = document.getElementById('pick-btn');
+  const pickLabelEl = document.getElementById('pick-label');
   const photoEl = document.getElementById('photo');
   const menuEl = document.getElementById('menu');
   const categoryEl = document.getElementById('category');
+  const catLineEl = document.getElementById('cat-line');
   const creditEl = document.getElementById('credit');
   const reactionsEl = document.getElementById('reactions');
   const accountEl = document.getElementById('account');
   const historyListEl = document.getElementById('history-list');
-  const historyEmptyEl = document.getElementById('history-empty');
+  const historyNoteEl = document.getElementById('history-note');
   const authDialog = document.getElementById('auth-dialog');
   const authForm = document.getElementById('auth-form');
   const authNoteEl = document.getElementById('auth-note');
   const authMessageEl = document.getElementById('auth-message');
+  const iconsTpl = document.getElementById('icons');
+  const bowlTpl = document.getElementById('bowl-art');
 
   let MEALS = {};             // Supabase menus 테이블에서 불러옴: 끼니 → 종류 → [{ id, meal, category, menu, photo }]
   let meal;
@@ -237,6 +586,50 @@
   let user = null;            // 로그인한 사람 (없으면 null)
   let reactions = new Map();  // 메뉴 id → 'like' | 'dislike'
   let historyRows = [];
+
+
+  // ── 작은 도우미 ───────────────────────────────────────
+
+  function icon(name) {
+    const svg = Array.from(iconsTpl.content.children).find(el => el.dataset.icon === name);
+    return svg ? svg.cloneNode(true) : document.createTextNode('');
+  }
+
+  function textEl(tag, className, text) {
+    const el = document.createElement(tag);
+    el.className = className;
+    el.textContent = text;
+    return el;
+  }
+
+  function randomItem(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  // 메뉴 이름 끝 글자의 받침으로 조사를 고름 (곱창이다냥 / 피자다냥)
+  function lastSyllable(word) {
+    const code = word.charCodeAt(word.length - 1) - 0xAC00;
+    return code >= 0 && code <= 11171 ? code % 28 : 0;
+  }
+
+  function catLine(item) {
+    const m = item.menu;
+    const batchim = lastSyllable(m) !== 0;
+    const ro = batchim && lastSyllable(m) !== 8 ? '으로' : '로';   // 받침 ㄹ은 '로'
+    const lines = [
+      `오늘은 ${m}${batchim ? '이' : '가'} 딱이다냥!`,
+      `냥셰프 추천은 ${m}${batchim ? '이다' : '다'}냥!`,
+      `${m}${batchim ? '이면' : '면'} 실패 없다냥!`,
+      `${m}, 맛있게 만들어 줄게냥!`,
+    ];
+    const byMeal = {
+      아침: `든든하게 ${m}${ro} 하루를 시작하자냥!`,
+      점심: `오후도 힘내게 ${m} 어떠냥?`,
+      저녁: `오늘 하루 수고했다냥, ${m} 먹자냥!`,
+    };
+    if (byMeal[item.meal]) lines.push(byMeal[item.meal]);
+    return randomItem(lines);
+  }
 
 
   // ── 메뉴 ──────────────────────────────────────────────
@@ -267,10 +660,11 @@
     return i === -1 ? MEAL_ORDER.length : i;
   }
 
-  function makeToggle(label, pressed, onClick) {
+  function makeToggle(label, pressed, onClick, iconName) {
     const b = document.createElement('button');
     b.type = 'button';
-    b.textContent = label;
+    if (iconName) b.append(icon(iconName));
+    b.append(label);
     b.setAttribute('aria-pressed', pressed);
     b.addEventListener('click', () => {
       b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
@@ -280,11 +674,9 @@
   }
 
   function showPlaceholder(text) {
-    const span = document.createElement('span');
-    span.className = 'placeholder';
-    span.textContent = text;
-    menuEl.replaceChildren(span);
+    menuEl.replaceChildren(textEl('span', 'placeholder', text));
     categoryEl.textContent = '';
+    catLineEl.textContent = '';
   }
 
   function selectMeal(name) {
@@ -294,15 +686,15 @@
     current = null;
 
     headingEl.textContent = `오늘 ${meal} 뭐 먹지?`;
-    document.title = `오늘 ${meal} 뭐 먹지`;
-    btn.textContent = `${meal} 추천받기`;
+    document.title = `냥셰프의 오늘 ${meal} 뭐 먹지`;
+    pickLabelEl.textContent = `냥셰프에게 ${meal} 추천받기`;
 
     filtersEl.replaceChildren(...['전체', ...Object.keys(MEALS[meal])].map(c =>
       makeToggle(c, c === category, () => { category = c; })
     ));
 
-    emptyPhoto('?', true);
-    showPlaceholder('아직 고르지 않았습니다.');
+    emptyPhoto('버튼을 누르면 냥셰프가 골라줘요');
+    showPlaceholder('아직 고르지 않았어요.');
     renderReactions();
   }
 
@@ -320,15 +712,12 @@
     return pool.flatMap(x => reactions.get(x.id) === 'like' ? [x, x] : [x]);
   }
 
-  function randomItem(list) {
-    return list[Math.floor(Math.random() * list.length)];
-  }
-
-  function emptyPhoto(text, big) {
-    const span = document.createElement('span');
-    span.className = big ? 'empty big' : 'empty';
-    span.textContent = text;
-    photoEl.replaceChildren(span);
+  // 사진이 없을 때는 김이 나는 국그릇 그림을 보여줌
+  function emptyPhoto(text, cooking) {
+    const art = bowlTpl.content.firstElementChild.cloneNode(true);
+    art.classList.toggle('cooking', Boolean(cooking));
+    art.querySelector('.photo-label').textContent = text;
+    photoEl.replaceChildren(art);
     creditEl.hidden = true;
   }
 
@@ -338,7 +727,7 @@
   }
 
   function showPhoto(item) {
-    if (!item.photo) return emptyPhoto('사진 없음');
+    if (!item.photo) return emptyPhoto('사진이 없어요');
 
     const img = new Image();
     img.alt = item.menu;
@@ -368,22 +757,24 @@
     const finish = () => {
       showName(pick);
       showPhoto(pick);
+      catLineEl.textContent = catLine(pick);
       last = pick.id;
       current = pick;
       renderReactions();
       setRolling(false);
-      btn.textContent = '다시 추천받기';
+      pickLabelEl.textContent = '한 번 더 추천받기';
       savePick(pick);
     };
 
     current = null;
+    catLineEl.textContent = '';
     renderReactions();
 
     if (reduceMotion) return finish();
 
     // 룰렛처럼 이름이 잠깐 섞였다가 멈추고, 사진은 멈춘 뒤에 불러옴
     setRolling(true);
-    emptyPhoto('?', true);
+    emptyPhoto('냥셰프가 고르는 중…', true);
     let ticks = 0;
     const timer = setInterval(() => {
       showName(randomItem(list));
@@ -412,7 +803,7 @@
   reactionsEl.addEventListener('click', async e => {
     const b = e.target.closest('button[data-reaction]');
     if (!b || !current) return;
-    if (!user) return openAuth('로그인하면 좋아요와 별로예요가 저장돼요.');
+    if (!user) return openAuth('로그인하면 좋아요와 별로예요를 기억해 둘게요냥.');
 
     const item = current;
     const prev = reactions.get(item.id);
@@ -461,19 +852,24 @@
   function renderHistory() {
     historyListEl.replaceChildren(...historyRows.map(row => {
       const li = document.createElement('li');
-      const name = document.createElement('span');
-      name.className = 'h-menu';
-      name.textContent = row.menu_name;
-      const meta = document.createElement('span');
-      meta.className = 'h-meta';
-      meta.textContent = `${row.meal} · ${row.category} · ${timeAgo(row.created_at)}`;
-      li.append(name, meta);
+      li.className = 'history-item';
+      const iconWrap = document.createElement('span');
+      iconWrap.className = 'history-icon';
+      iconWrap.append(icon(MEAL_ICON[row.meal] || 'bowl'));
+      li.append(
+        iconWrap,
+        textEl('span', 'h-menu', row.menu_name),
+        textEl('span', 'h-meta', `${row.meal} · ${row.category}`),
+        textEl('span', 'h-time', timeAgo(row.created_at)),
+      );
       return li;
     }));
-    historyEmptyEl.hidden = historyRows.length > 0;
-    historyEmptyEl.textContent = user
-      ? '아직 기록이 없어요. 추천을 받아보세요.'
-      : '로그인하면 추천 기록이 여기에 저장돼요.';
+
+    historyNoteEl.textContent = !user
+      ? `로그인하면 최근 ${HISTORY_LIMIT}개가 여기 남아요`
+      : historyRows.length
+        ? `최근 ${historyRows.length}개`
+        : '아직 기록이 없어요. 추천을 받아보세요냥';
   }
 
   // "3분 전" 같은 시간 표시를 1분마다 새로 고침
@@ -515,14 +911,11 @@
     button.className = 'pill-btn';
 
     if (user) {
-      const email = document.createElement('span');
-      email.className = 'email';
-      email.textContent = user.email;
       button.textContent = '로그아웃';
       button.addEventListener('click', () => db.auth.signOut());
-      accountEl.replaceChildren(email, button);
+      accountEl.replaceChildren(textEl('span', 'email', user.email), button);
     } else {
-      button.textContent = '로그인';
+      button.append(icon('user'), '로그인');
       button.addEventListener('click', () => openAuth());
       accountEl.replaceChildren(button);
     }
@@ -537,7 +930,7 @@
   };
 
   function openAuth(note) {
-    authNoteEl.textContent = note || '로그인하면 추천 기록과 좋아요가 저장돼요.';
+    authNoteEl.textContent = note || '로그인하면 추천 기록과 좋아요를 기억해 둘게요냥.';
     authMessageEl.textContent = '';
     authDialog.showModal();
   }
@@ -596,14 +989,14 @@
   // ── 시작 ──────────────────────────────────────────────
 
   function showLoadError(message) {
-    emptyPhoto('!', true);
+    emptyPhoto('냥셰프가 잠깐 자리를 비웠어요');
     showPlaceholder(message);
   }
 
   async function init() {
     renderAccount();
     renderHistory();
-    emptyPhoto('?', true);
+    emptyPhoto('메뉴 준비 중…', true);
     showPlaceholder('메뉴를 불러오는 중이에요…');
 
     if (!db) {
@@ -635,7 +1028,9 @@
 
     const byTime = mealByTime();
     const initialMeal = mealNames.includes(byTime) ? byTime : mealNames[0];
-    mealTabsEl.append(...mealNames.map(m => makeToggle(m, m === initialMeal, () => selectMeal(m))));
+    mealTabsEl.append(...mealNames.map(m =>
+      makeToggle(m, m === initialMeal, () => selectMeal(m), MEAL_ICON[m] || 'bowl')
+    ));
     selectMeal(initialMeal);
     btn.disabled = false;
   }
