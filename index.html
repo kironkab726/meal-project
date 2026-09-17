@@ -19,129 +19,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
+<link rel="stylesheet" href="style.css?v=2">
 <style>
-  :root {
-    color-scheme: light;
-    --bg: #FBF3E4;
-    --paper: #FFFBF3;
-    --sunk: #F3E6CF;
-    --well: #FBF3E4;
-    --photo-bg: #F7E7C6;
-    --photo-dot: #EFD7AB;
-    --text: #4A3426;
-    --muted: #7A6352;
-    --quote: #7A5238;
-    --link: #8A5A3B;
-    --border: #E6D3B3;
-    --border-soft: #EBDDC5;
-    --shadow: #EAD9BF;
-    --chip-on-bg: #F6D78B;
-    --chip-on-border: #E9BE5E;
-    --chip-on-text: #4A3426;
-    --accent: #B8552F;
-    --accent-hover: #A34A28;
-    --accent-text: #FFFFFF;
-    --accent-soft: rgba(184, 85, 47, 0.28);
-    --btn-shadow: rgba(74, 52, 38, 0.45);
-    --plate: #F6E6CB;
-    --plate-ring: #E6D0AC;
-    --note: #FFF4CF;
-    --note-text: #5C4332;
-    --tape: rgba(242, 196, 109, 0.75);
-    --doodle: #E4CFAD;
-    --bubble-line: #4A3426;
-  }
-  :root[data-theme="dark"] {
-    color-scheme: dark;
-    --bg: #241C17;
-    --paper: #30261F;
-    --sunk: #3B2F26;
-    --well: #29201A;
-    --photo-bg: #3A2E24;
-    --photo-dot: #463829;
-    --text: #F4E7D4;
-    --muted: #C9B49D;
-    --quote: #E8C39A;
-    --link: #E8C39A;
-    --border: #54432F;
-    --border-soft: #45372B;
-    --shadow: #17110D;
-    --chip-on-bg: #F2C46D;
-    --chip-on-border: #F2C46D;
-    --chip-on-text: #2A1F18;
-    --accent-soft: rgba(184, 85, 47, 0.4);
-    --btn-shadow: rgba(0, 0, 0, 0.55);
-    --plate: #3A2D23;
-    --plate-ring: #54432F;
-    --note: #3D3222;
-    --note-text: #EAD9BF;
-    --tape: rgba(242, 196, 109, 0.45);
-    --doodle: #45372B;
-    --bubble-line: #E9D8BF;
-  }
+  /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
-  [hidden] { display: none !important; }
-  *, *::before, *::after { box-sizing: border-box; }
-
-  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: 'Gowun Dodum', sans-serif; line-height: 1.6; transition: background-color 0.2s, color 0.2s; }
-  button { font: inherit; color: inherit; }
-  a { color: var(--link); }
-  button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-
-  /* ── 일러스트 선과 아이콘 ── */
-  .ico { width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .ink { stroke: #4A3426; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
-  .ink3 { stroke: #4A3426; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
-  .ink-line { fill: none; stroke: #4A3426; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-  .ink-thin { fill: none; stroke: #4A3426; stroke-width: 3; stroke-linecap: round; }
-  .stripe { fill: none; stroke: #D9914A; stroke-width: 6; stroke-linecap: round; }
-  .pleat { fill: none; stroke: #E6D3B3; stroke-width: 3; stroke-linecap: round; }
-  .tail-out { fill: none; stroke: #4A3426; stroke-width: 24; stroke-linecap: round; }
-  .tail-in { fill: none; stroke: #F2B872; stroke-width: 16; stroke-linecap: round; }
-  .spoon-out { fill: none; stroke: #4A3426; stroke-width: 18; stroke-linecap: round; }
-  .spoon-in { fill: none; stroke: #C99466; stroke-width: 11; stroke-linecap: round; }
-  .scarf { fill: var(--accent); }
-  .steam { fill: none; stroke: #C9A882; stroke-width: 4; stroke-linecap: round; }
-  .chop { fill: none; stroke: #8A5A3B; stroke-width: 6; stroke-linecap: round; }
-  .bowl-band { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
-
-  /* ── 식탁보 띠, 낙서 ── */
-  .gingham { flex-shrink: 0; background-color: var(--bg); background-image: linear-gradient(90deg, var(--accent-soft) 50%, transparent 50%), linear-gradient(var(--accent-soft) 50%, transparent 50%); }
-  .gingham-top { height: 18px; background-size: 24px 24px; }
-  .gingham-bottom { height: 56px; margin-top: 64px; border-top: 3px solid var(--accent); background-size: 28px 28px; }
-
-  .page { position: relative; flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 64px); }
-  .doodles { display: none; }
-  .doodle-svg { position: absolute; fill: none; stroke: var(--doodle); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-
-  /* ── 머리글 ── */
-  .site-header { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 22px 0 10px; }
-  .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .brand-cat { width: 54px; height: 54px; flex-shrink: 0; }
-  .brand-text { display: flex; flex-direction: column; min-width: 0; }
-  .brand-name { font-family: 'Jua', sans-serif; font-size: 28px; line-height: 1.15; }
-  .brand-sub { font-size: 14px; color: var(--muted); }
-  .narrow-only { display: none; }
-  .header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-  .account { display: flex; align-items: center; gap: 10px; }
-  .account .email { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; color: var(--muted); }
-  .pill-btn { height: 46px; padding: 0 20px; display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); font-family: 'Jua', sans-serif; font-size: 17px; white-space: nowrap; cursor: pointer; }
-  .icon-btn { width: 46px; height: 46px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--border); border-radius: 50%; background: var(--paper); cursor: pointer; }
-  .pill-btn:hover, .icon-btn:hover { border-color: var(--text); }
-  .icon-sun { display: none; }
-  :root[data-theme="dark"] .icon-sun { display: block; }
-  :root[data-theme="dark"] .icon-moon { display: none; }
-
-  /* ── 본문: 휴대폰 기준, 넓은 화면은 아래에서 두 칸으로 ── */
   .layout { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 6px; }
-
-  .chef { position: relative; display: flex; align-items: center; gap: 10px; }
-  .chef-art { position: relative; order: -1; width: 150px; height: 158px; flex-shrink: 0; }
-  .plate { position: absolute; left: 4px; top: 12px; width: 142px; height: 142px; border-radius: 50%; background: var(--plate); }
-  .plate-ring { display: none; }
-  .chef-cat { position: relative; display: block; width: 100%; height: 100%; }
-  .bubble { position: relative; flex: 1; margin: 0; padding: 12px 16px; background: var(--paper); border: 3px solid var(--bubble-line); border-radius: 22px; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 23px; line-height: 1.2; word-break: keep-all; }
-  .bubble::after { content: ""; position: absolute; left: -12px; top: 50%; width: 18px; height: 18px; margin-top: -9px; background: var(--paper); border-left: 3px solid var(--bubble-line); border-bottom: 3px solid var(--bubble-line); transform: rotate(45deg); }
   .chef-caption, .note, .doodle-mid { display: none; }
 
   .note { position: relative; width: 380px; margin-top: 18px; padding: 30px 28px 24px; flex-direction: column; gap: 4px; background: var(--note); color: var(--note-text); border-radius: 8px; box-shadow: 0 6px 0 var(--shadow); transform: rotate(-2deg); }
@@ -149,15 +31,18 @@
   .note-title { font-family: 'Jua', sans-serif; font-size: 21px; color: var(--text); }
   .note-line { font-family: 'Gaegu', cursive; font-size: 22px; line-height: 1.35; }
 
-  /* ── 추천 카드 ── */
-  .card { display: flex; flex-direction: column; gap: 16px; padding: 20px 18px 22px; background: var(--paper); border: 2px solid var(--border-soft); border-radius: 26px; box-shadow: 0 8px 0 var(--shadow); }
-  .card h1 { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 30px; line-height: 1.2; }
+  /* 메뉴 건의함 입구 */
+  .board-link { position: relative; display: flex; flex-direction: column; gap: 2px; margin-top: 22px; padding: 22px 22px 16px; color: var(--text); text-decoration: none; background: var(--paper); border: 2px dashed var(--border); border-radius: 22px; transition: transform 0.15s, border-color 0.15s; }
+  .board-link:hover { border-style: solid; border-color: var(--accent); transform: translateY(-2px); }
+  .board-link::before { content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: var(--accent); box-shadow: 0 2px 0 var(--btn-shadow); }
+  .board-link-title { font-family: 'Jua', sans-serif; font-size: 23px; line-height: 1.2; }
+  .board-link-desc { font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.3; color: var(--quote); word-break: keep-all; }
+  .board-link-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; font-size: 14px; color: var(--muted); }
+  .board-link-foot span { display: inline-flex; align-items: center; gap: 4px; }
+  .board-link-foot .ico { width: 16px; height: 16px; }
+  .board-link-go { font-family: 'Jua', sans-serif; font-size: 17px; color: var(--link); }
 
-  .meal-tabs { display: flex; gap: 4px; padding: 5px; background: var(--sunk); border-radius: 999px; }
-  .meal-tabs button { flex: 1; height: 46px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: none; border-radius: 999px; background: transparent; font-family: 'Jua', sans-serif; font-size: 17px; cursor: pointer; }
-  .meal-tabs button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
-  .meal-tabs button:disabled { cursor: default; }
-
+  /* 추천 카드 안쪽 */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; }
   .filters button { height: 44px; padding: 0 14px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); font-size: 15px; cursor: pointer; }
   .filters button[aria-pressed="true"] { background: var(--chip-on-bg); border-color: var(--chip-on-border); color: var(--chip-on-text); font-weight: 700; }
@@ -179,8 +64,6 @@
   @keyframes steam { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
 
   .result-text { display: flex; flex-direction: column; gap: 2px; }
-  .tag { align-self: flex-start; padding: 2px 10px; border-radius: 999px; background: var(--sunk); font-size: 13px; color: var(--muted); }
-  .tag:empty { display: none; }
   .menu { min-height: 48px; font-family: 'Jua', sans-serif; font-size: 40px; line-height: 1.2; word-break: keep-all; }
   .menu .placeholder { font-family: 'Gowun Dodum', sans-serif; font-size: 16px; line-height: 48px; color: var(--muted); }
   .cat-line { margin: 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.3; color: var(--quote); word-break: keep-all; }
@@ -195,13 +78,7 @@
   .reactions button[data-reaction="dislike"][aria-pressed="true"] { background: var(--sunk); border-color: var(--muted); color: var(--muted); text-decoration: line-through; }
   .credit { align-self: flex-end; font-size: 12px; }
 
-  .pick-btn { height: 60px; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; border-radius: 18px; background: var(--accent); color: var(--accent-text); font-family: 'Jua', sans-serif; font-size: 22px; box-shadow: 0 5px 0 var(--btn-shadow); cursor: pointer; transition: transform 0.08s, box-shadow 0.08s; }
-  .pick-btn:hover { background: var(--accent-hover); }
-  .pick-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--btn-shadow); }
-  .pick-btn:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: 0 5px 0 var(--btn-shadow); }
-  .pick-btn .ico { width: 24px; height: 24px; }
-
-  /* ── 최근 추천 ── */
+  /* 최근 추천 */
   .history { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 12px; }
   .history-head { display: flex; flex-direction: column; gap: 2px; }
   .history h2 { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 24px; }
@@ -213,28 +90,7 @@
   .h-meta { grid-area: meta; font-size: 13px; color: var(--muted); }
   .h-time { grid-area: time; font-size: 13px; color: var(--muted); white-space: nowrap; }
 
-  /* ── 로그인 창 ── */
-  dialog { width: min(380px, calc(100vw - 32px)); padding: 28px 24px 24px; border: 3px solid var(--bubble-line); border-radius: 26px; background: var(--paper); color: var(--text); box-shadow: 0 10px 0 var(--shadow); }
-  dialog::backdrop { background: rgb(42 30 22 / 0.5); }
-  dialog form { position: relative; margin: 0; }
-  dialog h2 { margin: 0 0 4px; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 28px; }
-  .auth-note { margin: 0 0 16px; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.3; color: var(--quote); word-break: keep-all; }
-  dialog label { display: block; margin-bottom: 12px; font-size: 15px; color: var(--muted); }
-  dialog input { display: block; width: 100%; height: 48px; margin-top: 4px; padding: 0 14px; font: inherit; font-size: 16px; color: var(--text); border: 2px solid var(--border); border-radius: 14px; background: var(--bg); }
-  dialog input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  .auth-message { min-height: 1.5rem; margin: 0 0 10px; font-size: 14px; }
-  .auth-actions { display: flex; gap: 8px; }
-  .auth-actions button { flex: 1; height: 48px; border: 2px solid var(--border); border-radius: 14px; background: var(--paper); font-family: 'Jua', sans-serif; font-size: 18px; cursor: pointer; }
-  .auth-actions button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
-  .auth-actions button:disabled { opacity: 0.6; cursor: default; }
-  .auth-close { position: absolute; top: -20px; right: -14px; width: 44px; height: 44px; padding: 0; border: none; background: none; color: var(--muted); font-size: 28px; line-height: 1; cursor: pointer; }
-
-  /* ── 태블릿 이상 ── */
   @media (min-width: 700px) {
-    .card { gap: 20px; padding: 32px 36px 36px; border-radius: 32px; box-shadow: 0 10px 0 var(--shadow); }
-    .card h1 { font-size: 44px; line-height: 1.15; }
-    .meal-tabs { align-self: flex-start; gap: 6px; padding: 6px; }
-    .meal-tabs button { flex: none; height: 48px; padding: 0 22px; gap: 8px; font-size: 19px; }
     .filters button { padding: 0 16px; font-size: 16px; }
     .result { gap: 14px; padding: 18px; border-radius: 24px; }
     .photo-frame::before, .photo-frame::after { top: -10px; width: 88px; height: 26px; }
@@ -243,16 +99,12 @@
     .photo { border-radius: 18px; background-size: 18px 18px; }
     .bowl { width: 240px; }
     .photo-label { font-size: 14px; }
-    .tag { padding: 2px 12px; font-size: 14px; }
     .menu { min-height: 60px; font-size: 52px; line-height: 1.15; }
     .menu .placeholder { line-height: 60px; }
     .cat-line { font-size: 23px; }
     .result-actions { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
     .reactions button { flex: none; font-size: 16px; }
     .credit { align-self: auto; margin-left: auto; font-size: 13px; }
-    .pick-btn { height: 66px; border-radius: 20px; font-size: 25px; box-shadow: 0 6px 0 var(--btn-shadow); }
-    .pick-btn:disabled { box-shadow: 0 6px 0 var(--btn-shadow); }
-    .pick-btn .ico { width: 26px; height: 26px; }
     .history { margin-top: 56px; gap: 16px; }
     .history-head { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; }
     .history h2 { font-size: 30px; }
@@ -264,11 +116,13 @@
     .h-meta { font-size: 14px; }
   }
 
-  /* ── 넓은 화면: 왼쪽 냥셰프, 오른쪽 추천 카드 ── */
+  /* 넓은 화면: 왼쪽 냥셰프(+메모지, 건의함), 오른쪽 추천 카드 */
   @media (min-width: 1200px) {
-    .doodles { display: block; }
-    .layout { max-width: none; grid-template-columns: 440px minmax(0, 640px); justify-content: center; align-items: start; gap: 52px; padding-top: 18px; }
-    .chef { flex-direction: column; gap: 14px; padding-top: 8px; }
+    .layout { max-width: none; grid-template-columns: 440px minmax(0, 640px); grid-template-rows: auto 1fr; justify-content: center; align-items: start; column-gap: 52px; row-gap: 0; padding-top: 18px; }
+    .chef { grid-column: 1; grid-row: 1; flex-direction: column; gap: 14px; padding-top: 8px; }
+    .card { grid-column: 2; grid-row: 1 / span 2; }
+    .board-link { grid-column: 1; grid-row: 2; justify-self: center; width: 380px; margin-top: 34px; transform: rotate(1.5deg); }
+    .board-link:hover { transform: rotate(1.5deg) translateY(-2px); }
     .chef-art { order: 0; width: 440px; height: 430px; }
     .plate { left: 20px; top: 24px; width: 400px; height: 400px; }
     .plate-ring { display: block; position: absolute; left: 44px; top: 48px; width: 348px; height: 348px; border-radius: 50%; border: 3px dashed var(--plate-ring); }
@@ -281,27 +135,9 @@
     .history { max-width: 1152px; }
   }
 
-  /* ── 휴대폰 ── */
-  @media (max-width: 699px) {
-    .gingham-top { height: 12px; background-size: 18px 18px; }
-    .gingham-bottom { height: 44px; margin-top: 48px; background-size: 22px 22px; }
-    .site-header { padding: 14px 0 6px; }
-    .brand { gap: 8px; }
-    .brand-cat { width: 42px; height: 42px; }
-    .brand-name { font-size: 22px; line-height: 1.1; }
-    .brand-sub { font-size: 12px; }
-    .wide-only { display: none; }
-    .narrow-only { display: inline; }
-    .header-actions { gap: 8px; }
-    .account .email { display: none; }
-    .pill-btn { height: 44px; padding: 0 14px; gap: 6px; font-size: 15px; }
-    .pill-btn .ico { width: 18px; height: 18px; }
-    .icon-btn { width: 44px; height: 44px; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .photo-empty.cooking .steam { animation: none; }
-    .pick-btn, body { transition: none; }
+    .board-link { transition: none; }
   }
 </style>
 </head>
@@ -462,11 +298,20 @@
           </div>
         </div>
 
-        <button class="pick-btn" id="pick-btn" type="button" disabled>
+        <button class="accent-btn" id="pick-btn" type="button" disabled>
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="16" r="4.5"></circle><circle cx="5.5" cy="10" r="2"></circle><circle cx="9.5" cy="5.5" r="2"></circle><circle cx="14.5" cy="5.5" r="2"></circle><circle cx="18.5" cy="10" r="2"></circle></svg>
           <span id="pick-label">추천받기</span>
         </button>
       </section>
+
+      <a class="board-link" href="board.html">
+        <span class="board-link-title">냥셰프 메뉴 건의함</span>
+        <span class="board-link-desc">먹고 싶은 메뉴가 있냥? 적어 주면 참고할게냥!</span>
+        <span class="board-link-foot">
+          <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>로그인한 집사만</span>
+          <span class="board-link-go">건의함 가기<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+        </span>
+      </a>
     </main>
 
     <section class="history">
@@ -530,28 +375,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
+<script src="common.js?v=2"></script>
 <script>
-  // Supabase 주소와 키는 config.js에 있음. 데이터 보호는 Supabase의 RLS 정책이 맡음
-  const config = window.APP_CONFIG || {};
+  // 추천 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
 
-  // secret/service_role 키는 모든 권한을 우회하므로, 실수로 넣었더라도 쓰지 않음
-  function isSecretKey(key) {
-    if (key.startsWith('sb_secret_')) return true;
-    try {
-      const payload = JSON.parse(atob(key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-      return payload.role === 'service_role';
-    } catch (e) {
-      return false;
-    }
-  }
-
-  const secretKeyUsed = isSecretKey(config.supabaseKey || '');
-  const db = window.supabase && config.supabaseUrl && config.supabaseKey && !secretKeyUsed
-    ? window.supabase.createClient(config.supabaseUrl, config.supabaseKey)
-    : null;
-
-  const MEAL_ORDER = ['아침', '점심', '저녁'];
-  const MEAL_ICON = { 아침: 'sun', 점심: 'bowl', 저녁: 'moon' };
   const HISTORY_LIMIT = 10;
 
   const photoUrl = file => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=640`;
@@ -568,14 +395,8 @@
   const catLineEl = document.getElementById('cat-line');
   const creditEl = document.getElementById('credit');
   const reactionsEl = document.getElementById('reactions');
-  const accountEl = document.getElementById('account');
   const historyListEl = document.getElementById('history-list');
   const historyNoteEl = document.getElementById('history-note');
-  const authDialog = document.getElementById('auth-dialog');
-  const authForm = document.getElementById('auth-form');
-  const authNoteEl = document.getElementById('auth-note');
-  const authMessageEl = document.getElementById('auth-message');
-  const iconsTpl = document.getElementById('icons');
   const bowlTpl = document.getElementById('bowl-art');
 
   let MEALS = {};             // Supabase menus 테이블에서 불러옴: 끼니 → 종류 → [{ id, meal, category, menu, photo }]
@@ -583,24 +404,11 @@
   let category = '전체';
   let last = null;            // 직전에 나온 메뉴 id
   let current = null;         // 지금 화면에 보이는 메뉴
-  let user = null;            // 로그인한 사람 (없으면 null)
   let reactions = new Map();  // 메뉴 id → 'like' | 'dislike'
   let historyRows = [];
 
 
-  // ── 작은 도우미 ───────────────────────────────────────
-
-  function icon(name) {
-    const svg = Array.from(iconsTpl.content.children).find(el => el.dataset.icon === name);
-    return svg ? svg.cloneNode(true) : document.createTextNode('');
-  }
-
-  function textEl(tag, className, text) {
-    const el = document.createElement(tag);
-    el.className = className;
-    el.textContent = text;
-    return el;
-  }
+  // ── 고양이 한마디 ─────────────────────────────────────
 
   function randomItem(list) {
     return list[Math.floor(Math.random() * list.length)];
@@ -803,7 +611,7 @@
   reactionsEl.addEventListener('click', async e => {
     const b = e.target.closest('button[data-reaction]');
     if (!b || !current) return;
-    if (!user) return openAuth('로그인하면 좋아요와 별로예요를 기억해 둘게요냥.');
+    if (!currentUser) return openAuth('로그인하면 좋아요와 별로예요를 기억해 둘게요냥.');
 
     const item = current;
     const prev = reactions.get(item.id);
@@ -812,8 +620,8 @@
     // 화면을 먼저 바꾸고, 저장에 실패하면 되돌림
     setLocalReaction(item.id, next);
     const { error } = next
-      ? await db.from('reactions').upsert({ user_id: user.id, menu_id: item.id, reaction: next, updated_at: new Date().toISOString() })
-      : await db.from('reactions').delete().eq('user_id', user.id).eq('menu_id', item.id);
+      ? await db.from('reactions').upsert({ user_id: currentUser.id, menu_id: item.id, reaction: next, updated_at: new Date().toISOString() })
+      : await db.from('reactions').delete().eq('user_id', currentUser.id).eq('menu_id', item.id);
 
     if (error) {
       console.error(error);
@@ -826,27 +634,15 @@
   // ── 추천 기록 ─────────────────────────────────────────
 
   async function savePick(item) {
-    if (!user) return;
+    if (!currentUser) return;
     const { data, error } = await db.from('picks')
-      .insert({ user_id: user.id, menu_id: item.id, meal: item.meal, category: item.category, menu_name: item.menu })
+      .insert({ user_id: currentUser.id, menu_id: item.id, meal: item.meal, category: item.category, menu_name: item.menu })
       .select('id, meal, category, menu_name, created_at')
       .single();
     if (error) return console.error(error);
 
     historyRows = [data, ...historyRows].slice(0, HISTORY_LIMIT);
     renderHistory();
-  }
-
-  const relativeTime = new Intl.RelativeTimeFormat('ko', { numeric: 'auto' });
-
-  function timeAgo(iso) {
-    const seconds = (new Date(iso) - Date.now()) / 1000;
-    const abs = Math.abs(seconds);
-    if (abs < 60) return '방금 전';
-    if (abs < 3600) return relativeTime.format(Math.round(seconds / 60), 'minute');
-    if (abs < 86400) return relativeTime.format(Math.round(seconds / 3600), 'hour');
-    if (abs < 86400 * 7) return relativeTime.format(Math.round(seconds / 86400), 'day');
-    return new Date(iso).toLocaleDateString('ko', { month: 'long', day: 'numeric' });
   }
 
   function renderHistory() {
@@ -865,7 +661,7 @@
       return li;
     }));
 
-    historyNoteEl.textContent = !user
+    historyNoteEl.textContent = !currentUser
       ? `로그인하면 최근 ${HISTORY_LIMIT}개가 여기 남아요`
       : historyRows.length
         ? `최근 ${historyRows.length}개`
@@ -875,11 +671,9 @@
   // "3분 전" 같은 시간 표시를 1분마다 새로 고침
   setInterval(renderHistory, 60 * 1000);
 
-
-  // ── 로그인 ────────────────────────────────────────────
-
+  // 로그인/로그아웃할 때마다 내 좋아요와 기록을 다시 불러옴
   async function loadUserData() {
-    const uid = user ? user.id : null;
+    const uid = currentUser ? currentUser.id : null;
     reactions = new Map();
     historyRows = [];
 
@@ -891,7 +685,7 @@
           .limit(HISTORY_LIMIT),
       ]);
       // 불러오는 사이에 로그아웃했거나 다른 계정으로 바뀌었으면 버림
-      if ((user ? user.id : null) !== uid) return;
+      if ((currentUser ? currentUser.id : null) !== uid) return;
 
       if (r.error) console.error(r.error);
       else reactions = new Map(r.data.map(x => [x.menu_id, x.reaction]));
@@ -903,87 +697,7 @@
     renderReactions();
   }
 
-  function renderAccount() {
-    if (!db) return accountEl.replaceChildren();
-
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'pill-btn';
-
-    if (user) {
-      button.textContent = '로그아웃';
-      button.addEventListener('click', () => db.auth.signOut());
-      accountEl.replaceChildren(textEl('span', 'email', user.email), button);
-    } else {
-      button.append(icon('user'), '로그인');
-      button.addEventListener('click', () => openAuth());
-      accountEl.replaceChildren(button);
-    }
-  }
-
-  const AUTH_ERRORS = {
-    invalid_credentials: '이메일 또는 비밀번호가 맞지 않아요.',
-    email_not_confirmed: '메일 인증을 먼저 끝내 주세요. 받은 메일의 링크를 누르면 돼요.',
-    user_already_exists: '이미 가입된 이메일이에요. 로그인해 주세요.',
-    weak_password: '비밀번호가 너무 쉬워요. 더 길게 정해 주세요.',
-    over_email_send_rate_limit: '메일을 너무 자주 보냈어요. 잠시 뒤 다시 시도해 주세요.',
-  };
-
-  function openAuth(note) {
-    authNoteEl.textContent = note || '로그인하면 추천 기록과 좋아요를 기억해 둘게요냥.';
-    authMessageEl.textContent = '';
-    authDialog.showModal();
-  }
-
-  document.getElementById('auth-close').addEventListener('click', () => authDialog.close());
-
-  authForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const mode = e.submitter && e.submitter.value === 'signup' ? 'signup' : 'login';
-    const email = authForm.elements.email.value.trim();
-    const password = authForm.elements.password.value;
-    const buttons = authForm.querySelectorAll('.auth-actions button');
-
-    buttons.forEach(b => { b.disabled = true; });
-    authMessageEl.textContent = mode === 'signup' ? '가입하는 중…' : '로그인하는 중…';
-
-    const { data, error } = mode === 'signup'
-      ? await db.auth.signUp({ email, password })
-      : await db.auth.signInWithPassword({ email, password });
-
-    buttons.forEach(b => { b.disabled = false; });
-
-    if (error) {
-      authMessageEl.textContent = AUTH_ERRORS[error.code] || `오류: ${error.message}`;
-      return;
-    }
-    if (mode === 'signup' && !data.session) {
-      authMessageEl.textContent = '확인 메일을 보냈어요. 메일 속 링크를 누른 뒤, 여기서 로그인하세요.';
-      return;
-    }
-    authForm.reset();
-    authDialog.close();
-  });
-
-
-  // ── 다크/라이트 모드 ── 고른 모드는 브라우저에 저장해서 새로고침해도 유지
-
-  const themeBtn = document.getElementById('theme-toggle');
-
-  function applyTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    const label = theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환';
-    themeBtn.setAttribute('aria-label', label);
-    themeBtn.title = label;
-  }
-
-  themeBtn.addEventListener('click', () => {
-    const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    applyTheme(theme);
-    try { localStorage.setItem('menu-picker-theme', theme); } catch (e) {}
-  });
-
-  applyTheme(document.documentElement.dataset.theme);
+  onUserChange(loadUserData);
 
 
   // ── 시작 ──────────────────────────────────────────────
@@ -994,27 +708,12 @@
   }
 
   async function init() {
-    renderAccount();
     renderHistory();
     emptyPhoto('메뉴 준비 중…', true);
     showPlaceholder('메뉴를 불러오는 중이에요…');
 
-    if (!db) {
-      const message = secretKeyUsed ? 'config.js에 secret 키가 들어 있어요. 공개(publishable) 키로 바꿔 주세요.'
-        : !config.supabaseKey ? 'config.js를 찾지 못했어요. index.html과 같은 폴더에 있는지 확인해 주세요.'
-        : 'Supabase에 연결하지 못했어요. 인터넷 연결을 확인해 주세요.';
-      return showLoadError(message);
-    }
-
-    db.auth.onAuthStateChange((event, session) => {
-      const nextUser = session ? session.user : null;
-      const changed = (nextUser ? nextUser.id : null) !== (user ? user.id : null);
-      user = nextUser;
-      if (!changed) return;
-      renderAccount();
-      // 이 콜백 안에서 바로 Supabase를 부르면 멈출 수 있어서 한 박자 뒤에 불러옴
-      setTimeout(loadUserData, 0);
-    });
+    const problem = connectionProblem();
+    if (problem) return showLoadError(problem);
 
     try {
       MEALS = await loadMenus();

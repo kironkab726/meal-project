@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>냥셰프 메뉴 건의함</title>
+<script>
+  // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
+  (function () {
+    let theme = null;
+    try { theme = localStorage.getItem('menu-picker-theme'); } catch (e) {}
+    if (theme !== 'dark' && theme !== 'light') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
+<link rel="stylesheet" href="style.css?v=2">
+<style>
+  /* ── 건의함 페이지 전용 (공통 스타일은 style.css) ── */
+
+  .board { position: relative; z-index: 1; width: 100%; max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; padding-top: 4px; }
+
+  .back-link { align-self: flex-start; min-height: 44px; display: inline-flex; align-items: center; gap: 6px; font-size: 15px; color: var(--muted); text-decoration: none; }
+  .back-link:hover { color: var(--text); }
+  .back-link .ico { width: 18px; height: 18px; }
+
+  .board-title { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 32px; line-height: 1.2; }
+  .board-sub { margin: 2px 0 0; display: flex; align-items: center; gap: 4px; font-size: 15px; color: var(--muted); }
+  .board-sub .ico { width: 16px; height: 16px; }
+
+  .state-card { align-items: center; text-align: center; }
+  .state-text { margin: 0; font-size: 17px; color: var(--muted); word-break: keep-all; }
+
+  .request-form { display: flex; flex-direction: column; gap: 18px; }
+  .field-label { padding: 0; font-family: 'Jua', sans-serif; font-size: 19px; }
+  .menu-field { display: flex; flex-direction: column; gap: 6px; }
+  .menu-field input { width: 100%; height: 54px; padding: 0 16px; font: inherit; font-size: 18px; color: var(--text); background: var(--bg); border: 2px solid var(--border); border-radius: 16px; }
+  .menu-field input::placeholder { color: var(--muted); opacity: 0.8; }
+  .menu-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .field-hint { font-size: 13px; color: var(--muted); }
+
+  .meal-choice { min-width: 0; margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px; }
+  .meal-choice-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .meal-choice label { position: relative; cursor: pointer; }
+  .meal-choice input { position: absolute; top: 50%; left: 50%; width: 1px; height: 1px; margin: 0; opacity: 0; }
+  .meal-choice-btn { height: 56px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 2px solid var(--border); border-radius: 16px; background: var(--paper); font-family: 'Jua', sans-serif; font-size: 19px; }
+  .meal-choice label:hover .meal-choice-btn { border-color: var(--text); }
+  .meal-choice input:checked + .meal-choice-btn { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+  .meal-choice input:focus-visible + .meal-choice-btn { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  .form-message { min-height: 1.4em; margin: -6px 0 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 19px; line-height: 1.3; color: var(--quote); word-break: keep-all; }
+
+  .requests { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+  .requests-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .requests h2 { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 24px; }
+  .requests-count { font-size: 14px; color: var(--muted); white-space: nowrap; }
+  .requests-empty { margin: 12px 0; text-align: center; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 21px; color: var(--quote); }
+
+  .request-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .request-item { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; column-gap: 12px; align-items: center; padding: 12px 10px 12px 14px; background: var(--paper); border: 2px solid var(--border-soft); border-radius: 18px; }
+  .request-item.mine { border-color: var(--chip-on-border); }
+  .request-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--photo-bg); color: var(--link); }
+  .request-body { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .request-menu { font-family: 'Jua', sans-serif; font-size: 21px; line-height: 1.25; word-break: keep-all; overflow-wrap: anywhere; }
+  .request-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+  .request-meta .tag { align-self: auto; }
+  .mine-badge { padding: 1px 8px; border-radius: 999px; background: var(--chip-on-bg); color: var(--chip-on-text); font-size: 12px; font-weight: 700; }
+  .delete-btn { width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border: 2px solid transparent; border-radius: 50%; background: none; color: var(--muted); cursor: pointer; }
+  .delete-btn:hover { border-color: var(--border); color: var(--text); }
+
+  @media (min-width: 700px) {
+    .board-title { font-size: 40px; }
+    .requests { margin-top: 28px; }
+    .requests h2 { font-size: 28px; }
+    .request-item { padding: 14px 12px 14px 18px; border-radius: 22px; }
+    .request-menu { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="gingham gingham-top" aria-hidden="true"></div>
+
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="./">
+        <svg class="brand-cat" viewBox="0 0 120 120" aria-hidden="true">
+          <path class="ink" d="M22 64 L28 22 L54 46 Z" fill="#F2B872"></path>
+          <path class="ink" d="M98 64 L92 22 L66 46 Z" fill="#F2B872"></path>
+          <ellipse class="ink" cx="60" cy="72" rx="44" ry="36" fill="#F2B872"></ellipse>
+          <circle class="ink" cx="43" cy="30" r="15" fill="#FFFFFF"></circle>
+          <circle class="ink" cx="60" cy="21" r="18" fill="#FFFFFF"></circle>
+          <circle class="ink" cx="77" cy="30" r="15" fill="#FFFFFF"></circle>
+          <rect class="ink" x="38" y="32" width="44" height="18" rx="5" fill="#FFFFFF"></rect>
+          <path class="ink-line" d="M40 72 Q47 65 54 72"></path>
+          <path class="ink-line" d="M66 72 Q73 65 80 72"></path>
+          <ellipse cx="36" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
+          <ellipse cx="84" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
+          <path d="M56 80 L64 80 L60 85 Z" fill="#E7837A"></path>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">냥셰프<span class="wide-only">의 오늘 뭐 먹지</span></span>
+          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">오늘 뭐 먹지</span></span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <div class="account" id="account"></div>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
+          <svg class="ico icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          <svg class="ico icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="board">
+      <a class="back-link" href="./">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+        메뉴 추천으로 돌아가기
+      </a>
+
+      <div>
+        <h1 class="board-title">냥셰프 메뉴 건의함</h1>
+        <p class="board-sub">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          로그인한 집사만 보고 쓸 수 있어요
+        </p>
+      </div>
+
+      <div class="chef">
+        <p class="bubble" id="hero-bubble">먹고 싶은 메뉴를 적어 달라냥!</p>
+        <div class="chef-art">
+          <div class="plate" aria-hidden="true"></div>
+          <svg class="chef-cat" viewBox="0 0 380 400" role="img" aria-label="요리사 모자를 쓰고 나무 국자를 든 고양이">
+            <path class="tail-out" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
+            <path class="tail-in" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
+            <ellipse class="ink" cx="190" cy="336" rx="112" ry="66" fill="#F2B872"></ellipse>
+            <path class="ink" d="M130 300 Q190 290 250 300 L240 402 L140 402 Z" fill="#FFFBF3"></path>
+            <path class="ink-thin" d="M165 350 L215 350 L212 378 Q190 384 168 378 Z"></path>
+            <path class="ink" d="M78 176 L86 88 L150 128 Z" fill="#F2B872"></path>
+            <path class="ink" d="M302 176 L294 88 L230 128 Z" fill="#F2B872"></path>
+            <path d="M94 150 L99 110 L128 129 Z" fill="#F4A28C"></path>
+            <path d="M286 150 L281 110 L252 129 Z" fill="#F4A28C"></path>
+            <ellipse class="ink" cx="190" cy="210" rx="122" ry="98" fill="#F2B872"></ellipse>
+            <path class="stripe" d="M170 130 Q175 146 172 160"></path>
+            <path class="stripe" d="M190 128 L190 158"></path>
+            <path class="stripe" d="M210 130 Q205 146 208 160"></path>
+            <path class="stripe" d="M74 198 L98 205"></path>
+            <path class="stripe" d="M72 218 L96 221"></path>
+            <path class="stripe" d="M306 198 L282 205"></path>
+            <path class="stripe" d="M308 218 L284 221"></path>
+            <circle class="ink" cx="140" cy="62" r="42" fill="#FFFFFF"></circle>
+            <circle class="ink" cx="240" cy="62" r="42" fill="#FFFFFF"></circle>
+            <circle class="ink" cx="190" cy="44" r="50" fill="#FFFFFF"></circle>
+            <rect class="ink" x="122" y="70" width="136" height="56" rx="12" fill="#FFFFFF"></rect>
+            <path class="pleat" d="M160 80 L160 116"></path>
+            <path class="pleat" d="M190 80 L190 116"></path>
+            <path class="pleat" d="M220 80 L220 116"></path>
+            <path class="ink-line" d="M132 208 Q148 190 164 208"></path>
+            <path class="ink-line" d="M216 208 Q232 190 248 208"></path>
+            <ellipse cx="122" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
+            <ellipse cx="258" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
+            <ellipse cx="190" cy="248" rx="44" ry="30" fill="#FFF1DC"></ellipse>
+            <path class="ink3" d="M180 232 Q190 228 200 232 L190 244 Z" fill="#E7837A"></path>
+            <path class="ink-thin" d="M190 244 Q184 258 172 254"></path>
+            <path class="ink-thin" d="M190 244 Q196 258 208 254"></path>
+            <path class="ink-thin" d="M120 242 L66 232"></path>
+            <path class="ink-thin" d="M120 254 L64 260"></path>
+            <path class="ink-thin" d="M260 242 L314 232"></path>
+            <path class="ink-thin" d="M260 254 L316 260"></path>
+            <path class="ink scarf" d="M146 300 Q190 318 234 300 L206 334 Q190 342 174 334 Z"></path>
+            <circle class="ink3 scarf" cx="190" cy="316" r="9"></circle>
+            <path class="spoon-out" d="M300 358 L338 216"></path>
+            <path class="spoon-in" d="M300 358 L338 216"></path>
+            <ellipse class="ink" cx="342" cy="196" rx="21" ry="28" transform="rotate(14 342 196)" fill="#D9A574"></ellipse>
+            <ellipse class="ink" cx="298" cy="352" rx="26" ry="22" fill="#F2B872"></ellipse>
+            <path class="ink-thin" d="M290 342 L290 354 M304 340 L304 354"></path>
+            <ellipse class="ink" cx="94" cy="360" rx="26" ry="22" fill="#F2B872"></ellipse>
+            <path class="ink-thin" d="M86 350 L86 362 M100 348 L100 362"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 로그인 전, 불러오는 중, 오류일 때 -->
+      <section class="card state-card" id="state-card" aria-live="polite">
+        <p class="state-text" id="state-text">들어가도 되는지 확인하는 중이에요…</p>
+        <button class="accent-btn" id="state-login" type="button" hidden>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21 C4 16 8 14 12 14 C16 14 20 16 20 21"></path></svg>
+          로그인하고 들어가기
+        </button>
+      </section>
+
+      <!-- 로그인한 사람에게만 보이는 부분 -->
+      <div id="board-body" hidden>
+        <section class="card">
+          <form class="request-form" id="request-form">
+            <label class="menu-field">
+              <span class="field-label">먹고 싶은 메뉴</span>
+              <input type="text" name="menu" maxlength="30" required autocomplete="off" placeholder="예: 연어 덮밥">
+              <span class="field-hint">30자까지 적을 수 있어요</span>
+            </label>
+
+            <fieldset class="meal-choice">
+              <legend class="field-label">어느 끼니에 넣으면 좋을까요?</legend>
+              <div class="meal-choice-row">
+                <label>
+                  <input type="radio" name="meal" value="아침" required>
+                  <span class="meal-choice-btn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>아침</span>
+                </label>
+                <label>
+                  <input type="radio" name="meal" value="점심">
+                  <span class="meal-choice-btn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18a9 7 0 0 1-18 0z"></path><path d="M8 8c0-1.5 1-2 1-3.5M12 8c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"></path></svg>점심</span>
+                </label>
+                <label>
+                  <input type="radio" name="meal" value="저녁">
+                  <span class="meal-choice-btn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>저녁</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <p class="form-message" id="form-message" role="status"></p>
+
+            <button class="accent-btn" id="request-submit" type="submit">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"></path><path d="M13.5 6.5l4 4"></path></svg>
+              냥셰프에게 건의하기
+            </button>
+          </form>
+        </section>
+
+        <section class="requests">
+          <div class="requests-head">
+            <h2>집사들의 건의</h2>
+            <span class="requests-count" id="requests-count"></span>
+          </div>
+          <div class="meal-tabs" id="request-filters"></div>
+          <p class="requests-empty" id="requests-empty" hidden></p>
+          <ol class="request-list" id="request-list"></ol>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="gingham gingham-bottom" aria-hidden="true"></div>
+
+  <dialog id="auth-dialog">
+    <form id="auth-form">
+      <h2>로그인</h2>
+      <p class="auth-note" id="auth-note"></p>
+      <label>이메일
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>비밀번호 (6자 이상)
+        <input type="password" name="password" autocomplete="current-password" minlength="6" required>
+      </label>
+      <p class="auth-message" id="auth-message" role="status"></p>
+      <div class="auth-actions">
+        <button type="submit" value="login" class="primary">로그인</button>
+        <button type="submit" value="signup">회원가입</button>
+      </div>
+      <button type="button" class="auth-close" id="auth-close" aria-label="닫기">×</button>
+    </form>
+  </dialog>
+
+  <!-- 자바스크립트가 복사해서 쓰는 아이콘 -->
+  <template id="icons">
+    <svg class="ico" data-icon="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+    <svg class="ico" data-icon="bowl" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18a9 7 0 0 1-18 0z"></path><path d="M8 8c0-1.5 1-2 1-3.5M12 8c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"></path></svg>
+    <svg class="ico" data-icon="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+    <svg class="ico" data-icon="user" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21 C4 16 8 14 12 14 C16 14 20 16 20 21"></path></svg>
+    <svg class="ico" data-icon="trash" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"></path></svg>
+  </template>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="common.js?v=2"></script>
+<script>
+  // 건의함 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
+
+  const REQUEST_LIMIT = 100;
+  const DEFAULT_BUBBLE = '먹고 싶은 메뉴를 적어 달라냥!';
+
+  const heroBubbleEl = document.getElementById('hero-bubble');
+  const stateCardEl = document.getElementById('state-card');
+  const stateTextEl = document.getElementById('state-text');
+  const stateLoginBtn = document.getElementById('state-login');
+  const boardBodyEl = document.getElementById('board-body');
+  const requestForm = document.getElementById('request-form');
+  const requestSubmitBtn = document.getElementById('request-submit');
+  const formMessageEl = document.getElementById('form-message');
+  const filtersEl = document.getElementById('request-filters');
+  const listEl = document.getElementById('request-list');
+  const emptyEl = document.getElementById('requests-empty');
+  const countEl = document.getElementById('requests-count');
+
+  let requests = [];     // 불러온 건의 글 (최신순)
+  let filter = '전체';
+
+
+  // ── 화면 상태: 안내 카드 ↔ 건의함 ────────────────────
+
+  function showState(text, options) {
+    const opts = options || {};
+    stateTextEl.textContent = text;
+    stateLoginBtn.hidden = !opts.login;
+    heroBubbleEl.textContent = opts.bubble || DEFAULT_BUBBLE;
+    stateCardEl.hidden = false;
+    boardBodyEl.hidden = true;
+  }
+
+  function showBoard() {
+    heroBubbleEl.textContent = DEFAULT_BUBBLE;
+    stateCardEl.hidden = true;
+    boardBodyEl.hidden = false;
+  }
+
+  stateLoginBtn.addEventListener('click', () => openAuth('로그인하면 메뉴 건의함에 들어갈 수 있어요냥.'));
+
+
+  // ── 목록 ──────────────────────────────────────────────
+
+  filtersEl.append(...['전체', ...MEAL_ORDER].map(name => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    if (MEAL_ICON[name]) b.append(icon(MEAL_ICON[name]));
+    b.append(name);
+    b.setAttribute('aria-pressed', name === filter);
+    b.addEventListener('click', () => {
+      filter = name;
+      filtersEl.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      renderRequests();
+    });
+    return b;
+  }));
+
+  function requestItem(row) {
+    const mine = Boolean(currentUser) && row.user_id === currentUser.id;
+    const li = document.createElement('li');
+    li.className = mine ? 'request-item mine' : 'request-item';
+
+    const iconWrap = document.createElement('span');
+    iconWrap.className = 'request-icon';
+    iconWrap.append(icon(MEAL_ICON[row.meal] || 'bowl'));
+
+    const meta = document.createElement('span');
+    meta.className = 'request-meta';
+    meta.append(textEl('span', 'tag', row.meal), textEl('span', '', timeAgo(row.created_at)));
+    if (mine) meta.append(textEl('span', 'mine-badge', '내 건의'));
+
+    const body = document.createElement('div');
+    body.className = 'request-body';
+    body.append(textEl('span', 'request-menu', row.menu_name), meta);
+
+    li.append(iconWrap, body);
+
+    if (mine) {
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'delete-btn';
+      del.setAttribute('aria-label', `${row.menu_name} 건의 지우기`);
+      del.title = '지우기';
+      del.append(icon('trash'));
+      del.addEventListener('click', () => deleteRequest(row));
+      li.append(del);
+    }
+    return li;
+  }
+
+  function renderRequests() {
+    const shown = filter === '전체' ? requests : requests.filter(r => r.meal === filter);
+    listEl.replaceChildren(...shown.map(requestItem));
+    countEl.textContent = requests.length ? `모두 ${requests.length}개` : '';
+    emptyEl.hidden = shown.length > 0;
+    emptyEl.textContent = requests.length
+      ? `${filter} 건의는 아직 없다냥`
+      : '아직 건의가 없다냥. 첫 번째로 적어 줘냥!';
+  }
+
+  async function loadRequests() {
+    const uid = currentUser ? currentUser.id : null;
+    const { data, error } = await db.from('menu_requests')
+      .select('id, user_id, menu_name, meal, created_at')
+      .order('created_at', { ascending: false })
+      .limit(REQUEST_LIMIT);
+
+    // 불러오는 사이에 로그아웃했거나 다른 계정으로 바뀌었으면 버림
+    if ((currentUser ? currentUser.id : null) !== uid) return;
+
+    if (error) {
+      console.error(error);
+      showState('건의함을 불러오지 못했어요. Supabase에 menu_requests 테이블을 만들었는지 확인해 주세요.');
+      return;
+    }
+    requests = data;
+    renderRequests();
+  }
+
+  async function deleteRequest(row) {
+    if (!confirm(`"${row.menu_name}" 건의를 지울까요?`)) return;
+    const { error } = await db.from('menu_requests').delete().eq('id', row.id).eq('user_id', currentUser.id);
+    if (error) {
+      console.error(error);
+      alert('지우지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+      return;
+    }
+    requests = requests.filter(r => r.id !== row.id);
+    renderRequests();
+  }
+
+  // "3분 전" 같은 시간 표시를 1분마다 새로 고침
+  setInterval(() => { if (!boardBodyEl.hidden) renderRequests(); }, 60 * 1000);
+
+
+  // ── 글쓰기 ────────────────────────────────────────────
+
+  requestForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!currentUser) return openAuth('로그인하면 메뉴를 건의할 수 있어요냥.');
+
+    const menuName = requestForm.elements.menu.value.trim().replace(/\s+/g, ' ');
+    const mealValue = requestForm.elements.meal.value;
+    if (!menuName) {
+      formMessageEl.textContent = '메뉴 이름을 적어 주세요냥.';
+      return;
+    }
+    if (!MEAL_ORDER.includes(mealValue)) {
+      formMessageEl.textContent = '아침·점심·저녁 중에 하나를 골라 주세요냥.';
+      return;
+    }
+
+    requestSubmitBtn.disabled = true;
+    formMessageEl.textContent = '냥셰프에게 전하는 중…';
+
+    const { data, error } = await db.from('menu_requests')
+      .insert({ user_id: currentUser.id, menu_name: menuName, meal: mealValue })
+      .select('id, user_id, menu_name, meal, created_at')
+      .single();
+
+    requestSubmitBtn.disabled = false;
+
+    if (error) {
+      console.error(error);
+      formMessageEl.textContent = '건의를 저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.';
+      return;
+    }
+
+    requests = [data, ...requests].slice(0, REQUEST_LIMIT);
+    renderRequests();
+    requestForm.reset();
+    formMessageEl.textContent = `"${data.menu_name}" 건의 고마워냥! ${data.meal} 메뉴로 참고할게냥.`;
+  });
+
+
+  // ── 시작: 로그인한 사람에게만 건의함을 보여줌 ─────────
+
+  onUserChange(user => {
+    if (user) {
+      showBoard();
+      listEl.replaceChildren();
+      countEl.textContent = '';
+      emptyEl.textContent = '건의를 불러오는 중이에요…';
+      emptyEl.hidden = false;
+      loadRequests();
+    } else {
+      requests = [];
+      listEl.replaceChildren();
+      requestForm.reset();
+      formMessageEl.textContent = '';
+      showState('로그인한 집사만 보고 쓸 수 있어요.', { login: true, bubble: '로그인한 집사만 들어올 수 있다냥!' });
+    }
+  });
+
+  const problem = connectionProblem();
+  showState(problem || '들어가도 되는지 확인하는 중이에요…');
+</script>
+
+</body>
+</html>
