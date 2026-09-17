@@ -26,6 +26,20 @@
   .layout { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 6px; }
   .chef-caption, .note, .doodle-mid { display: none; }
 
+  /* 냥셰프 표정: 좋아요/별로예요에 따라 바뀜 */
+  .chef-cat { transform-origin: 50% 100%; }
+  .chef-cat .face-like, .chef-cat .face-dislike { display: none; }
+  .chef-cat[data-mood="like"] .face-default, .chef-cat[data-mood="dislike"] .face-default { display: none; }
+  .chef-cat[data-mood="like"] .face-like, .chef-cat[data-mood="dislike"] .face-dislike { display: inline; }
+  .chef-cat .blush { transition: opacity 0.3s; }
+  .chef-cat[data-mood="dislike"] .blush { opacity: 0.25; }
+  .chef-cat.mood-pop { animation: cat-pop 0.55s ease-out; }
+  .chef-cat.mood-droop { animation: cat-droop 0.6s ease-in-out; }
+  .bubble.bubble-pop { animation: bubble-pop 0.35s ease-out; }
+  @keyframes cat-pop { 0% { transform: none; } 30% { transform: scale(1.05, 0.95); } 60% { transform: translateY(-12px) scale(0.98, 1.03); } 100% { transform: none; } }
+  @keyframes cat-droop { 0%, 100% { transform: none; } 25% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } 75% { transform: rotate(-2deg); } }
+  @keyframes bubble-pop { 0% { transform: scale(0.94); } 100% { transform: none; } }
+
   .note { position: relative; width: 380px; margin-top: 18px; padding: 30px 28px 24px; flex-direction: column; gap: 4px; background: var(--note); color: var(--note-text); border-radius: 8px; box-shadow: 0 6px 0 var(--shadow); transform: rotate(-2deg); }
   .note::before { content: ""; position: absolute; top: -12px; left: 50%; width: 96px; height: 26px; margin-left: -48px; background: var(--tape); transform: rotate(3deg); }
   .note-title { font-family: 'Jua', sans-serif; font-size: 21px; color: var(--text); }
@@ -136,7 +150,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .photo-empty.cooking .steam { animation: none; }
+    .photo-empty.cooking .steam, .chef-cat.mood-pop, .chef-cat.mood-droop, .bubble.bubble-pop { animation: none; }
     .board-link { transition: none; }
   }
 </style>
@@ -206,12 +220,12 @@
           <path d="M16 2 L19 13 L30 16 L19 19 L16 30 L13 19 L2 16 L13 13 Z"></path>
         </svg>
 
-        <p class="bubble">오늘은 뭘 만들어 줄까냥?</p>
+        <p class="bubble" id="chef-bubble" aria-live="polite">오늘은 뭘 만들어 줄까냥?</p>
 
         <div class="chef-art">
           <div class="plate" aria-hidden="true"></div>
           <div class="plate-ring" aria-hidden="true"></div>
-          <svg class="chef-cat" viewBox="0 0 380 400" role="img" aria-label="요리사 모자를 쓰고 나무 국자를 든 고양이">
+          <svg class="chef-cat" data-mood="default" viewBox="0 0 380 400" role="img" aria-label="요리사 모자를 쓰고 나무 국자를 든 고양이">
             <path class="tail-out" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
             <path class="tail-in" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
             <ellipse class="ink" cx="190" cy="336" rx="112" ry="66" fill="#F2B872"></ellipse>
@@ -236,14 +250,40 @@
             <path class="pleat" d="M160 80 L160 116"></path>
             <path class="pleat" d="M190 80 L190 116"></path>
             <path class="pleat" d="M220 80 L220 116"></path>
-            <path class="ink-line" d="M132 208 Q148 190 164 208"></path>
-            <path class="ink-line" d="M216 208 Q232 190 248 208"></path>
-            <ellipse cx="122" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
-            <ellipse cx="258" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
+            <ellipse class="blush" cx="122" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
+            <ellipse class="blush" cx="258" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
             <ellipse cx="190" cy="248" rx="44" ry="30" fill="#FFF1DC"></ellipse>
             <path class="ink3" d="M180 232 Q190 228 200 232 L190 244 Z" fill="#E7837A"></path>
-            <path class="ink-thin" d="M190 244 Q184 258 172 254"></path>
-            <path class="ink-thin" d="M190 244 Q196 258 208 254"></path>
+            <!-- 표정: 기본 (눈웃음) -->
+            <g class="face face-default">
+              <path class="ink-line" d="M132 208 Q148 190 164 208"></path>
+              <path class="ink-line" d="M216 208 Q232 190 248 208"></path>
+              <path class="ink-thin" d="M190 244 Q184 258 172 254"></path>
+              <path class="ink-thin" d="M190 244 Q196 258 208 254"></path>
+            </g>
+            <!-- 표정: 좋아요 (하트 눈, 활짝 웃는 입, 반짝이) -->
+            <g class="face face-like">
+              <path class="ink3" d="M148 218 C134 208 130 198 136 192 C141 187 147 190 148 195 C149 190 155 187 160 192 C166 198 162 208 148 218 Z" fill="#E7837A"></path>
+              <path class="ink3" d="M232 218 C218 208 214 198 220 192 C225 187 231 190 232 195 C233 190 239 187 244 192 C250 198 246 208 232 218 Z" fill="#E7837A"></path>
+              <path class="ink-thin" d="M190 244 L190 250"></path>
+              <path class="ink3" d="M170 250 Q190 276 210 250 Z" fill="#9C4A3A"></path>
+              <ellipse cx="190" cy="259" rx="8" ry="4" fill="#F4A28C"></ellipse>
+              <path class="ink3" d="M40 134 L44 146 L56 150 L44 154 L40 166 L36 154 L24 150 L36 146 Z" fill="#F2C46D"></path>
+              <path class="ink3" d="M344 126 L347 137 L358 140 L347 143 L344 154 L341 143 L330 140 L341 137 Z" fill="#F2C46D"></path>
+            </g>
+            <!-- 표정: 별로예요 (처진 눈썹, 눈물, 삐죽 입, 식은땀) -->
+            <g class="face face-dislike">
+              <path class="ink-thin" d="M130 186 L162 176"></path>
+              <path class="ink-thin" d="M250 186 L218 176"></path>
+              <ellipse cx="148" cy="206" rx="9" ry="11" fill="#4A3426"></ellipse>
+              <ellipse cx="232" cy="206" rx="9" ry="11" fill="#4A3426"></ellipse>
+              <circle cx="151" cy="202" r="3" fill="#FFFFFF"></circle>
+              <circle cx="235" cy="202" r="3" fill="#FFFFFF"></circle>
+              <path class="ink3" d="M136 218 Q129 230 136 237 Q143 230 136 218 Z" fill="#A9D8EC"></path>
+              <path class="ink3" d="M244 218 Q237 230 244 237 Q251 230 244 218 Z" fill="#A9D8EC"></path>
+              <path class="ink-thin" d="M174 260 Q190 246 206 260"></path>
+              <path class="ink3" d="M50 160 Q38 180 50 188 Q62 180 50 160 Z" fill="#A9D8EC"></path>
+            </g>
             <path class="ink-thin" d="M120 242 L66 232"></path>
             <path class="ink-thin" d="M120 254 L64 260"></path>
             <path class="ink-thin" d="M260 242 L314 232"></path>
@@ -398,6 +438,8 @@
   const historyListEl = document.getElementById('history-list');
   const historyNoteEl = document.getElementById('history-note');
   const bowlTpl = document.getElementById('bowl-art');
+  const chefCatEl = document.querySelector('.chef-cat');
+  const chefBubbleEl = document.getElementById('chef-bubble');
 
   let MEALS = {};             // Supabase menus 테이블에서 불러옴: 끼니 → 종류 → [{ id, meal, category, menu, photo }]
   let meal;
@@ -437,6 +479,51 @@
     };
     if (byMeal[item.meal]) lines.push(byMeal[item.meal]);
     return randomItem(lines);
+  }
+
+
+  // ── 냥셰프 표정과 말풍선 ──────────────────────────────
+
+  const DEFAULT_BUBBLE = '오늘은 뭘 만들어 줄까냥?';
+
+  // 받침 있으면 앞의 조사, 없으면 뒤의 조사 (곱창을 / 피자를)
+  function josa(word, withBatchim, withoutBatchim) {
+    return word + (lastSyllable(word) !== 0 ? withBatchim : withoutBatchim);
+  }
+
+  // 애니메이션 클래스를 뗐다 붙여서 처음부터 다시 재생
+  function replay(el, className) {
+    el.classList.remove('mood-pop', 'mood-droop', 'bubble-pop');
+    void el.getBoundingClientRect();
+    el.classList.add(className);
+  }
+
+  [chefCatEl, chefBubbleEl].forEach(el =>
+    el.addEventListener('animationend', () => el.classList.remove('mood-pop', 'mood-droop', 'bubble-pop'))
+  );
+
+  function sayBubble(text) {
+    if (chefBubbleEl.textContent === text) return;
+    chefBubbleEl.textContent = text;
+    replay(chefBubbleEl, 'bubble-pop');
+  }
+
+  // 얼굴만 바꿈. mood: 'like' | 'dislike' | 없으면 기본 눈웃음
+  function setMood(mood) {
+    chefCatEl.dataset.mood = mood || 'default';
+  }
+
+  // 좋아요/별로예요 버튼을 눌렀을 때: 얼굴 + 말풍선 + 몸짓
+  function reactToButton(mood, item) {
+    setMood(mood);
+    if (!mood) return sayBubble(DEFAULT_BUBBLE);
+
+    const m = item.menu;
+    const lines = mood === 'like'
+      ? [`${josa(m, '을', '를')} 좋아해 줘서 고맙다냥!`, '냥셰프 기분 최고다냥!', `${m}, 더 자주 만들어 줄게냥!`]
+      : [`${josa(m, '은', '는')} 빼 둘게냥…`, '흑, 입맛에 안 맞았냥…', '다음엔 더 잘 골라 줄게냥…'];
+    sayBubble(randomItem(lines));
+    replay(chefCatEl, mood === 'like' ? 'mood-pop' : 'mood-droop');
   }
 
 
@@ -503,6 +590,7 @@
 
     emptyPhoto('버튼을 누르면 냥셰프가 골라줘요');
     showPlaceholder('아직 고르지 않았어요.');
+    sayBubble(DEFAULT_BUBBLE);
     renderReactions();
   }
 
@@ -569,6 +657,8 @@
       last = pick.id;
       current = pick;
       renderReactions();
+      // 전에 좋아요한 메뉴가 나오면 하트 눈으로 반김
+      if (reactions.get(pick.id) === 'like') sayBubble(`${josa(pick.menu, '이', '가')} 나왔다냥! 좋아하는 거 알지냥?`);
       setRolling(false);
       pickLabelEl.textContent = '한 번 더 추천받기';
       savePick(pick);
@@ -576,6 +666,7 @@
 
     current = null;
     catLineEl.textContent = '';
+    sayBubble(DEFAULT_BUBBLE);
     renderReactions();
 
     if (reduceMotion) return finish();
@@ -600,6 +691,7 @@
     reactionsEl.hidden = !current;
     const mine = current ? reactions.get(current.id) : undefined;
     reactionsEl.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.reaction === mine));
+    setMood(mine);
   }
 
   function setLocalReaction(menuId, value) {
@@ -619,6 +711,7 @@
 
     // 화면을 먼저 바꾸고, 저장에 실패하면 되돌림
     setLocalReaction(item.id, next);
+    reactToButton(next, item);
     const { error } = next
       ? await db.from('reactions').upsert({ user_id: currentUser.id, menu_id: item.id, reaction: next, updated_at: new Date().toISOString() })
       : await db.from('reactions').delete().eq('user_id', currentUser.id).eq('menu_id', item.id);
@@ -626,6 +719,7 @@
     if (error) {
       console.error(error);
       setLocalReaction(item.id, prev);
+      sayBubble(DEFAULT_BUBBLE);
       alert('저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.');
     }
   });
@@ -695,6 +789,7 @@
 
     renderHistory();
     renderReactions();
+    sayBubble(DEFAULT_BUBBLE);
   }
 
   onUserChange(loadUserData);
