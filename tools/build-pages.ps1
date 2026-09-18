@@ -107,13 +107,12 @@ $HeadTemplate = @'
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{TITLE}}</title>
 <meta name="description" content="{{DESCRIPTION}}">
-<link rel="canonical" href="{{CANONICAL}}">
+{{CANONICAL_TAGS}}
 <meta property="og:type" content="{{OG_TYPE}}">
 <meta property="og:site_name" content="냥셰프의 오늘 뭐 먹지">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="{{TITLE}}">
 <meta property="og:description" content="{{DESCRIPTION}}">
-<meta property="og:url" content="{{CANONICAL}}">
 {{OG_IMAGE}}
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
@@ -194,10 +193,16 @@ function Page([hashtable]$p) {
   $homeLink = if ($prefix) { $prefix } else { './' }
   $ogImage = ''
   if ($p.Image) { $ogImage = '<meta property="og:image" content="' + (Enc $p.Image) + '">' }
+  # 대표 주소가 없는 페이지(404)는 검색엔진에 올리지 않음
+  if ($p.Canonical) {
+    $canonicalTags = '<link rel="canonical" href="' + (Enc $p.Canonical) + '">' + "`n" + '<meta property="og:url" content="' + (Enc $p.Canonical) + '">'
+  } else {
+    $canonicalTags = '<meta name="robots" content="noindex">'
+  }
   Fill $HeadTemplate @{
     TITLE       = Enc $p.Title
     DESCRIPTION = Enc $p.Description
-    CANONICAL   = Enc $p.Canonical
+    CANONICAL_TAGS = $canonicalTags
     OG_TYPE     = $(if ($p.OgType) { $p.OgType } else { 'website' })
     OG_IMAGE    = $ogImage
     EXTRA_HEAD  = [string]$p.ExtraHead
@@ -458,6 +463,18 @@ foreach ($p in $staticPages) {
     Body        = $body
   })
 }
+
+
+# ── 404 페이지 (없는 주소로 오면 Cloudflare가 보여 줌) ──────
+# 어느 폴더 주소에서든 보여야 해서 링크를 사이트 맨 위 기준(/)으로 씀
+
+$notFoundBody = [IO.File]::ReadAllText((Join-Path $Root 'tools\pages\404.html'), $Utf8).TrimEnd()
+Save '404.html' (Page @{
+  Prefix      = '/'
+  Title       = "페이지를 찾을 수 없어요 | $SiteName"
+  Description = '주소가 바뀌었거나 잘못 입력된 것 같아요.'
+  Body        = $notFoundBody
+})
 
 
 # ── sitemap.xml ─────────────────────────────────────────
