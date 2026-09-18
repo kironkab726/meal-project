@@ -19,14 +19,18 @@
     })(window, document, "clarity", "script", "yk8aoaocif");
 </script>
 <script>
-  // 대표 주소는 Vercel. 깃허브 주소로 들어오면 같은 페이지의 Vercel 주소로 옮겨 줌
-  if (location.hostname === 'kironkab726.github.io') {
-    location.replace('https://meal-project-lovat.vercel.app' + location.pathname.replace(/^\/meal-project/, '') + location.search + location.hash);
-  }
+  // 대표 주소는 Cloudflare Pages. 예전 주소(깃허브, Vercel)로 들어오면 같은 페이지의 새 주소로 옮겨 줌
+  (function () {
+    var host = location.hostname;
+    var path = location.pathname;
+    if (host === 'kironkab726.github.io') path = path.replace(/^\/meal-project/, '');
+    else if (!/\.vercel\.app$/.test(host)) return;
+    location.replace('https://meal-project.pages.dev' + path + location.search + location.hash);
+  })();
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="canonical" href="https://meal-project-lovat.vercel.app/board.html">
+<link rel="canonical" href="https://meal-project.pages.dev/board">
 <title>냥셰프 메뉴 건의함</title>
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
