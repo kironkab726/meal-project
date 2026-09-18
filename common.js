@@ -88,11 +88,14 @@ applyTheme(document.documentElement.dataset.theme);
 
 let currentUser = null;   // 로그인한 사람 (없으면 null)
 let authReady = false;
+let notifyPending = false;
 const userListeners = [];
 
 // 로그인 상태가 처음 정해질 때, 그리고 바뀔 때마다 listener(currentUser)를 부름
 function onUserChange(listener) {
   userListeners.push(listener);
+  // 페이지 스크립트보다 로그인 확인이 먼저 끝났으면, 늦게 등록한 listener에게도 한 번 알려 줌
+  if (authReady && !notifyPending) setTimeout(() => listener(currentUser), 0);
 }
 
 const accountEl = document.getElementById('account');
@@ -175,6 +178,10 @@ if (db) {
     if (!changed) return;
     renderAccount();
     // 이 콜백 안에서 바로 Supabase를 부르면 멈출 수 있어서 한 박자 뒤에 알림
-    setTimeout(() => userListeners.forEach(listener => listener(currentUser)), 0);
+    notifyPending = true;
+    setTimeout(() => {
+      notifyPending = false;
+      userListeners.forEach(listener => listener(currentUser));
+    }, 0);
   });
 }
