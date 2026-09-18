@@ -49,7 +49,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -468,6 +468,7 @@
     <svg class="ico" data-icon="user" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21 C4 16 8 14 12 14 C16 14 20 16 20 21"></path></svg>
     <svg class="ico" data-icon="clock" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
     <svg class="ico" data-icon="flame" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"></path></svg>
+    <svg class="ico" data-icon="cart" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h3l2.4 11.5h11.2L21 7H6"></path><circle cx="9" cy="19.5" r="1.5"></circle><circle cx="17.5" cy="19.5" r="1.5"></circle></svg>
   </template>
 
   <template id="bowl-art">
@@ -843,7 +844,8 @@
       }
       recipeCache.set(item.id, data);
     }
-    if (current === item) renderRecipe(item, recipeCache.get(item.id));
+    const shopLinks = await loadShopLinks();
+    if (current === item) renderRecipe(item, recipeCache.get(item.id), shopLinks);
   }
 
   // Table Editor에서 한 줄에 하나씩 적은 글을 목록으로 나눔
@@ -872,7 +874,34 @@
     return a;
   }
 
-  function renderRecipe(item, recipe) {
+  // 쿠팡 파트너스 재료 링크 (메뉴 id → 링크). tools/coupang-links.csv 에 넣은 링크를
+  // build-pages.ps1 이 recipes/shop-links.json 으로 만들어 줌. 없으면 버튼을 안 보여줌
+  let shopLinksLoad = null;
+  function loadShopLinks() {
+    if (!shopLinksLoad) {
+      shopLinksLoad = fetch('recipes/shop-links.json')
+        .then(res => (res.ok ? res.json() : {}))
+        .then(data => (data && typeof data === 'object' ? data : {}))
+        .catch(() => ({}));
+    }
+    return shopLinksLoad;
+  }
+
+  function shopBox(url) {
+    if (!url) return null;
+    const box = document.createElement('div');
+    box.className = 'shop-box';
+    const a = document.createElement('a');
+    a.className = 'pill-btn';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'sponsored nofollow noopener';
+    a.append(icon('cart'), '쿠팡에서 재료 보기');
+    box.append(a, textEl('p', 'ad-note', '이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.'));
+    return box;
+  }
+
+  function renderRecipe(item, recipe, shopLinks) {
     if (!recipe) {
       recipeBodyEl.replaceChildren(textEl('p', 'recipe-status', '아직 냥셰프 레시피가 없어요.'), recipeSearchLink(item));
       return;
@@ -904,6 +933,8 @@
         ul.append(li);
       });
       parts.push(recipeSection('재료', ul));
+      const shop = shopBox(shopLinks[item.id]);   // 쿠팡에서 재료 보기 (링크가 있을 때만)
+      if (shop) parts.push(shop);
     }
 
     const steps = lines(recipe.steps);

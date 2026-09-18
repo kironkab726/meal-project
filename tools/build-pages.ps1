@@ -5,6 +5,8 @@
 #   recipes/index.html        레시피 모음
 #   about.html, privacy.html  사이트 소개, 개인정보처리방침 (본문은 tools/pages/ 에 있음)
 #   sitemap.xml               검색엔진에 알려 줄 페이지 목록
+#   recipes/shop-links.json   쿠팡 파트너스 재료 링크 (메인 화면 레시피 칸이 읽음)
+#   tools/coupang-links.csv   쿠팡 파트너스 링크를 적는 표 (새 메뉴가 생기면 줄을 더해 줌)
 #
 # 실행 (프로젝트 폴더에서):
 #   powershell -ExecutionPolicy Bypass -File tools\build-pages.ps1
@@ -65,6 +67,7 @@ $Ico = @{
   clock = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>'
   flame = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"></path></svg>'
   user  = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21 C4 16 8 14 12 14 C16 14 20 16 20 21"></path></svg>'
+  cart  = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h3l2.4 11.5h11.2L21 7H6"></path><circle cx="9" cy="19.5" r="1.5"></circle><circle cx="17.5" cy="19.5" r="1.5"></circle></svg>'
 }
 $MealIcon = @{ '아침' = $Ico.sun; '점심' = $Ico.bowl; '저녁' = $Ico.moon }
 
@@ -128,8 +131,8 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=3">
-<link rel="stylesheet" href="{{PREFIX}}pages.css?v=1">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=4">
+<link rel="stylesheet" href="{{PREFIX}}pages.css?v=2">
 {{EXTRA_HEAD}}
 </head>
 <body>
@@ -231,6 +234,72 @@ $items = @($menus | Where-Object { $_.recipes } | Sort-Object @{ Expression = { 
 if ($items.Count -eq 0) { throw '레시피가 있는 메뉴를 하나도 찾지 못했어요.' }
 
 
+# ── 쿠팡 파트너스 재료 링크 (tools/coupang-links.csv) ─────────
+# 쿠팡 파트너스의 "간편 링크 만들기"에 표의 쿠팡 주소를 붙여 넣고, 만들어진 링크를
+# "파트너스 링크" 칸에 넣으면 그 메뉴의 레시피 페이지와 메인 화면 레시피 칸에
+# "쿠팡에서 재료 보기" 버튼이 생김. 칸이 비어 있으면 버튼도 안내 문구도 없음.
+# 링크를 처음 켤 때는 tools/pages/privacy.html 의 시행일도 그날로 바꿀 것.
+
+$LinksPath = Join-Path $PSScriptRoot 'coupang-links.csv'
+$ColId     = '번호'
+$ColName   = '메뉴'
+$ColMeal   = '끼니'
+$ColSource = '간편 링크에 붙여 넣을 쿠팡 주소'
+$ColLink   = '파트너스 링크'
+$AdNote    = '이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.'
+
+# 엑셀에서 "CSV (쉼표로 분리)"로 저장하면 UTF-8이 아니라 한글 윈도우 글자(CP949)로 저장됨
+function ReadCsvText([string]$path) {
+  $bytes = [IO.File]::ReadAllBytes($path)
+  try { (New-Object System.Text.UTF8Encoding($false, $true)).GetString($bytes).TrimStart([char]0xFEFF) }
+  catch { [Text.Encoding]::GetEncoding(949).GetString($bytes) }
+}
+
+function CsvField([string]$s) { '"' + $s.Replace('"', '""') + '"' }
+
+$typedSource = @{}   # 메뉴 번호 → 표에 적혀 있던 쿠팡 주소 (직접 바꿨으면 그대로 둠)
+$typedLink   = @{}   # 메뉴 번호 → 표에 적혀 있던 파트너스 링크
+if (Test-Path -LiteralPath $LinksPath) {
+  $oldCsv = ReadCsvText $LinksPath
+  foreach ($row in @($oldCsv -split "\r?\n" | Where-Object { $_.Trim() } | ConvertFrom-Csv)) {
+    $id = ([string]$row.$ColId).Trim()
+    if (-not $id) { continue }
+    $typedSource[$id] = ([string]$row.$ColSource).Trim()
+    $typedLink[$id]   = ([string]$row.$ColLink).Trim()
+  }
+} else {
+  $oldCsv = ''
+}
+
+$shopLinks = [ordered]@{}   # 메뉴 번호 → 쓸 수 있는 파트너스 링크
+$badLinks  = @()
+$csvLines  = @((@($ColId, $ColName, $ColMeal, $ColSource, $ColLink) | ForEach-Object { CsvField $_ }) -join ',')
+foreach ($m in $items) {
+  $id = [string]$m.id
+  $source = $typedSource[$id]
+  if (-not $source) { $source = 'https://www.coupang.com/np/search?q=' + [Uri]::EscapeDataString([string]$m.name + ' 재료') }
+  $link = [string]$typedLink[$id]
+  # 파트너스 링크만 받음 (그냥 쿠팡 주소는 수수료가 안 생기니 버튼을 달지 않음)
+  if ($link -match '^https://(link\.coupang\.com|coupa\.ng)/\S+$') { $shopLinks[$id] = $link }
+  elseif ($link) { $badLinks += ('  ' + $id + ' ' + $m.name + ': ' + $link) }
+  $csvLines += (@($id, [string]$m.name, [string]$m.meal, $source, $link) | ForEach-Object { CsvField $_ }) -join ','
+}
+$newCsv = ($csvLines -join "`r`n") + "`r`n"
+if ($newCsv -ne $oldCsv) {
+  try {
+    # BOM을 붙여야 엑셀이 한글을 안 깨뜨리고 엶
+    [IO.File]::WriteAllText($LinksPath, $newCsv, (New-Object System.Text.UTF8Encoding($true)))
+  } catch {
+    Write-Warning 'tools\coupang-links.csv 를 고치지 못했어요. 엑셀에서 열려 있으면 닫고 다시 실행해 주세요.'
+  }
+}
+if ($badLinks.Count) {
+  Write-Warning ("파트너스 링크가 아니라서 뺀 링크 (https://link.coupang.com/... 모양이어야 해요):`n" + ($badLinks -join "`n"))
+}
+
+Save 'recipes\shop-links.json' ((ConvertTo-Json -InputObject $shopLinks -Compress) + "`n")
+
+
 # ── 레시피 링크 카드 ────────────────────────────────────
 
 function RecipeLink($x) {
@@ -289,6 +358,20 @@ foreach ($m in $items) {
   $tipHtml = ''
   if ($r.tip) { $tipHtml = '        <p class="tip-note"><strong>냥셰프 팁</strong>' + (Enc $r.tip) + '</p>' }
 
+  # 쿠팡 파트너스 링크가 있으면: 제목 아래에 안내 문구, 재료 아래에 버튼
+  $adNoteTop = ''
+  $shopHtml = ''
+  $shopUrl = $shopLinks[[string]$m.id]
+  if ($shopUrl) {
+    $adNoteTop = '        <p class="ad-note">' + (Enc $AdNote) + '</p>'
+    $shopHtml = @(
+      '          <div class="shop-box">'
+      '            <a class="pill-btn" href="' + (Enc $shopUrl) + '" target="_blank" rel="sponsored nofollow noopener">' + $Ico.cart + '쿠팡에서 재료 보기</a>'
+      '            <p class="ad-note">쿠팡 파트너스 링크예요. 이 링크로 사면 냥셰프가 수수료를 받지만, 내는 가격은 똑같아요.</p>'
+      '          </div>'
+    ) -join "`n"
+  }
+
   # 같은 종류 메뉴 먼저, 모자라면 같은 끼니의 다른 종류로 채움
   $same   = @($items | Where-Object { $_.meal -eq $m.meal -and $_.category -eq $m.category -and $_.id -ne $m.id })
   $others = @($items | Where-Object { $_.meal -eq $m.meal -and $_.category -ne $m.category })
@@ -333,6 +416,7 @@ foreach ($m in $items) {
       <div>
         <h1 class="page-title">$(Enc $name) 레시피</h1>
         <p class="page-lead">$(Enc $lead)</p>
+$adNoteTop
       </div>
 
 $photoHtml
@@ -345,6 +429,7 @@ $photoHtml
           <ul class="ingredient-list">
 $($ingredientHtml -join "`n")
           </ul>
+$shopHtml
         </section>
 
         <section>
@@ -452,9 +537,31 @@ $staticPages = @(
   @{ File = 'about';   Title = "사이트 소개 | $SiteName";     Description = '고양이 요리사 냥셰프가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 레시피를 알려 주는 사이트예요.' }
   @{ File = 'privacy'; Title = "개인정보처리방침 | $SiteName"; Description = ($SiteName + '가 어떤 개인정보를 왜 모으고 어떻게 보호하는지 알려 드려요.') }
 )
+# 광고·제휴 안내: 쿠팡 파트너스 링크가 하나라도 켜져 있을 때와 아닐 때 문구가 다름
+if ($shopLinks.Count) {
+  $affiliateAbout = @(
+    '        <p>일부 레시피에는 "쿠팡에서 재료 보기" 버튼이 있어요. 쿠팡 파트너스 제휴 링크라서, 이 버튼을 거쳐 쿠팡에서 물건을 사면 냥셰프가 쿠팡에게서 일정액의 수수료를 받아요. 사는 분이 내는 가격은 똑같아요.</p>'
+    '        <p>' + $AdNote + '</p>'
+    '        <p>쿠팡으로 이동한 뒤의 정보 처리는 <a href="privacy.html">개인정보처리방침</a>에 적어 두었어요.</p>'
+  ) -join "`n"
+  $affiliatePrivacy = @(
+    '        <p>일부 레시피의 "쿠팡에서 재료 보기" 버튼은 쿠팡 파트너스 제휴 링크예요.</p>'
+    '        <ul>'
+    '          <li>이 사이트는 버튼을 누르기 전까지 쿠팡에 어떤 정보도 보내지 않아요.</li>'
+    '          <li>버튼을 누르면 쿠팡으로 이동하고, 쿠팡이 어느 사이트를 거쳐 왔는지 쿠키로 기록해요. 그다음부터는 <a href="https://privacy.coupang.com/ko/center/coupang/" target="_blank" rel="noopener">쿠팡의 개인정보처리방침</a>이 적용돼요.</li>'
+    '          <li>냥셰프는 쿠팡에서 어떤 상품이 몇 개 팔렸는지 같은 통계만 받고, 누가 샀는지는 알 수 없어요.</li>'
+    '        </ul>'
+    '        <p>그 밖의 광고는 아직 없어요. 새 광고를 넣게 되면 광고 업체와 광고용 쿠키 사용 내용을 이 방침에 먼저 추가할게요.</p>'
+  ) -join "`n"
+} else {
+  $affiliateAbout = '        <p>사이트를 계속 운영하기 위해 앞으로 광고나 제휴 링크가 들어갈 수 있어요. 광고가 들어가면 광고임을 알아볼 수 있게 표시하고, <a href="privacy.html">개인정보처리방침</a>도 함께 고칠게요.</p>'
+  $affiliatePrivacy = '        <p>지금은 사이트에 광고가 없어요. 앞으로 광고나 제휴 링크를 넣게 되면, 광고 업체와 광고용 쿠키 사용 내용을 이 방침에 추가하고 사이트에 미리 알릴게요.</p>'
+}
+
 foreach ($p in $staticPages) {
   $bodyPath = Join-Path $Root ('tools\pages\' + $p.File + '.html')
   $body = [IO.File]::ReadAllText($bodyPath, $Utf8).TrimEnd()
+  $body = Fill $body @{ AFFILIATE_ABOUT = $affiliateAbout; AFFILIATE_PRIVACY = $affiliatePrivacy }
   Save ($p.File + '.html') (Page @{
     Prefix      = ''
     Title       = $p.Title
@@ -485,4 +592,4 @@ $sitemap += $urls | ForEach-Object { "  <url><loc>$_</loc><lastmod>$Today</lastm
 $sitemap += '</urlset>'
 Save 'sitemap.xml' (($sitemap -join "`n") + "`n")
 
-Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs)" -f $items.Count, $urls.Count)
+Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs), coupang links {2}" -f $items.Count, $urls.Count, $shopLinks.Count)

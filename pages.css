@@ -45,6 +45,10 @@ a.chip:hover { color: var(--text); }
 
 .search-more { align-self: flex-end; font-size: 14px; }
 
+/* 쿠팡 파트너스 안내 문구와 재료 버튼 (모양은 style.css) */
+.page-lead + .ad-note { margin-top: 8px; }
+.ingredient-list + .shop-box { margin-top: 16px; }
+
 /* 추천받으러 가기 */
 .cta-card { align-items: center; text-align: center; }
 .cta-text { margin: 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 22px; color: var(--quote); word-break: keep-all; }

@@ -167,6 +167,11 @@ a.accent-btn { color: var(--accent-text); }
 .site-footer nav a:hover { text-decoration: underline; }
 .site-footer p { margin: 0; font-size: 13px; }
 
+/* ── 쿠팡 파트너스 재료 링크 (파트너스 링크를 넣은 레시피에만 보임) ── */
+.shop-box { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 14px; border: 2px dashed var(--border); border-radius: 14px; }
+.shop-box .pill-btn .ico { color: var(--accent); }
+.ad-note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); word-break: keep-all; }
+
 /* ── 태블릿 이상 ── */
 @media (min-width: 700px) {
   .card { gap: 20px; padding: 32px 36px 36px; border-radius: 32px; box-shadow: 0 10px 0 var(--shadow); }
