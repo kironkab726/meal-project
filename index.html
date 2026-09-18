@@ -47,7 +47,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -144,6 +144,8 @@
   .recipe-tip { margin: 0; padding: 10px 14px; border-radius: 12px; background: var(--note); color: var(--note-text); font-family: 'Gaegu', cursive; font-weight: 700; font-size: 19px; line-height: 1.35; word-break: keep-all; }
   .recipe-tip-label { margin-right: 6px; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 15px; color: var(--text); }
   .recipe-more { align-self: flex-end; font-size: 14px; }
+  .recipe-links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; }
+  .recipe-links .recipe-more { align-self: auto; }
 
   /* 최근 추천 */
   .history { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 12px; }
@@ -423,6 +425,15 @@
       </div>
       <ol class="history-list" id="history-list"></ol>
     </section>
+
+    <footer class="site-footer">
+      <nav aria-label="사이트 안내">
+        <a href="recipes/">냥셰프 레시피 모음</a>
+        <a href="about.html">사이트 소개</a>
+        <a href="privacy.html">개인정보처리방침</a>
+      </nav>
+      <p>음식 사진: 위키미디어 공용 · 레시피: 냥셰프</p>
+    </footer>
   </div>
 
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
@@ -442,6 +453,7 @@
         <button type="submit" value="login" class="primary">로그인</button>
         <button type="submit" value="signup">회원가입</button>
       </div>
+      <p class="auth-legal">가입하면 <a href="privacy.html">개인정보처리방침</a>에 동의하게 돼요. 만 14세 미만은 가입할 수 없어요.</p>
       <button type="button" class="auth-close" id="auth-close" aria-label="닫기">×</button>
     </form>
   </dialog>
@@ -479,7 +491,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
-<script src="common.js?v=3"></script>
+<script src="theme.js?v=1"></script>
+<script src="common.js?v=4"></script>
 <script>
   // 추천 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
 
@@ -905,7 +918,13 @@
       parts.push(tip);
     }
 
-    parts.push(recipeSearchLink(item));
+    // 메뉴마다 따로 만든 레시피 페이지 (recipes/메뉴번호.html)
+    const pageLink = textEl('a', 'recipe-more', '레시피 페이지로 크게 보기 →');
+    pageLink.href = `recipes/${item.id}.html`;
+    const links = document.createElement('div');
+    links.className = 'recipe-links';
+    links.append(pageLink, recipeSearchLink(item));
+    parts.push(links);
     recipeBodyEl.replaceChildren(...parts);
   }
 

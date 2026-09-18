@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /board
+
+Sitemap: https://meal-project.pages.dev/sitemap.xml

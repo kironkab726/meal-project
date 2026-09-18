@@ -1,6 +1,6 @@
 // 두 페이지(index.html, board.html)가 함께 쓰는 코드
 // Supabase 연결 · 로그인 · 다크/라이트 모드 · 작은 도우미 함수
-// 불러오는 순서: supabase-js → config.js → common.js → 각 페이지 스크립트
+// 불러오는 순서: supabase-js → config.js → theme.js → common.js → 각 페이지 스크립트
 
 
 // ── Supabase 연결 ── 주소와 키는 config.js에 있음. 데이터 보호는 Supabase의 RLS 정책이 맡음
@@ -64,24 +64,7 @@ function timeAgo(iso) {
 }
 
 
-// ── 다크/라이트 모드 ── 고른 모드는 브라우저에 저장해서 새로고침해도 유지
-
-const themeBtn = document.getElementById('theme-toggle');
-
-function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
-  const label = theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환';
-  themeBtn.setAttribute('aria-label', label);
-  themeBtn.title = label;
-}
-
-themeBtn.addEventListener('click', () => {
-  const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-  applyTheme(theme);
-  try { localStorage.setItem('menu-picker-theme', theme); } catch (e) {}
-});
-
-applyTheme(document.documentElement.dataset.theme);
+// 다크/라이트 모드 버튼은 theme.js에 있음
 
 
 // ── 로그인 ────────────────────────────────────────────
