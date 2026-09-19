@@ -5,6 +5,7 @@
 #   recipes/index.html        레시피 모음
 #   about.html, privacy.html  사이트 소개, 개인정보처리방침 (본문은 tools/pages/ 에 있음)
 #   sitemap.xml               검색엔진에 알려 줄 페이지 목록
+#   rss.xml                   레시피 새 글 목록 (네이버 서치어드바이저 RSS 제출용)
 #   recipes/shop-links.json   쿠팡 파트너스 재료 링크 (메인 화면 레시피 칸이 읽음)
 #   tools/coupang-links.csv   쿠팡 파트너스 링크를 적는 표 (새 메뉴가 생기면 줄을 더해 줌)
 #
@@ -120,6 +121,7 @@ $HeadTemplate = @'
 <link rel="icon" href="{{PREFIX}}favicon.ico" sizes="any">
 <link rel="icon" href="{{PREFIX}}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{PREFIX}}apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="냥셰프 레시피" href="{{PREFIX}}rss.xml">
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
   (function () {
@@ -197,11 +199,24 @@ $HeadTemplate = @'
 function Page([hashtable]$p) {
   $prefix = [string]$p.Prefix
   $homeLink = if ($prefix) { $prefix } else { './' }
-  $ogImage = ''
-  if ($p.Image) { $ogImage = '<meta property="og:image" content="' + (Enc $p.Image) + '">' }
+  # 공유 미리보기 사진: 음식 사진이 없으면 사이트 대표 그림 (og-image.png, 1200x630)
+  if ($p.Image) {
+    $ogImage = '<meta property="og:image" content="' + (Enc $p.Image) + '">'
+  } else {
+    $ogImage = @(
+      '<meta property="og:image" content="' + $SiteUrl + '/og-image.png">'
+      '<meta property="og:image:width" content="1200">'
+      '<meta property="og:image:height" content="630">'
+    ) -join "`n"
+  }
   # 대표 주소가 없는 페이지(404)는 검색엔진에 올리지 않음
   if ($p.Canonical) {
-    $canonicalTags = '<link rel="canonical" href="' + (Enc $p.Canonical) + '">' + "`n" + '<meta property="og:url" content="' + (Enc $p.Canonical) + '">'
+    $canonicalTags = @(
+      '<link rel="canonical" href="' + (Enc $p.Canonical) + '">'
+      '<meta property="og:url" content="' + (Enc $p.Canonical) + '">'
+      # 구글 검색·디스커버에서 사진을 크게 보여 줘도 된다는 표시
+      '<meta name="robots" content="max-image-preview:large">'
+    ) -join "`n"
   } else {
     $canonicalTags = '<meta name="robots" content="noindex">'
   }
@@ -226,7 +241,7 @@ $sbUrl = [regex]::Match($config, "supabaseUrl:\s*'([^']+)'").Groups[1].Value
 $sbKey = [regex]::Match($config, "supabaseKey:\s*'([^']+)'").Groups[1].Value
 if (-not $sbUrl -or -not $sbKey) { throw 'config.js에서 Supabase 주소와 키를 찾지 못했어요.' }
 
-$query = 'menus?select=id,meal,category,name,photo,recipes(minutes,difficulty,servings,ingredients,steps,tip)&order=id'
+$query = 'menus?select=id,meal,category,name,photo,created_at,recipes(minutes,difficulty,servings,ingredients,steps,tip,updated_at)&order=id'
 $response = Invoke-WebRequest -UseBasicParsing -Uri "$sbUrl/rest/v1/$query" -Headers @{ apikey = $sbKey }
 # Windows PowerShell은 JSON 배열을 한 덩어리로 넘겨주므로, 한 번 더 풀어서 메뉴 하나하나로 만듦
 $parsed = $Utf8.GetString($response.RawContentStream.ToArray()) | ConvertFrom-Json
@@ -235,6 +250,31 @@ $menus = @($parsed | ForEach-Object { $_ })
 # 레시피가 있는 메뉴만, 아침 → 점심 → 저녁, 같은 끼니 안에서는 메뉴 번호 순서로
 $items = @($menus | Where-Object { $_.recipes } | Sort-Object @{ Expression = { MealRank $_.meal } }, id)
 if ($items.Count -eq 0) { throw '레시피가 있는 메뉴를 하나도 찾지 못했어요.' }
+
+
+# ── 날짜 (검색엔진에 "언제 만들고 언제 고쳤는지" 알려 줄 때 씀) ──
+
+# Supabase 시간 글자("2026-09-17T05:12:33.12+00:00")를 날짜로
+function ParseTime($s) {
+  if (-not $s) { return $null }
+  try { [DateTimeOffset]::Parse([string]$s, [Globalization.CultureInfo]::InvariantCulture) } catch { $null }
+}
+
+# 메뉴나 레시피를 마지막으로 고친 때
+function Touched($m) {
+  $times = @((ParseTime $m.created_at), (ParseTime $m.recipes.updated_at)) | Where-Object { $_ }
+  if ($times) { @($times | Sort-Object -Descending)[0] } else { $null }
+}
+
+$Latest = @($items | ForEach-Object { Touched $_ } | Where-Object { $_ } | Sort-Object -Descending) | Select-Object -First 1
+
+function JsonLd($obj) {
+  '<script type="application/ld+json">' + (ConvertTo-Json -InputObject $obj -Depth 6 -Compress).Replace('</', '<\/') + '</script>'
+}
+
+function Crumb([int]$position, [string]$name, [string]$url) {
+  [ordered]@{ '@type' = 'ListItem'; position = $position; name = $name; item = $url }
+}
 
 
 # ── 쿠팡 파트너스 재료 링크 (tools/coupang-links.csv) ─────────
@@ -317,6 +357,8 @@ function RecipeLink($x) {
 
 Get-ChildItem -LiteralPath (Join-Path $Root 'recipes') -Filter '*.html' -ErrorAction SilentlyContinue | Remove-Item -Force
 
+$Descriptions = @{}   # 메뉴 번호 → 페이지 설명 (rss.xml 에서 다시 씀)
+
 foreach ($m in $items) {
   $r = $m.recipes
   $name = [string]$m.name
@@ -389,7 +431,12 @@ foreach ($m in $items) {
   if ($r.minutes)    { $descParts += ('조리 시간 ' + [string]$r.minutes + '분') }
   if ($r.difficulty) { $descParts += ('난이도 ' + [string]$r.difficulty) }
   if ($r.servings)   { $descParts += ([string]$r.servings + '인분 기준') }
-  $description = $name + ' 레시피: ' + ($descParts -join ', ') + '. 재료와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.'
+  # 설명에 주재료를 넣어서 페이지마다 다르고 구체적인 설명이 되게 함 ("양념: ..." 같은 줄은 뺌)
+  $mainIngredients = @($ingredients | Where-Object { $_ -notmatch '^[^:]{1,12}:' } | Select-Object -First 3)
+  $ingredientText = '재료와 만드는 법'
+  if ($mainIngredients.Count) { $ingredientText = '재료(' + ($mainIngredients -join ', ') + ' 등)와 만드는 법' }
+  $description = $name + ' 레시피: ' + ($descParts -join ', ') + '. ' + $ingredientText + ', 냥셰프 팁까지 한눈에 볼 수 있어요.'
+  $Descriptions[[string]$m.id] = $description
 
   # 검색엔진용 레시피 정보 (schema.org Recipe)
   $ld = [ordered]@{
@@ -406,7 +453,22 @@ foreach ($m in $items) {
   if ($photoUrl)     { $ld.image = @($photoUrl) }
   if ($r.minutes)    { $ld.totalTime = 'PT' + [string]$r.minutes + 'M' }
   if ($r.servings)   { $ld.recipeYield = [string]$r.servings + '인분' }
-  $ldJson = ($ld | ConvertTo-Json -Depth 6 -Compress).Replace('</', '<\/')
+  $ld.keywords = $name + ', ' + $name + ' 레시피, ' + $m.meal + ' 메뉴, ' + $m.category + ', 집밥 레시피'
+  $published = ParseTime $m.created_at
+  $touched = Touched $m
+  if ($published) { $ld.datePublished = $published.ToString('yyyy-MM-dd') }
+  if ($touched)   { $ld.dateModified = $touched.ToString('yyyy-MM-dd') }
+
+  # 검색 결과에 "홈 > 레시피 모음 > ..." 경로로 보이게 하는 정보
+  $crumbLd = [ordered]@{
+    '@context'      = 'https://schema.org'
+    '@type'         = 'BreadcrumbList'
+    itemListElement = @(
+      (Crumb 1 '홈' "$SiteUrl/"),
+      (Crumb 2 '레시피 모음' "$SiteUrl/recipes/"),
+      (Crumb 3 ($name + ' 레시피') $canonical)
+    )
+  }
 
   $body = @"
       <nav class="breadcrumb" aria-label="현재 위치">
@@ -466,7 +528,7 @@ $relatedHtml
     Canonical   = $canonical
     OgType      = 'article'
     Image       = $photoUrl
-    ExtraHead   = '<script type="application/ld+json">' + $ldJson + '</script>'
+    ExtraHead   = (JsonLd $ld) + "`n" + (JsonLd $crumbLd)
     Body        = $body
   }
   Save ("recipes\" + $m.id + ".html") $html
@@ -525,11 +587,26 @@ $indexBody = @"
 $($mealSections -join "`n`n")
 "@
 
+# 레시피 목록 정보 (구글 레시피 캐러셀용) + 경로 정보
+$listLd = [ordered]@{
+  '@context'      = 'https://schema.org'
+  '@type'         = 'ItemList'
+  itemListElement = @(for ($i = 0; $i -lt $items.Count; $i++) {
+    [ordered]@{ '@type' = 'ListItem'; position = $i + 1; url = "$SiteUrl/recipes/" + $items[$i].id }
+  })
+}
+$indexCrumbLd = [ordered]@{
+  '@context'      = 'https://schema.org'
+  '@type'         = 'BreadcrumbList'
+  itemListElement = @((Crumb 1 '홈' "$SiteUrl/"), (Crumb 2 '레시피 모음' "$SiteUrl/recipes/"))
+}
+
 Save 'recipes\index.html' (Page @{
   Prefix      = '../'
   Title       = "냥셰프 레시피 모음 | 집밥 레시피 $($items.Count)가지"
   Description = "김치찌개부터 파스타, 샤브샤브까지. 아침·점심·저녁 집밥 레시피 $($items.Count)가지를 재료와 만드는 법, 냥셰프 팁과 함께 모았어요."
   Canonical   = "$SiteUrl/recipes/"
+  ExtraHead   = (JsonLd $listLd) + "`n" + (JsonLd $indexCrumbLd)
   Body        = $indexBody
 })
 
@@ -589,10 +666,58 @@ Save '404.html' (Page @{
 
 # ── sitemap.xml ─────────────────────────────────────────
 
-$urls = @("$SiteUrl/", "$SiteUrl/recipes/", "$SiteUrl/about", "$SiteUrl/privacy") + @($items | ForEach-Object { "$SiteUrl/recipes/" + $_.id })
+# lastmod(마지막 수정일)는 실제로 레시피를 고친 날만 적음. 매번 오늘 날짜를 적으면 구글이 믿지 않음
+# 손으로 고치는 페이지(홈, 소개, 개인정보처리방침)는 날짜를 적지 않음
+$latestDay = if ($Latest) { $Latest.ToString('yyyy-MM-dd') } else { $Today }
+$entries = @(
+  @{ Loc = "$SiteUrl/" }
+  @{ Loc = "$SiteUrl/recipes/"; Mod = $latestDay }
+  @{ Loc = "$SiteUrl/about" }
+  @{ Loc = "$SiteUrl/privacy" }
+) + @($items | ForEach-Object {
+  $t = Touched $_
+  @{ Loc = "$SiteUrl/recipes/" + $_.id; Mod = $(if ($t) { $t.ToString('yyyy-MM-dd') } else { $latestDay }) }
+})
 $sitemap = @('<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
-$sitemap += $urls | ForEach-Object { "  <url><loc>$_</loc><lastmod>$Today</lastmod></url>" }
+$sitemap += $entries | ForEach-Object {
+  if ($_.Mod) { "  <url><loc>$($_.Loc)</loc><lastmod>$($_.Mod)</lastmod></url>" } else { "  <url><loc>$($_.Loc)</loc></url>" }
+}
 $sitemap += '</urlset>'
 Save 'sitemap.xml' (($sitemap -join "`n") + "`n")
 
-Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs), coupang links {2}" -f $items.Count, $urls.Count, $shopLinks.Count)
+
+# ── rss.xml (네이버 서치어드바이저 "RSS 제출"용, 새 레시피가 위로) ─────
+
+function Xml([string]$s) { [Security.SecurityElement]::Escape($s) }
+function RssDate($t) { $t.UtcDateTime.ToString('ddd, dd MMM yyyy HH:mm:ss', [Globalization.CultureInfo]::InvariantCulture) + ' +0000' }
+
+$rssItems = $items | Sort-Object @{ Expression = { $t = ParseTime $_.created_at; if ($t) { $t.UtcTicks } else { 0 } }; Descending = $true }, @{ Expression = { [int]$_.id }; Descending = $true }
+$rss = @(
+  '<?xml version="1.0" encoding="UTF-8"?>'
+  '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'
+  '<channel>'
+  '  <title>' + (Xml ($SiteName + ' 레시피')) + '</title>'
+  '  <link>' + $SiteUrl + '/</link>'
+  '  <description>고양이 요리사 냥셰프가 정리한 아침·점심·저녁 집밥 레시피</description>'
+  '  <language>ko</language>'
+  '  <atom:link href="' + $SiteUrl + '/rss.xml" rel="self" type="application/rss+xml"/>'
+)
+if ($Latest) { $rss += '  <lastBuildDate>' + (RssDate $Latest) + '</lastBuildDate>' }
+foreach ($m in $rssItems) {
+  $link = "$SiteUrl/recipes/" + $m.id
+  $rss += '  <item>'
+  $rss += '    <title>' + (Xml ([string]$m.name + ' 레시피')) + '</title>'
+  $rss += '    <link>' + $link + '</link>'
+  $rss += '    <guid isPermaLink="true">' + $link + '</guid>'
+  $rss += '    <description>' + (Xml $Descriptions[[string]$m.id]) + '</description>'
+  $rss += '    <category>' + (Xml ([string]$m.meal)) + '</category>'
+  $rss += '    <category>' + (Xml ([string]$m.category)) + '</category>'
+  $published = ParseTime $m.created_at
+  if ($published) { $rss += '    <pubDate>' + (RssDate $published) + '</pubDate>' }
+  $rss += '  </item>'
+}
+$rss += '</channel>'
+$rss += '</rss>'
+Save 'rss.xml' (($rss -join "`n") + "`n")
+
+Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs), rss.xml, coupang links {2}" -f $items.Count, $entries.Count, $shopLinks.Count)

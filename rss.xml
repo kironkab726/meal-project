@@ -1,0 +1,902 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>냥셰프의 오늘 뭐 먹지 레시피</title>
+  <link>https://meal-project.pages.dev/</link>
+  <description>고양이 요리사 냥셰프가 정리한 아침·점심·저녁 집밥 레시피</description>
+  <language>ko</language>
+  <atom:link href="https://meal-project.pages.dev/rss.xml" rel="self" type="application/rss+xml"/>
+  <lastBuildDate>Thu, 17 Sep 2026 14:12:14 +0000</lastBuildDate>
+  <item>
+    <title>닭가슴살 샐러드 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/99</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/99</guid>
+    <description>닭가슴살 샐러드 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(닭가슴살 2쪽, 올리브유 1큰술, 소금, 후추, 허브 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>가볍게</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>도토리묵무침 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/98</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/98</guid>
+    <description>도토리묵무침 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(도토리묵 1모 (400g), 상추 등 쌈채소 1줌, 오이 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>가볍게</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>두부조림 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/97</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/97</guid>
+    <description>두부조림 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(두부 1모, 식용유 2큰술, 대파 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>가볍게</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>포케 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/96</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/96</guid>
+    <description>포케 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(날로 먹는 용도의 참치 또는 연어 200g, 밥 2공기 (현미밥이면 더 좋음), 아보카도 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>가볍게</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>월남쌈 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/95</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/95</guid>
+    <description>월남쌈 레시피: 조리 시간 30분, 난이도 쉬움, 2인분 기준. 재료(라이스페이퍼 12장, 데친 새우 10마리, 가는 쌀국수 면 50g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>가볍게</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>피시 앤 칩스 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/94</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/94</guid>
+    <description>피시 앤 칩스 레시피: 조리 시간 50분, 난이도 보통, 2인분 기준. 재료(대구나 동태 같은 흰살생선 필레 2쪽, 감자 3개, 밀가루 1컵 + 덧가루 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>라자냐 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/93</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/93</guid>
+    <description>라자냐 레시피: 조리 시간 80분, 난이도 어려움, 4인분 기준. 재료(라자냐 면 9장, 소고기 다짐육 300g, 양파 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>감바스 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/92</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/92</guid>
+    <description>감바스 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(껍질 벗긴 새우 15마리, 마늘 10알, 올리브유 1컵 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>스테이크 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/91</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/91</guid>
+    <description>스테이크 레시피: 조리 시간 45분, 난이도 보통, 2인분 기준. 재료(채끝 또는 안심 스테이크 2장 (2.5cm 두께), 소금, 후추 넉넉히, 올리브유 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>텐동 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/90</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/90</guid>
+    <description>텐동 레시피: 조리 시간 40분, 난이도 어려움, 2인분 기준. 재료(새우 6마리, 단호박, 가지, 꽈리고추, 연근 등 채소 약간, 튀김가루 1컵 + 덧가루 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>야키토리 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/89</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/89</guid>
+    <description>야키토리 레시피: 조리 시간 40분, 난이도 보통, 2인분 기준. 재료(닭다리살 400g, 대파 2대, 꼬치 막대 10개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>오코노미야키 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/88</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/88</guid>
+    <description>오코노미야키 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(양배추 1/4통 (300g), 오코노미야키 가루 또는 부침가루 100g, 물 100ml 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>모둠 사시미 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/87</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/87</guid>
+    <description>모둠 사시미 레시피: 조리 시간 20분, 난이도 보통, 2인분 기준. 재료(날로 먹는 용도의 연어, 참치, 광어 등 횟감 300g, 무 1/4개, 시소잎 또는 깻잎 몇 장 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>스키야키 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/86</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/86</guid>
+    <description>스키야키 레시피: 조리 시간 30분, 난이도 보통, 3인분 기준. 재료(스키야키용 얇은 소고기 등심 400g, 두부 1/2모, 대파 2대 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>샤브샤브 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/85</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/85</guid>
+    <description>샤브샤브 레시피: 조리 시간 30분, 난이도 쉬움, 3인분 기준. 재료(소고기 샤브용 400g, 배추, 청경채, 쑥갓 넉넉히, 버섯 모둠 300g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>딤섬 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/84</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/84</guid>
+    <description>딤섬 레시피: 조리 시간 50분, 난이도 보통, 3인분 기준. 재료(만두피 또는 완탕피 20장, 돼지고기 다짐육 200g, 다진 새우 150g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>양장피 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/83</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/83</guid>
+    <description>양장피 레시피: 조리 시간 60분, 난이도 어려움, 3인분 기준. 재료(양장피 1장, 새우 10마리, 오징어 1/2마리 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>깐풍기 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/82</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/82</guid>
+    <description>깐풍기 레시피: 조리 시간 40분, 난이도 보통, 2인분 기준. 재료(닭다리살 400g, 소금, 후추, 맛술 약간, 전분 1/2컵 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>훠궈 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/81</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/81</guid>
+    <description>훠궈 레시피: 조리 시간 40분, 난이도 쉬움, 3인분 기준. 재료(시판 훠궈 소스 (홍탕, 백탕) 1봉씩, 사골 육수 또는 물 2L, 소고기, 양고기 샤브용 400g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>마라샹궈 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/80</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/80</guid>
+    <description>마라샹궈 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(시판 마라샹궈 소스 1봉, 소고기 또는 새우 200g, 연근 100g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>김치찜 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/79</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/79</guid>
+    <description>김치찜 레시피: 조리 시간 70분, 난이도 쉬움, 3인분 기준. 재료(신김치 1/2포기, 돼지고기 목살 또는 삼겹살 덩어리 600g, 양파 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>아귀찜 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/78</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/78</guid>
+    <description>아귀찜 레시피: 조리 시간 50분, 난이도 어려움, 3인분 기준. 재료(손질된 아귀 1kg, 콩나물 500g, 미나리 1줌 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>파전 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/77</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/77</guid>
+    <description>파전 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(쪽파 1줌 (150g), 부침가루 1컵, 차가운 물 3/4컵 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>찜닭 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/76</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/76</guid>
+    <description>찜닭 레시피: 조리 시간 50분, 난이도 보통, 3인분 기준. 재료(볶음탕용 닭 1마리, 당면 1줌, 감자 2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>닭볶음탕 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/75</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/75</guid>
+    <description>닭볶음탕 레시피: 조리 시간 50분, 난이도 쉬움, 3인분 기준. 재료(닭볶음탕용 닭 1마리 (1kg), 감자 2개, 당근 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>감자탕 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/74</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/74</guid>
+    <description>감자탕 레시피: 조리 시간 180분, 난이도 보통, 4인분 기준. 재료(돼지 등뼈 1.5kg, 감자 4개, 데친 우거지 300g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>족발 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/73</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/73</guid>
+    <description>족발 레시피: 조리 시간 240분, 난이도 어려움, 4인분 기준. 재료(손질된 돼지 앞다리 족발 1.5kg, 간장 1컵, 설탕 1/2컵 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>보쌈 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/72</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/72</guid>
+    <description>보쌈 레시피: 조리 시간 80분, 난이도 보통, 3인분 기준. 재료(돼지고기 통삼겹 또는 앞다리살 1kg, 된장 2큰술, 대파 1대 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>치킨 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/71</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/71</guid>
+    <description>치킨 레시피: 조리 시간 70분, 난이도 어려움, 3인분 기준. 재료(튀김용 닭 1마리 (1kg), 우유 1컵, 소금, 후추 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>고기</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>차돌박이 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/70</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/70</guid>
+    <description>차돌박이 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(차돌박이 400g, 부추 1줌, 양파 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>고기</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>양꼬치 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/69</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/69</guid>
+    <description>양꼬치 레시피: 조리 시간 40분, 난이도 보통, 2인분 기준. 재료(양고기 어깨살 또는 다리살 400g, 꼬치 막대 10개, 찍어 먹을 쯔란 가루 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>고기</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>곱창 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/68</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/68</guid>
+    <description>곱창 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(삶아서 손질된 돼지곱창 400g, 양배추 1/4통, 양파 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>고기</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>갈비 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/67</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/67</guid>
+    <description>갈비 레시피: 조리 시간 90분, 난이도 보통, 3인분 기준. 재료(LA갈비 1kg, 간 배 1/2개, 간 양파 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>고기</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>삼겹살 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/66</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/66</guid>
+    <description>삼겹살 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(삼겹살 500g, 상추, 깻잎 등 쌈채소 넉넉히, 마늘 10알 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>저녁</category>
+    <category>고기</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>나시고렝 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/65</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/65</guid>
+    <description>나시고렝 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(찬밥 2공기, 닭고기 또는 새우 150g, 달걀 2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>아시안</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>분짜 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/64</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/64</guid>
+    <description>분짜 레시피: 조리 시간 40분, 난이도 보통, 2인분 기준. 재료(돼지고기 목살 300g, 가는 쌀국수 면 150g, 상추, 고수, 민트 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>아시안</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>카레 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/63</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/63</guid>
+    <description>카레 레시피: 조리 시간 40분, 난이도 쉬움, 3인분 기준. 재료(고형 카레 루 1/2팩 (100g), 소고기 또는 돼지고기 250g, 감자 2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>아시안</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>팟타이 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/62</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/62</guid>
+    <description>팟타이 레시피: 조리 시간 45분, 난이도 보통, 2인분 기준. 재료(넓은 쌀국수 면 150g, 새우 10마리, 달걀 2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>아시안</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>쌀국수 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/61</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/61</guid>
+    <description>쌀국수 레시피: 조리 시간 45분, 난이도 보통, 2인분 기준. 재료(쌀국수 면 2인분, 사골 또는 소고기 육수 1L, 양파 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>아시안</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>잔치국수 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/60</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/60</guid>
+    <description>잔치국수 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(소면 2인분, 멸치 다시마 육수 5컵, 국간장 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>분식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>칼국수 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/59</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/59</guid>
+    <description>칼국수 레시피: 조리 시간 30분, 난이도 쉬움, 2인분 기준. 재료(칼국수 생면 2인분, 바지락 300g, 감자 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>분식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>만두 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/58</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/58</guid>
+    <description>만두 레시피: 조리 시간 60분, 난이도 보통, 3인분 기준. 재료(만두피 30장, 돼지고기 다짐육 300g, 두부 1/2모 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>분식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>쫄면 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/57</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/57</guid>
+    <description>쫄면 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(쫄면 사리 2인분, 양배추 2장, 오이 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>분식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>라볶이 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/56</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/56</guid>
+    <description>라볶이 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(떡볶이떡 200g, 라면 사리 1개, 어묵 2장 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>분식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>김밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/55</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/55</guid>
+    <description>김밥 레시피: 조리 시간 40분, 난이도 보통, 2인분 기준. 재료(밥 3공기, 김밥용 김 4장, 김밥용 햄 4줄 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>분식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>떡볶이 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/54</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/54</guid>
+    <description>떡볶이 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(떡볶이떡 400g, 어묵 2장, 대파 1대 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>분식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>샐러드 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/53</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/53</guid>
+    <description>샐러드 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(양상추, 로메인 등 잎채소 2줌, 방울토마토 8개, 오이 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>피자 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/52</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/52</guid>
+    <description>피자 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(또띠아 2장 (또는 피자 도우 1장), 토마토소스 4큰술, 모차렐라 치즈 150g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>샌드위치 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/51</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/51</guid>
+    <description>샌드위치 레시피: 조리 시간 10분, 난이도 쉬움, 1인분 기준. 재료(식빵 2장, 햄 2장, 슬라이스 치즈 1장 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>리조또 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/50</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/50</guid>
+    <description>리조또 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(쌀 1컵 (씻지 않은 것), 새우, 오징어, 홍합 등 해물 200g, 양파 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>햄버거 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/49</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/49</guid>
+    <description>햄버거 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(햄버거 번 2개, 소고기 다짐육 300g, 다진 양파 1/4개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>파스타 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/48</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/48</guid>
+    <description>파스타 레시피: 조리 시간 35분, 난이도 쉬움, 2인분 기준. 재료(스파게티 200g, 소고기 다짐육 200g, 양파 1/2개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>소바 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/47</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/47</guid>
+    <description>소바 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(메밀면 2인분, 쯔유 원액 5큰술, 찬물 250ml 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>회덮밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/46</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/46</guid>
+    <description>회덮밥 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(밥 2공기, 날로 먹는 용도의 연어 또는 광어 200g, 양상추 3장 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>규동 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/45</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/45</guid>
+    <description>규동 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(소고기 우삼겹 또는 차돌박이 250g, 양파 1개, 물 200ml 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>우동 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/44</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/44</guid>
+    <description>우동 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(냉동 우동면 2개, 가쓰오 육수 800ml (또는 쯔유 4큰술 + 물), 국간장 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>라멘 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/43</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/43</guid>
+    <description>라멘 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(생라멘면 2인분, 닭 육수 1L, 간장 3큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>돈카츠 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/42</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/42</guid>
+    <description>돈카츠 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(돈카츠용 돼지고기 등심 2장, 소금, 후추 약간, 밀가루 1/2컵 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>초밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/41</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/41</guid>
+    <description>초밥 레시피: 조리 시간 40분, 난이도 어려움, 2인분 기준. 재료(고슬하게 지은 밥 2공기, 날로 먹는 용도의 연어, 광어 등 횟감 200g, 와사비 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>일식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>마라탕 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/40</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/40</guid>
+    <description>마라탕 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(시판 마라탕 소스 1봉, 사골 육수 또는 물 1L, 소고기 샤브용 150g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>잡채밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/39</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/39</guid>
+    <description>잡채밥 레시피: 조리 시간 50분, 난이도 보통, 2인분 기준. 재료(당면 100g, 돼지고기 또는 소고기 100g, 시금치 1줌 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>마파두부밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/38</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/38</guid>
+    <description>마파두부밥 레시피: 조리 시간 25분, 난이도 보통, 2인분 기준. 재료(두부 1모, 돼지고기 다짐육 100g, 두반장 1.5큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>탕수육 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/37</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/37</guid>
+    <description>탕수육 레시피: 조리 시간 90분, 난이도 어려움, 2인분 기준. 재료(돼지고기 등심 300g, 감자전분 1컵, 달걀흰자 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>볶음밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/36</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/36</guid>
+    <description>볶음밥 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(찬밥 2공기, 달걀 2개, 대파 1대 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>짬뽕 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/35</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/35</guid>
+    <description>짬뽕 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(중화면 2인분, 오징어 1/2마리, 홍합 또는 새우 한 줌 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>짜장면 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/34</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/34</guid>
+    <description>짜장면 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(중화면 2인분, 춘장 3큰술, 돼지고기 100g 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>중식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>콩나물국밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/33</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/33</guid>
+    <description>콩나물국밥 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(콩나물 200g, 밥 2공기, 멸치 다시마 육수 5컵 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>닭갈비 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/32</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/32</guid>
+    <description>닭갈비 레시피: 조리 시간 50분, 난이도 보통, 2인분 기준. 재료(닭다리살 500g, 양배추 1/4통, 고구마 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>부대찌개 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/31</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/31</guid>
+    <description>부대찌개 레시피: 조리 시간 30분, 난이도 쉬움, 3인분 기준. 재료(햄 (스팸) 200g, 소시지 4개, 신김치 1컵 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>뚝배기 불고기 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/30</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/30</guid>
+    <description>뚝배기 불고기 레시피: 조리 시간 40분, 난이도 쉬움, 2인분 기준. 재료(소고기 불고기용 300g, 양파 1/2개, 팽이버섯 1봉 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>삼계탕 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/29</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/29</guid>
+    <description>삼계탕 레시피: 조리 시간 80분, 난이도 보통, 2인분 기준. 재료(영계 (삼계탕용 닭) 2마리, 찹쌀 1/2컵, 수삼 2뿌리 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>냉면 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/28</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/28</guid>
+    <description>냉면 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(냉면 사리 2인분, 시판 냉면 육수 2봉, 오이 1/3개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>갈비탕 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/27</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/27</guid>
+    <description>갈비탕 레시피: 조리 시간 150분, 난이도 보통, 3인분 기준. 재료(소갈비 1kg, 무 300g, 양파 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>순대국 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/26</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/26</guid>
+    <description>순대국 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(순대 300g, 돼지 머릿고기 또는 삶은 내장 200g, 사골 육수 1L 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>비빔밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/25</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/25</guid>
+    <description>비빔밥 레시피: 조리 시간 30분, 난이도 보통, 2인분 기준. 재료(밥 2공기, 시금치 1줌, 콩나물 1줌 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>제육볶음 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/24</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/24</guid>
+    <description>제육볶음 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(돼지고기 앞다리살 (불고기용) 400g, 양파 1/2개, 대파 1대 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>된장찌개 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/23</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/23</guid>
+    <description>된장찌개 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(된장 2큰술, 감자 1개, 애호박 1/3개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>김치찌개 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/22</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/22</guid>
+    <description>김치찌개 레시피: 조리 시간 30분, 난이도 쉬움, 2인분 기준. 재료(잘 익은 김치 2컵, 돼지고기 목살 또는 앞다리살 200g, 두부 1/2모 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>점심</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>주먹밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/21</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/21</guid>
+    <description>주먹밥 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(따뜻한 밥 2공기, 참치캔 1개 (작은 것), 마요네즈 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>간편식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>군고구마 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/20</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/20</guid>
+    <description>군고구마 레시피: 조리 시간 40분, 난이도 쉬움, 2인분 기준. 재료(고구마 3~4개 (중간 크기) 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>간편식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>삶은 달걀 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/19</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/19</guid>
+    <description>삶은 달걀 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(달걀 4개, 물 넉넉히, 소금 1작은술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>간편식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>요거트 그래놀라 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/18</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/18</guid>
+    <description>요거트 그래놀라 레시피: 조리 시간 5분, 난이도 쉬움, 1인분 기준. 재료(플레인 요거트 또는 그릭요거트 150g, 그래놀라 3큰술, 블루베리, 딸기 같은 과일 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>간편식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>오트밀 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/17</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/17</guid>
+    <description>오트밀 레시피: 조리 시간 10분, 난이도 쉬움, 1인분 기준. 재료(오트밀 (압착 귀리) 40g, 우유 또는 물 200ml, 꿀 1작은술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>간편식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>시리얼 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/16</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/16</guid>
+    <description>시리얼 레시피: 조리 시간 3분, 난이도 쉬움, 1인분 기준. 재료(시리얼 1컵, 차가운 우유 200ml, 바나나나 딸기 같은 과일 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>간편식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>스크램블 에그 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/15</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/15</guid>
+    <description>스크램블 에그 레시피: 조리 시간 5분, 난이도 쉬움, 1인분 기준. 재료(달걀 3개, 우유 또는 생크림 2큰술, 버터 1작은술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>크루아상 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/14</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/14</guid>
+    <description>크루아상 레시피: 조리 시간 10분, 난이도 쉬움, 2인분 기준. 재료(크루아상 2개, 달걀 2개, 슬라이스 치즈 2장 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>베이글 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/13</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/13</guid>
+    <description>베이글 레시피: 조리 시간 10분, 난이도 쉬움, 1인분 기준. 재료(베이글 1개, 크림치즈 2큰술, 훈제연어 또는 햄 약간 (선택) 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>에그 베네딕트 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/12</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/12</guid>
+    <description>에그 베네딕트 레시피: 조리 시간 30분, 난이도 어려움, 2인분 기준. 재료(잉글리시 머핀 2개, 달걀 6개 (수란 4개, 소스용 노른자 2개), 베이컨 또는 햄 4장 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>오믈렛 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/11</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/11</guid>
+    <description>오믈렛 레시피: 조리 시간 10분, 난이도 보통, 1인분 기준. 재료(달걀 3개, 우유 2큰술, 버터 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>팬케이크 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/10</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/10</guid>
+    <description>팬케이크 레시피: 조리 시간 20분, 난이도 쉬움, 2인분 기준. 재료(박력분 150g, 베이킹파우더 1작은술, 설탕 2큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>프렌치토스트 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/9</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/9</guid>
+    <description>프렌치토스트 레시피: 조리 시간 15분, 난이도 쉬움, 2인분 기준. 재료(식빵 4장, 달걀 2개, 우유 100ml 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>토스트 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/8</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/8</guid>
+    <description>토스트 레시피: 조리 시간 10분, 난이도 쉬움, 1인분 기준. 재료(식빵 2장, 버터 1큰술, 딸기잼 또는 꿀 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>양식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>떡국 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/7</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/7</guid>
+    <description>떡국 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(떡국떡 400g, 소고기 양지 100g, 달걀 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>황태해장국 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/6</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/6</guid>
+    <description>황태해장국 레시피: 조리 시간 30분, 난이도 쉬움, 2인분 기준. 재료(황태채 1줌 (40g), 무 100g, 달걀 1개 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>미역국 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/5</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/5</guid>
+    <description>미역국 레시피: 조리 시간 40분, 난이도 쉬움, 3인분 기준. 재료(마른 미역 20g, 소고기 국거리 150g, 참기름 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>계란말이 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/4</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/4</guid>
+    <description>계란말이 레시피: 조리 시간 15분, 난이도 보통, 2인분 기준. 재료(달걀 4개, 대파 약간, 당근 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>간장계란밥 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/3</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/3</guid>
+    <description>간장계란밥 레시피: 조리 시간 10분, 난이도 쉬움, 1인분 기준. 재료(따뜻한 밥 1공기, 달걀 1~2개, 간장 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>전복죽 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/2</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/2</guid>
+    <description>전복죽 레시피: 조리 시간 40분, 난이도 보통, 2인분 기준. 재료(전복 2마리, 불린 쌀 1컵, 참기름 1큰술 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+  <item>
+    <title>누룽지 레시피</title>
+    <link>https://meal-project.pages.dev/recipes/1</link>
+    <guid isPermaLink="true">https://meal-project.pages.dev/recipes/1</guid>
+    <description>누룽지 레시피: 조리 시간 15분, 난이도 쉬움, 1인분 기준. 재료(누룽지 1줌 (60g), 물 3컵, 소금 약간 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.</description>
+    <category>아침</category>
+    <category>한식</category>
+    <pubDate>Thu, 17 Sep 2026 11:32:10 +0000</pubDate>
+  </item>
+</channel>
+</rss>

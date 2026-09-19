@@ -3,6 +3,7 @@
 # favicon.svg 와 같은 모양을 그려서 아래 파일을 만듭니다.
 #   favicon.ico            브라우저 탭용 (16 · 32 · 48px 묶음)
 #   apple-touch-icon.png   휴대폰 홈 화면에 추가할 때 쓰는 180px 아이콘 (모서리는 폰이 둥글게 깎음)
+#   og-image.png           카카오톡·SNS에 링크를 붙였을 때 뜨는 1200x630 미리보기 그림
 #
 # 실행 (프로젝트 폴더에서):
 #   powershell -ExecutionPolicy Bypass -File tools\make-favicon.ps1
@@ -135,4 +136,36 @@ $w.Flush()
 [IO.File]::WriteAllBytes((Join-Path $Root 'favicon.ico'), $ms.ToArray())
 $w.Dispose()
 
-Write-Host 'Done: favicon.ico (16, 32, 48px), apple-touch-icon.png (180px)'
+# og-image.png: 크림색 바탕 + 왼쪽 냥셰프 아이콘 + 오른쪽 사이트 이름 (글꼴: 윈도우 기본 맑은 고딕)
+$og = New-Object System.Drawing.Bitmap 1200, 630, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+$g = [System.Drawing.Graphics]::FromImage($og)
+$g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
+$g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+$g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::AntiAlias
+$g.Clear((Color '#FBF3E4'))
+
+$g.FillEllipse((Brush '#F3E6CF'), 90, 95, 440, 440)
+$icon = DrawIcon 330 $false
+$g.DrawImage($icon, 145, 150, 330, 330)
+$icon.Dispose()
+
+$px = [System.Drawing.GraphicsUnit]::Pixel
+$bold = [System.Drawing.FontStyle]::Bold
+$ink = Brush '#4A3426'
+$muted = Brush '#7A6352'
+$g.DrawString('냥셰프의', (New-Object System.Drawing.Font 'Malgun Gothic', 58, $bold, $px), $ink, 575, 118)
+$g.DrawString('오늘 뭐 먹지', (New-Object System.Drawing.Font 'Malgun Gothic', 90, $bold, $px), $ink, 568, 190)
+$sub = New-Object System.Drawing.Font 'Malgun Gothic', 34, ([System.Drawing.FontStyle]::Regular), $px
+$g.DrawString('고양이 요리사가 골라 주는', $sub, $muted, 580, 345)
+$g.DrawString('아침·점심·저녁 메뉴와 집밥 레시피', $sub, $muted, 580, 395)
+
+$urlFont = New-Object System.Drawing.Font 'Malgun Gothic', 28, $bold, $px
+$urlText = 'meal-project.pages.dev'
+$size = $g.MeasureString($urlText, $urlFont)
+$g.FillPath((Brush '#B8552F'), (RoundRect 580 478 ($size.Width + 44) 58 29))
+$g.DrawString($urlText, $urlFont, (Brush '#FFFFFF'), 602, (478 + (58 - $size.Height) / 2))
+$g.Dispose()
+$og.Save((Join-Path $Root 'og-image.png'), [System.Drawing.Imaging.ImageFormat]::Png)
+$og.Dispose()
+
+Write-Host 'Done: favicon.ico (16, 32, 48px), apple-touch-icon.png (180px), og-image.png (1200x630)'

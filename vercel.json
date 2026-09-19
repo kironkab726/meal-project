@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/:path*", "destination": "https://meal-project.pages.dev/:path*", "statusCode": 301 }
+  ]
+}
