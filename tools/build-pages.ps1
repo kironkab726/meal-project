@@ -6,6 +6,7 @@
 #   about.html, privacy.html  사이트 소개, 개인정보처리방침 (본문은 tools/pages/ 에 있음)
 #   sitemap.xml               검색엔진에 알려 줄 페이지 목록
 #   rss.xml                   레시피 새 글 목록 (네이버 서치어드바이저 RSS 제출용)
+#   llms.txt                  AI(ChatGPT, Claude 등)가 읽기 좋은 사이트 안내
 #   recipes/shop-links.json   쿠팡 파트너스 재료 링크 (메인 화면 레시피 칸이 읽음)
 #   tools/coupang-links.csv   쿠팡 파트너스 링크를 적는 표 (새 메뉴가 생기면 줄을 더해 줌)
 #
@@ -720,4 +721,40 @@ $rss += '</channel>'
 $rss += '</rss>'
 Save 'rss.xml' (($rss -join "`n") + "`n")
 
-Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs), rss.xml, coupang links {2}" -f $items.Count, $entries.Count, $shopLinks.Count)
+
+# ── llms.txt (AI가 사이트를 한눈에 이해하도록 쓴 안내, https://llmstxt.org 형식) ──
+
+$llms = @(
+  '# ' + $SiteName
+  ''
+  '> 고양이 요리사 캐릭터 "냥셰프"가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 집밥 레시피 ' + $items.Count + '가지를 알려 주는 한국어 사이트입니다.'
+  ''
+  '- 메뉴 추천: 끼니(아침·점심·저녁)와 음식 종류를 고르면 메뉴 하나를 무작위로 추천합니다. 로그인하면 좋아요/별로예요에 맞춰 추천이 달라집니다.'
+  '- 레시피: 메뉴마다 조리 시간, 난이도, 인분, 재료, 만드는 법, 요리 팁을 정리한 페이지가 있습니다.'
+  '- 음식 사진은 위키미디어 공용의 자유 라이선스 사진이고, 레시피는 이 사이트가 직접 정리했습니다.'
+  ''
+  '## 주요 페이지'
+  ''
+  '- [메뉴 추천 (홈)](' + $SiteUrl + '/): 냥셰프에게 오늘의 메뉴 추천받기'
+  '- [레시피 모음](' + $SiteUrl + '/recipes/): 끼니와 종류별 전체 레시피 목록'
+  '- [사이트 소개](' + $SiteUrl + '/about): 사이트가 하는 일, 사진 출처, 문의처'
+)
+foreach ($meal in $presentMeals) {
+  $llms += ''
+  $llms += '## ' + $meal + ' 레시피'
+  $llms += ''
+  foreach ($x in @($items | Where-Object { $_.meal -eq $meal })) {
+    $meta = @([string]$x.category)
+    if ($x.recipes.minutes) { $meta += ([string]$x.recipes.minutes + '분') }
+    if ($x.recipes.difficulty) { $meta += [string]$x.recipes.difficulty }
+    $llms += '- [' + $x.name + ' 레시피](' + $SiteUrl + '/recipes/' + $x.id + '): ' + ($meta -join ' · ')
+  }
+}
+$llms += ''
+$llms += '## 그 밖의 안내'
+$llms += ''
+$llms += '- [개인정보처리방침](' + $SiteUrl + '/privacy)'
+$llms += '- [사이트맵](' + $SiteUrl + '/sitemap.xml)'
+Save 'llms.txt' (($llms -join "`n") + "`n")
+
+Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs), rss.xml, llms.txt, coupang links {2}" -f $items.Count, $entries.Count, $shopLinks.Count)

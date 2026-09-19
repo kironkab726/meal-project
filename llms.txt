@@ -1,0 +1,126 @@
+# 냥셰프의 오늘 뭐 먹지
+
+> 고양이 요리사 캐릭터 "냥셰프"가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 집밥 레시피 99가지를 알려 주는 한국어 사이트입니다.
+
+- 메뉴 추천: 끼니(아침·점심·저녁)와 음식 종류를 고르면 메뉴 하나를 무작위로 추천합니다. 로그인하면 좋아요/별로예요에 맞춰 추천이 달라집니다.
+- 레시피: 메뉴마다 조리 시간, 난이도, 인분, 재료, 만드는 법, 요리 팁을 정리한 페이지가 있습니다.
+- 음식 사진은 위키미디어 공용의 자유 라이선스 사진이고, 레시피는 이 사이트가 직접 정리했습니다.
+
+## 주요 페이지
+
+- [메뉴 추천 (홈)](https://meal-project.pages.dev/): 냥셰프에게 오늘의 메뉴 추천받기
+- [레시피 모음](https://meal-project.pages.dev/recipes/): 끼니와 종류별 전체 레시피 목록
+- [사이트 소개](https://meal-project.pages.dev/about): 사이트가 하는 일, 사진 출처, 문의처
+
+## 아침 레시피
+
+- [누룽지 레시피](https://meal-project.pages.dev/recipes/1): 한식 · 15분 · 쉬움
+- [전복죽 레시피](https://meal-project.pages.dev/recipes/2): 한식 · 40분 · 보통
+- [간장계란밥 레시피](https://meal-project.pages.dev/recipes/3): 한식 · 10분 · 쉬움
+- [계란말이 레시피](https://meal-project.pages.dev/recipes/4): 한식 · 15분 · 보통
+- [미역국 레시피](https://meal-project.pages.dev/recipes/5): 한식 · 40분 · 쉬움
+- [황태해장국 레시피](https://meal-project.pages.dev/recipes/6): 한식 · 30분 · 쉬움
+- [떡국 레시피](https://meal-project.pages.dev/recipes/7): 한식 · 25분 · 쉬움
+- [토스트 레시피](https://meal-project.pages.dev/recipes/8): 양식 · 10분 · 쉬움
+- [프렌치토스트 레시피](https://meal-project.pages.dev/recipes/9): 양식 · 15분 · 쉬움
+- [팬케이크 레시피](https://meal-project.pages.dev/recipes/10): 양식 · 20분 · 쉬움
+- [오믈렛 레시피](https://meal-project.pages.dev/recipes/11): 양식 · 10분 · 보통
+- [에그 베네딕트 레시피](https://meal-project.pages.dev/recipes/12): 양식 · 30분 · 어려움
+- [베이글 레시피](https://meal-project.pages.dev/recipes/13): 양식 · 10분 · 쉬움
+- [크루아상 레시피](https://meal-project.pages.dev/recipes/14): 양식 · 10분 · 쉬움
+- [스크램블 에그 레시피](https://meal-project.pages.dev/recipes/15): 양식 · 5분 · 쉬움
+- [시리얼 레시피](https://meal-project.pages.dev/recipes/16): 간편식 · 3분 · 쉬움
+- [오트밀 레시피](https://meal-project.pages.dev/recipes/17): 간편식 · 10분 · 쉬움
+- [요거트 그래놀라 레시피](https://meal-project.pages.dev/recipes/18): 간편식 · 5분 · 쉬움
+- [삶은 달걀 레시피](https://meal-project.pages.dev/recipes/19): 간편식 · 15분 · 쉬움
+- [군고구마 레시피](https://meal-project.pages.dev/recipes/20): 간편식 · 40분 · 쉬움
+- [주먹밥 레시피](https://meal-project.pages.dev/recipes/21): 간편식 · 15분 · 쉬움
+
+## 점심 레시피
+
+- [김치찌개 레시피](https://meal-project.pages.dev/recipes/22): 한식 · 30분 · 쉬움
+- [된장찌개 레시피](https://meal-project.pages.dev/recipes/23): 한식 · 25분 · 쉬움
+- [제육볶음 레시피](https://meal-project.pages.dev/recipes/24): 한식 · 25분 · 쉬움
+- [비빔밥 레시피](https://meal-project.pages.dev/recipes/25): 한식 · 30분 · 보통
+- [순대국 레시피](https://meal-project.pages.dev/recipes/26): 한식 · 30분 · 보통
+- [갈비탕 레시피](https://meal-project.pages.dev/recipes/27): 한식 · 150분 · 보통
+- [냉면 레시피](https://meal-project.pages.dev/recipes/28): 한식 · 20분 · 쉬움
+- [삼계탕 레시피](https://meal-project.pages.dev/recipes/29): 한식 · 80분 · 보통
+- [뚝배기 불고기 레시피](https://meal-project.pages.dev/recipes/30): 한식 · 40분 · 쉬움
+- [부대찌개 레시피](https://meal-project.pages.dev/recipes/31): 한식 · 30분 · 쉬움
+- [닭갈비 레시피](https://meal-project.pages.dev/recipes/32): 한식 · 50분 · 보통
+- [콩나물국밥 레시피](https://meal-project.pages.dev/recipes/33): 한식 · 25분 · 쉬움
+- [짜장면 레시피](https://meal-project.pages.dev/recipes/34): 중식 · 30분 · 보통
+- [짬뽕 레시피](https://meal-project.pages.dev/recipes/35): 중식 · 30분 · 보통
+- [볶음밥 레시피](https://meal-project.pages.dev/recipes/36): 중식 · 15분 · 쉬움
+- [탕수육 레시피](https://meal-project.pages.dev/recipes/37): 중식 · 90분 · 어려움
+- [마파두부밥 레시피](https://meal-project.pages.dev/recipes/38): 중식 · 25분 · 보통
+- [잡채밥 레시피](https://meal-project.pages.dev/recipes/39): 중식 · 50분 · 보통
+- [마라탕 레시피](https://meal-project.pages.dev/recipes/40): 중식 · 30분 · 보통
+- [초밥 레시피](https://meal-project.pages.dev/recipes/41): 일식 · 40분 · 어려움
+- [돈카츠 레시피](https://meal-project.pages.dev/recipes/42): 일식 · 30분 · 보통
+- [라멘 레시피](https://meal-project.pages.dev/recipes/43): 일식 · 30분 · 보통
+- [우동 레시피](https://meal-project.pages.dev/recipes/44): 일식 · 15분 · 쉬움
+- [규동 레시피](https://meal-project.pages.dev/recipes/45): 일식 · 20분 · 쉬움
+- [회덮밥 레시피](https://meal-project.pages.dev/recipes/46): 일식 · 20분 · 쉬움
+- [소바 레시피](https://meal-project.pages.dev/recipes/47): 일식 · 15분 · 쉬움
+- [파스타 레시피](https://meal-project.pages.dev/recipes/48): 양식 · 35분 · 쉬움
+- [햄버거 레시피](https://meal-project.pages.dev/recipes/49): 양식 · 30분 · 보통
+- [리조또 레시피](https://meal-project.pages.dev/recipes/50): 양식 · 30분 · 보통
+- [샌드위치 레시피](https://meal-project.pages.dev/recipes/51): 양식 · 10분 · 쉬움
+- [피자 레시피](https://meal-project.pages.dev/recipes/52): 양식 · 25분 · 쉬움
+- [샐러드 레시피](https://meal-project.pages.dev/recipes/53): 양식 · 15분 · 쉬움
+- [떡볶이 레시피](https://meal-project.pages.dev/recipes/54): 분식 · 20분 · 쉬움
+- [김밥 레시피](https://meal-project.pages.dev/recipes/55): 분식 · 40분 · 보통
+- [라볶이 레시피](https://meal-project.pages.dev/recipes/56): 분식 · 20분 · 쉬움
+- [쫄면 레시피](https://meal-project.pages.dev/recipes/57): 분식 · 20분 · 쉬움
+- [만두 레시피](https://meal-project.pages.dev/recipes/58): 분식 · 60분 · 보통
+- [칼국수 레시피](https://meal-project.pages.dev/recipes/59): 분식 · 30분 · 쉬움
+- [잔치국수 레시피](https://meal-project.pages.dev/recipes/60): 분식 · 25분 · 쉬움
+- [쌀국수 레시피](https://meal-project.pages.dev/recipes/61): 아시안 · 45분 · 보통
+- [팟타이 레시피](https://meal-project.pages.dev/recipes/62): 아시안 · 45분 · 보통
+- [카레 레시피](https://meal-project.pages.dev/recipes/63): 아시안 · 40분 · 쉬움
+- [분짜 레시피](https://meal-project.pages.dev/recipes/64): 아시안 · 40분 · 보통
+- [나시고렝 레시피](https://meal-project.pages.dev/recipes/65): 아시안 · 20분 · 쉬움
+
+## 저녁 레시피
+
+- [삼겹살 레시피](https://meal-project.pages.dev/recipes/66): 고기 · 20분 · 쉬움
+- [갈비 레시피](https://meal-project.pages.dev/recipes/67): 고기 · 90분 · 보통
+- [곱창 레시피](https://meal-project.pages.dev/recipes/68): 고기 · 30분 · 보통
+- [양꼬치 레시피](https://meal-project.pages.dev/recipes/69): 고기 · 40분 · 보통
+- [차돌박이 레시피](https://meal-project.pages.dev/recipes/70): 고기 · 15분 · 쉬움
+- [치킨 레시피](https://meal-project.pages.dev/recipes/71): 고기 · 70분 · 어려움
+- [보쌈 레시피](https://meal-project.pages.dev/recipes/72): 한식 · 80분 · 보통
+- [족발 레시피](https://meal-project.pages.dev/recipes/73): 한식 · 240분 · 어려움
+- [감자탕 레시피](https://meal-project.pages.dev/recipes/74): 한식 · 180분 · 보통
+- [닭볶음탕 레시피](https://meal-project.pages.dev/recipes/75): 한식 · 50분 · 쉬움
+- [찜닭 레시피](https://meal-project.pages.dev/recipes/76): 한식 · 50분 · 보통
+- [파전 레시피](https://meal-project.pages.dev/recipes/77): 한식 · 25분 · 쉬움
+- [아귀찜 레시피](https://meal-project.pages.dev/recipes/78): 한식 · 50분 · 어려움
+- [김치찜 레시피](https://meal-project.pages.dev/recipes/79): 한식 · 70분 · 쉬움
+- [마라샹궈 레시피](https://meal-project.pages.dev/recipes/80): 중식 · 30분 · 보통
+- [훠궈 레시피](https://meal-project.pages.dev/recipes/81): 중식 · 40분 · 쉬움
+- [깐풍기 레시피](https://meal-project.pages.dev/recipes/82): 중식 · 40분 · 보통
+- [양장피 레시피](https://meal-project.pages.dev/recipes/83): 중식 · 60분 · 어려움
+- [딤섬 레시피](https://meal-project.pages.dev/recipes/84): 중식 · 50분 · 보통
+- [샤브샤브 레시피](https://meal-project.pages.dev/recipes/85): 일식 · 30분 · 쉬움
+- [스키야키 레시피](https://meal-project.pages.dev/recipes/86): 일식 · 30분 · 보통
+- [모둠 사시미 레시피](https://meal-project.pages.dev/recipes/87): 일식 · 20분 · 보통
+- [오코노미야키 레시피](https://meal-project.pages.dev/recipes/88): 일식 · 30분 · 보통
+- [야키토리 레시피](https://meal-project.pages.dev/recipes/89): 일식 · 40분 · 보통
+- [텐동 레시피](https://meal-project.pages.dev/recipes/90): 일식 · 40분 · 어려움
+- [스테이크 레시피](https://meal-project.pages.dev/recipes/91): 양식 · 45분 · 보통
+- [감바스 레시피](https://meal-project.pages.dev/recipes/92): 양식 · 20분 · 쉬움
+- [라자냐 레시피](https://meal-project.pages.dev/recipes/93): 양식 · 80분 · 어려움
+- [피시 앤 칩스 레시피](https://meal-project.pages.dev/recipes/94): 양식 · 50분 · 보통
+- [월남쌈 레시피](https://meal-project.pages.dev/recipes/95): 가볍게 · 30분 · 쉬움
+- [포케 레시피](https://meal-project.pages.dev/recipes/96): 가볍게 · 20분 · 쉬움
+- [두부조림 레시피](https://meal-project.pages.dev/recipes/97): 가볍게 · 25분 · 쉬움
+- [도토리묵무침 레시피](https://meal-project.pages.dev/recipes/98): 가볍게 · 15분 · 쉬움
+- [닭가슴살 샐러드 레시피](https://meal-project.pages.dev/recipes/99): 가볍게 · 25분 · 쉬움
+
+## 그 밖의 안내
+
+- [개인정보처리방침](https://meal-project.pages.dev/privacy)
+- [사이트맵](https://meal-project.pages.dev/sitemap.xml)
