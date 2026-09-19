@@ -181,12 +181,33 @@
   .h-meta { grid-area: meta; font-size: 13px; color: var(--muted); }
   .h-time { grid-area: time; font-size: 13px; color: var(--muted); white-space: nowrap; }
 
-  /* 레시피 모음 바로가기 (자바스크립트 없이도 보이는 글과 링크라 검색 로봇도 읽음) */
-  .recipe-shelf { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 10px; }
-  .recipe-shelf h2 { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 24px; }
-  .recipe-shelf p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted); word-break: keep-all; }
-  .recipe-shelf-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .recipe-shelf-links .ico { color: var(--accent); }
+  /* 오른쪽 메뉴판: 머리글의 "레시피 메뉴" 버튼을 누르면 오른쪽에서 나옴
+     (닫혀 있어도 링크는 페이지 안에 있어서 검색 로봇이 읽음) */
+  .menu-btn .ico { color: var(--accent); }
+  dialog.side-menu { position: fixed; inset: 0 0 0 auto; width: min(340px, 88vw); height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: none; border-left: 3px solid var(--bubble-line); border-radius: 26px 0 0 26px; box-shadow: -8px 0 0 var(--shadow); overflow-y: auto; }
+  dialog.side-menu[open] { animation: side-menu-in 0.22s ease-out; }
+  @keyframes side-menu-in { from { transform: translateX(100%); } to { transform: none; } }
+  body:has(dialog.side-menu[open]) { overflow: hidden; }
+  .side-menu-inner { min-height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; padding: 0 22px 28px; }
+  .side-menu .gingham { height: 14px; margin: 0 -22px; background-size: 18px 18px; border-radius: 23px 0 0 0; }
+  .side-menu-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .side-menu-head h2 { margin: 0; }
+  .side-menu-lead { margin: -8px 0 0; font-size: 15px; line-height: 1.6; color: var(--muted); word-break: keep-all; }
+  .side-menu nav { display: flex; flex-direction: column; gap: 18px; }
+  .side-menu h3 { margin: 0 0 8px; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 16px; color: var(--muted); }
+  .side-menu-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .side-menu-list a { min-height: 50px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border: 2px solid var(--border-soft); border-radius: 16px; background: var(--bg); color: var(--text); font-family: 'Jua', sans-serif; font-size: 18px; text-decoration: none; }
+  .side-menu-list a::after { content: "›"; margin-left: auto; font-size: 22px; color: var(--muted); }
+  .side-menu-list a:hover { border-color: var(--accent); }
+  .side-menu-list a:focus-visible, .side-menu .icon-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .side-menu-list .ico { color: var(--accent); }
+  @media (max-width: 699px) {
+    .menu-btn { width: 44px; padding: 0; justify-content: center; }
+    .menu-btn-label { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    dialog.side-menu[open] { animation: none; }
+  }
 
   @media (min-width: 700px) {
     .filters button { padding: 0 16px; font-size: 16px; }
@@ -208,8 +229,6 @@
     .history-head { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; }
     .history h2 { font-size: 30px; }
     .history-note { font-size: 15px; }
-    .recipe-shelf { margin-top: 56px; }
-    .recipe-shelf h2 { font-size: 30px; }
     .history-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
     .history-item { grid-template-columns: 40px minmax(0, 1fr); grid-template-areas: "icon time" "menu menu" "meta meta"; row-gap: 6px; padding: 16px 18px; border-radius: 22px; }
     .h-time { justify-self: end; }
@@ -234,7 +253,6 @@
     .note { display: flex; }
     .doodle-mid { display: block; }
     .history { max-width: 1152px; }
-    .recipe-shelf { max-width: 1152px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -295,6 +313,10 @@
         <button class="icon-btn" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
           <svg class="ico icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
           <svg class="ico icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+        <button class="pill-btn menu-btn" id="menu-open" type="button" aria-haspopup="dialog" aria-controls="side-menu" aria-label="레시피 메뉴 열기">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          <span class="menu-btn-label">레시피 메뉴</span>
         </button>
       </div>
     </header>
@@ -463,18 +485,6 @@
       <ol class="history-list" id="history-list"></ol>
     </section>
 
-    <section class="recipe-shelf" aria-labelledby="recipe-shelf-title">
-      <h2 id="recipe-shelf-title">냥셰프 레시피 모음</h2>
-      <p>추천받은 메뉴를 집에서 만들어 보고 싶다면? 한식, 중식, 일식, 양식, 분식까지 집밥 레시피를 재료와 만드는 법, 냥셰프 팁과 함께 정리해 뒀어요. 냉장고에 있는 재료로 만들 수 있는 메뉴도 찾아 드려요.</p>
-      <nav class="recipe-shelf-links" aria-label="끼니별 레시피">
-        <a class="pill-btn" href="fridge.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"></rect><path d="M5 10h14M9 5v2M9 13v3"></path></svg>냉장고 재료로 찾기</a>
-        <a class="pill-btn" href="recipes/#breakfast"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>아침 레시피</a>
-        <a class="pill-btn" href="recipes/#lunch"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18a9 7 0 0 1-18 0z"></path><path d="M8 8c0-1.5 1-2 1-3.5M12 8c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"></path></svg>점심 레시피</a>
-        <a class="pill-btn" href="recipes/#dinner"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>저녁 레시피</a>
-        <a class="pill-btn" href="recipes/">전체 레시피 보기</a>
-      </nav>
-    </section>
-
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
         <a href="recipes/">냥셰프 레시피 모음</a>
@@ -487,6 +497,43 @@
   </div>
 
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
+
+  <dialog class="side-menu" id="side-menu" aria-labelledby="side-menu-title">
+    <div class="side-menu-inner">
+      <div class="gingham" aria-hidden="true"></div>
+      <div class="side-menu-head">
+        <h2 id="side-menu-title">냥셰프 메뉴판</h2>
+        <button class="icon-btn" id="menu-close" type="button" aria-label="메뉴 닫기">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+      </div>
+      <p class="side-menu-lead">추천받은 메뉴를 집에서 만들어 보고 싶다면? 한식, 중식, 일식, 양식, 분식까지 집밥 레시피를 재료와 만드는 법, 냥셰프 팁과 함께 정리해 뒀어요.</p>
+      <nav aria-label="냥셰프 메뉴판">
+        <section>
+          <h3>레시피 모음</h3>
+          <ul class="side-menu-list">
+            <li><a href="recipes/#breakfast" data-track="side_menu" data-track-label="아침 레시피"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>아침 레시피</a></li>
+            <li><a href="recipes/#lunch" data-track="side_menu" data-track-label="점심 레시피"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18a9 7 0 0 1-18 0z"></path><path d="M8 8c0-1.5 1-2 1-3.5M12 8c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"></path></svg>점심 레시피</a></li>
+            <li><a href="recipes/#dinner" data-track="side_menu" data-track-label="저녁 레시피"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>저녁 레시피</a></li>
+            <li><a href="recipes/" data-track="side_menu" data-track-label="전체 레시피"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"></path><path d="M4 19a2 2 0 0 1 2-2h13"></path><path d="M9 7h6"></path></svg>전체 레시피 보기</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>찾아보기</h3>
+          <ul class="side-menu-list">
+            <li><a href="fridge.html" data-track="side_menu" data-track-label="냉장고 털기"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"></rect><path d="M5 10h14M9 5v2M9 13v3"></path></svg>냉장고 털기</a></li>
+            <li><a href="board.html" data-track="side_menu" data-track-label="메뉴 건의함"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"></path><path d="M13 7l4 4"></path></svg>메뉴 건의함</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>안내</h3>
+          <ul class="side-menu-list">
+            <li><a href="about.html" data-track="side_menu" data-track-label="사이트 소개"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5v.5"></path></svg>사이트 소개</a></li>
+          </ul>
+        </section>
+      </nav>
+    </div>
+  </dialog>
 
   <dialog id="auth-dialog">
     <form id="auth-form">
@@ -572,6 +619,20 @@
   const chefBubbleEl = document.getElementById('chef-bubble');
   const recipeEl = document.getElementById('recipe');
   const recipeBodyEl = document.getElementById('recipe-body');
+
+
+  // ── 오른쪽 메뉴판 ─────────────────────────────────────
+
+  const sideMenuEl = document.getElementById('side-menu');
+  document.getElementById('menu-open').addEventListener('click', () => {
+    sideMenuEl.showModal();
+    track('open_side_menu');
+  });
+  document.getElementById('menu-close').addEventListener('click', () => sideMenuEl.close());
+  // 메뉴판 바깥(어두운 부분)을 누르면 닫힘
+  sideMenuEl.addEventListener('click', e => {
+    if (e.target === sideMenuEl) sideMenuEl.close();
+  });
 
   let MEALS = {};             // Supabase menus 테이블에서 불러옴: 끼니 → 종류 → [{ id, meal, category, menu, photo }]
   let meal;
