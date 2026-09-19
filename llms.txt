@@ -10,6 +10,7 @@
 
 - [메뉴 추천 (홈)](https://meal-project.pages.dev/): 냥셰프에게 오늘의 메뉴 추천받기
 - [레시피 모음](https://meal-project.pages.dev/recipes/): 끼니와 종류별 전체 레시피 목록
+- [냉장고 털기](https://meal-project.pages.dev/fridge): 집에 있는 재료를 고르면 바로 만들 수 있는 레시피를 찾아 주는 도구
 - [사이트 소개](https://meal-project.pages.dev/about): 사이트가 하는 일, 사진 출처, 문의처
 
 ## 아침 레시피

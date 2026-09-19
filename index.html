@@ -66,7 +66,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -138,6 +138,9 @@
   .reactions button[data-reaction="like"][aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 700; }
   .reactions button[data-reaction="dislike"][aria-pressed="true"] { background: var(--sunk); border-color: var(--muted); color: var(--muted); text-decoration: line-through; }
   .credit { align-self: flex-end; font-size: 12px; }
+  .share-btn { height: 44px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); color: var(--text); font-family: inherit; font-size: 15px; cursor: pointer; }
+  .share-btn:hover { border-color: var(--text); }
+  .share-btn .ico { width: 18px; height: 18px; color: var(--accent); }
 
   /* 레시피 */
   .recipe { padding-top: 12px; border-top: 2px dashed var(--border); }
@@ -199,6 +202,7 @@
     .cat-line { font-size: 23px; }
     .result-actions { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
     .reactions button { flex: none; font-size: 16px; }
+    .share-btn { font-size: 16px; }
     .credit { align-self: auto; margin-left: auto; font-size: 13px; }
     .history { margin-top: 56px; gap: 16px; }
     .history-head { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -418,6 +422,10 @@
                 별로예요
               </button>
             </div>
+            <button class="share-btn" id="share-btn" type="button" hidden>
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>
+              친구에게 공유하기
+            </button>
             <a class="credit" id="credit" target="_blank" rel="noopener" hidden>사진: 위키미디어 공용</a>
           </div>
 
@@ -457,8 +465,9 @@
 
     <section class="recipe-shelf" aria-labelledby="recipe-shelf-title">
       <h2 id="recipe-shelf-title">냥셰프 레시피 모음</h2>
-      <p>추천받은 메뉴를 집에서 만들어 보고 싶다면? 한식, 중식, 일식, 양식, 분식까지 집밥 레시피를 재료와 만드는 법, 냥셰프 팁과 함께 정리해 뒀어요.</p>
+      <p>추천받은 메뉴를 집에서 만들어 보고 싶다면? 한식, 중식, 일식, 양식, 분식까지 집밥 레시피를 재료와 만드는 법, 냥셰프 팁과 함께 정리해 뒀어요. 냉장고에 있는 재료로 만들 수 있는 메뉴도 찾아 드려요.</p>
       <nav class="recipe-shelf-links" aria-label="끼니별 레시피">
+        <a class="pill-btn" href="fridge.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"></rect><path d="M5 10h14M9 5v2M9 13v3"></path></svg>냉장고 재료로 찾기</a>
         <a class="pill-btn" href="recipes/#breakfast"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>아침 레시피</a>
         <a class="pill-btn" href="recipes/#lunch"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18a9 7 0 0 1-18 0z"></path><path d="M8 8c0-1.5 1-2 1-3.5M12 8c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"></path></svg>점심 레시피</a>
         <a class="pill-btn" href="recipes/#dinner"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>저녁 레시피</a>
@@ -469,6 +478,7 @@
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
         <a href="recipes/">냥셰프 레시피 모음</a>
+        <a href="fridge.html">냉장고 털기</a>
         <a href="about.html">사이트 소개</a>
         <a href="privacy.html">개인정보처리방침</a>
       </nav>
@@ -533,7 +543,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script src="theme.js?v=1"></script>
-<script src="common.js?v=4"></script>
+<script src="site.js?v=1"></script>
+<script src="common.js?v=5"></script>
 <script>
   // 추천 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
 
@@ -553,6 +564,7 @@
   const catLineEl = document.getElementById('cat-line');
   const creditEl = document.getElementById('credit');
   const reactionsEl = document.getElementById('reactions');
+  const shareBtn = document.getElementById('share-btn');
   const historyListEl = document.getElementById('history-list');
   const historyNoteEl = document.getElementById('history-note');
   const bowlTpl = document.getElementById('bowl-art');
@@ -705,7 +717,10 @@
     pickLabelEl.textContent = `냥셰프에게 ${meal} 추천받기`;
 
     filtersEl.replaceChildren(...['전체', ...Object.keys(MEALS[meal])].map(c =>
-      makeToggle(c, c === category, () => { category = c; })
+      makeToggle(c, c === category, () => {
+        category = c;
+        track('select_category', { meal, category: c });
+      })
     ));
 
     emptyPhoto('버튼을 누르면 냥셰프가 골라줘요');
@@ -784,6 +799,7 @@
       setRolling(false);
       pickLabelEl.textContent = '한 번 더 추천받기';
       savePick(pick);
+      track('pick_menu', { meal: pick.meal, category: pick.category, menu_name: pick.menu, filter: category });
     };
 
     current = null;
@@ -812,6 +828,7 @@
 
   function renderReactions() {
     reactionsEl.hidden = !current;
+    shareBtn.hidden = !current;
     const mine = current ? reactions.get(current.id) : undefined;
     reactionsEl.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.reaction === mine));
     setMood(mine);
@@ -844,7 +861,38 @@
       setLocalReaction(item.id, prev);
       sayBubble(DEFAULT_BUBBLE);
       alert('저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+      return;
     }
+    track('reaction', { reaction: next || 'cancel', menu_name: item.menu });
+  });
+
+
+  // ── 친구에게 공유하기 ─────────────────────────────────
+
+  // build-pages.ps1 이 만든 레시피 페이지 번호 목록. 페이지가 있으면 그 주소를 공유함
+  // (카톡 미리보기에 음식 사진이 뜸), 없으면 첫 화면 주소를 공유함
+  let recipePagesLoad = null;
+  function loadRecipePages() {
+    if (!recipePagesLoad) {
+      recipePagesLoad = fetch('recipes/pages.json')
+        .then(res => (res.ok ? res.json() : []))
+        .then(ids => new Set(Array.isArray(ids) ? ids : []))
+        .catch(() => new Set());
+    }
+    return recipePagesLoad;
+  }
+
+  shareBtn.addEventListener('click', async () => {
+    if (!current) return;
+    const item = current;
+    const pages = await loadRecipePages();
+    shareLink({
+      title: `${item.menu} | 냥셰프의 오늘 뭐 먹지`,
+      text: `오늘 ${item.meal} 메뉴는 ${josa(item.menu, '이다냥', '다냥')}! 냥셰프가 골라 준 메뉴와 레시피 보러 가기`,
+      url: pages.has(item.id) ? `${SITE_URL}/recipes/${item.id}` : `${SITE_URL}/`,
+      contentType: 'menu',
+      itemId: item.menu,
+    });
   });
 
 
@@ -861,7 +909,10 @@
 
   // 펼칠 때 처음 한 번만 Supabase에서 불러옴
   recipeEl.addEventListener('toggle', () => {
-    if (recipeEl.open && current) showRecipe(current);
+    if (recipeEl.open && current) {
+      showRecipe(current);
+      track('open_recipe', { menu_name: current.menu, meal: current.meal });
+    }
   });
 
   async function showRecipe(item) {
@@ -909,6 +960,8 @@
     a.href = `https://www.10000recipe.com/recipe/list.html?q=${encodeURIComponent(item.menu)}`;
     a.target = '_blank';
     a.rel = 'noopener';
+    a.dataset.track = 'click_more_recipes';
+    a.dataset.trackLabel = item.menu;
     return a;
   }
 
@@ -934,6 +987,7 @@
     a.href = url;
     a.target = '_blank';
     a.rel = 'sponsored nofollow noopener';
+    a.dataset.track = 'click_shop';
     a.append(icon('cart'), '쿠팡에서 재료 보기');
     box.append(a, textEl('p', 'ad-note', '이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.'));
     return box;
@@ -992,6 +1046,8 @@
     // 메뉴마다 따로 만든 레시피 페이지 (recipes/메뉴번호.html)
     const pageLink = textEl('a', 'recipe-more', '레시피 페이지로 크게 보기 →');
     pageLink.href = `recipes/${item.id}.html`;
+    pageLink.dataset.track = 'go_recipe_page';
+    pageLink.dataset.trackLabel = item.menu;
     const links = document.createElement('div');
     links.className = 'recipe-links';
     links.append(pageLink, recipeSearchLink(item));
@@ -1098,7 +1154,10 @@
     const byTime = mealByTime();
     const initialMeal = mealNames.includes(byTime) ? byTime : mealNames[0];
     mealTabsEl.append(...mealNames.map(m =>
-      makeToggle(m, m === initialMeal, () => selectMeal(m), MEAL_ICON[m] || 'bowl')
+      makeToggle(m, m === initialMeal, () => {
+        selectMeal(m);
+        track('select_meal', { meal: m });
+      }, MEAL_ICON[m] || 'bowl')
     ));
     selectMeal(initialMeal);
     btn.disabled = false;

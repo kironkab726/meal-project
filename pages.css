@@ -45,6 +45,40 @@ a.chip:hover { color: var(--text); }
 
 .search-more { align-self: flex-end; font-size: 14px; }
 
+/* 제목 아래 버튼 줄 (레시피 공유하기 등) */
+.page-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.page-actions .ico { color: var(--accent); }
+
+/* 냉장고 털기 */
+.fridge-note { margin: 6px 0 0; font-size: 14px; color: var(--muted); word-break: keep-all; }
+.fridge-picker { display: flex; flex-direction: column; gap: 18px; }
+.fridge-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.fridge-head h2 { margin: 0; }
+.text-btn { min-height: 44px; padding: 0 4px; border: none; background: none; color: var(--link); font-family: inherit; font-size: 15px; text-decoration: underline; cursor: pointer; }
+.fridge-group h3 { margin: 0 0 8px; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 17px; color: var(--muted); }
+.fridge-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.fridge-chip { min-height: 44px; padding: 0 16px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); color: var(--text); font-family: inherit; font-size: 15px; cursor: pointer; }
+.fridge-chip:hover { border-color: var(--text); }
+.fridge-chip[aria-pressed="true"] { background: var(--chip-on-bg); border-color: var(--chip-on-border); color: var(--chip-on-text); font-weight: 700; }
+.fridge-chip:focus-visible, .text-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.fridge-status { margin: 0; font-size: 15px; color: var(--muted); word-break: keep-all; }
+.fridge-status:empty { display: none; }
+.fridge-results { display: flex; flex-direction: column; gap: 22px; }
+.fridge-empty { margin: 0; padding: 22px 18px; border: 2px dashed var(--border); border-radius: 18px; text-align: center; color: var(--muted); word-break: keep-all; }
+.fridge-section h2 { font-size: 22px; }
+.fridge-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.fridge-list a { height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: 2px solid var(--border-soft); border-radius: 16px; background: var(--paper); color: var(--text); text-decoration: none; }
+.fridge-list a:hover { border-color: var(--accent); }
+.fridge-list .name { font-family: 'Jua', sans-serif; font-size: 20px; line-height: 1.25; word-break: keep-all; }
+.fridge-list .meta { font-size: 13px; color: var(--muted); }
+.fridge-list .have, .fridge-list .need { font-size: 14px; line-height: 1.5; word-break: keep-all; }
+.fridge-list strong { font-weight: 700; }
+.fridge-list .need strong { color: var(--quote); }
+.fridge-more summary { min-height: 44px; display: flex; align-items: center; font-family: 'Jua', sans-serif; font-size: 19px; cursor: pointer; }
+.fridge-more[open] summary { margin-bottom: 10px; }
+.fridge-section .fridge-more { margin-top: 10px; }
+.fridge-section .fridge-more summary { font-family: inherit; font-size: 15px; color: var(--link); text-decoration: underline; }
+
 /* 쿠팡 파트너스 안내 문구와 재료 버튼 (모양은 style.css) */
 .page-lead + .ad-note { margin-top: 8px; }
 .ingredient-list + .shop-box { margin-top: 16px; }

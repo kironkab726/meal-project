@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S0G51XCDTL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S0G51XCDTL');
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "yk8aoaocif");
+</script>
+<script>
+  // 대표 주소는 Cloudflare Pages. 예전 주소(깃허브, Vercel)로 들어오면 같은 페이지의 새 주소로 옮겨 줌
+  (function () {
+    var host = location.hostname;
+    var path = location.pathname;
+    if (host === 'kironkab726.github.io') path = path.replace(/^\/meal-project/, '');
+    else if (!/\.vercel\.app$/.test(host)) return;
+    location.replace('https://meal-project.pages.dev' + path + location.search + location.hash);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>냉장고 털기: 있는 재료로 메뉴 찾기 | 냥셰프의 오늘 뭐 먹지</title>
+<meta name="description" content="집에 있는 재료를 고르면 냥셰프 집밥 레시피 중에서 바로 만들 수 있는 메뉴와, 한두 가지만 더 있으면 되는 메뉴를 찾아 줘요. 김치, 달걀, 두부, 돼지고기로 오늘 뭐 먹을지 정해 보세요.">
+<link rel="canonical" href="https://meal-project.pages.dev/fridge">
+<meta property="og:url" content="https://meal-project.pages.dev/fridge">
+<meta name="robots" content="max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="냥셰프의 오늘 뭐 먹지">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="냉장고 털기: 있는 재료로 메뉴 찾기 | 냥셰프의 오늘 뭐 먹지">
+<meta property="og:description" content="집에 있는 재료를 고르면 냥셰프 집밥 레시피 중에서 바로 만들 수 있는 메뉴와, 한두 가지만 더 있으면 되는 메뉴를 찾아 줘요. 김치, 달걀, 두부, 돼지고기로 오늘 뭐 먹을지 정해 보세요.">
+<meta property="og:image" content="https://meal-project.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="냥셰프 레시피" href="rss.xml">
+<script>
+  // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
+  (function () {
+    let theme = null;
+    try { theme = localStorage.getItem('menu-picker-theme'); } catch (e) {}
+    if (theme !== 'dark' && theme !== 'light') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
+<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="pages.css?v=3">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://meal-project.pages.dev/"},{"@type":"ListItem","position":2,"name":"냉장고 털기","item":"https://meal-project.pages.dev/fridge"}]}</script>
+</head>
+<body>
+
+  <div class="gingham gingham-top" aria-hidden="true"></div>
+
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="./">
+        <svg class="brand-cat" viewBox="0 0 120 120" aria-hidden="true">
+          <path class="ink" d="M22 64 L28 22 L54 46 Z" fill="#F2B872"></path>
+          <path class="ink" d="M98 64 L92 22 L66 46 Z" fill="#F2B872"></path>
+          <ellipse class="ink" cx="60" cy="72" rx="44" ry="36" fill="#F2B872"></ellipse>
+          <circle class="ink" cx="43" cy="30" r="15" fill="#FFFFFF"></circle>
+          <circle class="ink" cx="60" cy="21" r="18" fill="#FFFFFF"></circle>
+          <circle class="ink" cx="77" cy="30" r="15" fill="#FFFFFF"></circle>
+          <rect class="ink" x="38" y="32" width="44" height="18" rx="5" fill="#FFFFFF"></rect>
+          <path class="ink-line" d="M40 72 Q47 65 54 72"></path>
+          <path class="ink-line" d="M66 72 Q73 65 80 72"></path>
+          <ellipse cx="36" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
+          <ellipse cx="84" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
+          <path d="M56 80 L64 80 L60 85 Z" fill="#E7837A"></path>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">냥셰프<span class="wide-only">의 오늘 뭐 먹지</span></span>
+          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">오늘 뭐 먹지</span></span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a class="pill-btn" href="./">메뉴 추천받기</a>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
+          <svg class="ico icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          <svg class="ico icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <nav class="breadcrumb" aria-label="현재 위치">
+        <a href="./">홈</a><span aria-hidden="true">›</span>
+        <span>냉장고 털기</span>
+      </nav>
+
+      <div>
+        <h1 class="page-title">냉장고 털기</h1>
+        <p class="page-lead">집에 있는 재료를 골라 주세요. 냥셰프 레시피 99가지 중에서 지금 만들 수 있는 메뉴를 찾아 줄게요.</p>
+        <p class="fridge-note">소금·설탕·간장·고추장·된장·식용유·마늘 같은 기본 양념은 집에 있다고 칠게요.</p>
+      </div>
+
+      <section class="card fridge-picker" aria-labelledby="fridge-picker-title">
+        <div class="fridge-head">
+          <h2 id="fridge-picker-title">우리 집 냉장고에는…</h2>
+          <button class="text-btn" id="fridge-reset" type="button" hidden>다 지우기</button>
+        </div>
+        <div class="fridge-group" role="group" aria-labelledby="fridge-group-1">
+          <h3 id="fridge-group-1">고기&#183;달걀</h3>
+          <div class="fridge-chips">
+            <button class="fridge-chip" type="button" data-key="달걀" aria-pressed="false">달걀</button>
+            <button class="fridge-chip" type="button" data-key="돼지고기" aria-pressed="false">돼지고기</button>
+            <button class="fridge-chip" type="button" data-key="소고기" aria-pressed="false">소고기</button>
+            <button class="fridge-chip" type="button" data-key="닭고기" aria-pressed="false">닭고기</button>
+            <button class="fridge-chip" type="button" data-key="햄&#183;소시지" aria-pressed="false">햄&#183;소시지</button>
+          </div>
+        </div>
+        <div class="fridge-group" role="group" aria-labelledby="fridge-group-2">
+          <h3 id="fridge-group-2">해산물</h3>
+          <div class="fridge-chips">
+            <button class="fridge-chip" type="button" data-key="새우" aria-pressed="false">새우</button>
+            <button class="fridge-chip" type="button" data-key="오징어" aria-pressed="false">오징어</button>
+            <button class="fridge-chip" type="button" data-key="조개" aria-pressed="false">조개</button>
+            <button class="fridge-chip" type="button" data-key="어묵" aria-pressed="false">어묵</button>
+            <button class="fridge-chip" type="button" data-key="참치캔" aria-pressed="false">참치캔</button>
+            <button class="fridge-chip" type="button" data-key="생선회" aria-pressed="false">생선회</button>
+          </div>
+        </div>
+        <div class="fridge-group" role="group" aria-labelledby="fridge-group-3">
+          <h3 id="fridge-group-3">채소</h3>
+          <div class="fridge-chips">
+            <button class="fridge-chip" type="button" data-key="양파" aria-pressed="false">양파</button>
+            <button class="fridge-chip" type="button" data-key="대파&#183;쪽파" aria-pressed="false">대파&#183;쪽파</button>
+            <button class="fridge-chip" type="button" data-key="감자" aria-pressed="false">감자</button>
+            <button class="fridge-chip" type="button" data-key="고구마" aria-pressed="false">고구마</button>
+            <button class="fridge-chip" type="button" data-key="당근" aria-pressed="false">당근</button>
+            <button class="fridge-chip" type="button" data-key="애호박" aria-pressed="false">애호박</button>
+            <button class="fridge-chip" type="button" data-key="버섯" aria-pressed="false">버섯</button>
+            <button class="fridge-chip" type="button" data-key="양배추" aria-pressed="false">양배추</button>
+            <button class="fridge-chip" type="button" data-key="배추" aria-pressed="false">배추</button>
+            <button class="fridge-chip" type="button" data-key="콩나물" aria-pressed="false">콩나물</button>
+            <button class="fridge-chip" type="button" data-key="숙주" aria-pressed="false">숙주</button>
+            <button class="fridge-chip" type="button" data-key="시금치" aria-pressed="false">시금치</button>
+            <button class="fridge-chip" type="button" data-key="부추" aria-pressed="false">부추</button>
+            <button class="fridge-chip" type="button" data-key="청경채" aria-pressed="false">청경채</button>
+            <button class="fridge-chip" type="button" data-key="오이" aria-pressed="false">오이</button>
+            <button class="fridge-chip" type="button" data-key="토마토" aria-pressed="false">토마토</button>
+            <button class="fridge-chip" type="button" data-key="깻잎" aria-pressed="false">깻잎</button>
+            <button class="fridge-chip" type="button" data-key="상추&#183;양상추" aria-pressed="false">상추&#183;양상추</button>
+            <button class="fridge-chip" type="button" data-key="청양고추" aria-pressed="false">청양고추</button>
+            <button class="fridge-chip" type="button" data-key="파프리카" aria-pressed="false">파프리카</button>
+            <button class="fridge-chip" type="button" data-key="무" aria-pressed="false">무</button>
+          </div>
+        </div>
+        <div class="fridge-group" role="group" aria-labelledby="fridge-group-4">
+          <h3 id="fridge-group-4">밥&#183;면&#183;빵&#183;떡</h3>
+          <div class="fridge-chips">
+            <button class="fridge-chip" type="button" data-key="밥" aria-pressed="false">밥</button>
+            <button class="fridge-chip" type="button" data-key="쌀" aria-pressed="false">쌀</button>
+            <button class="fridge-chip" type="button" data-key="라면" aria-pressed="false">라면</button>
+            <button class="fridge-chip" type="button" data-key="국수&#183;소면" aria-pressed="false">국수&#183;소면</button>
+            <button class="fridge-chip" type="button" data-key="쌀국수 면" aria-pressed="false">쌀국수 면</button>
+            <button class="fridge-chip" type="button" data-key="파스타면" aria-pressed="false">파스타면</button>
+            <button class="fridge-chip" type="button" data-key="당면" aria-pressed="false">당면</button>
+            <button class="fridge-chip" type="button" data-key="떡" aria-pressed="false">떡</button>
+            <button class="fridge-chip" type="button" data-key="만두피" aria-pressed="false">만두피</button>
+            <button class="fridge-chip" type="button" data-key="식빵&#183;빵" aria-pressed="false">식빵&#183;빵</button>
+          </div>
+        </div>
+        <div class="fridge-group" role="group" aria-labelledby="fridge-group-5">
+          <h3 id="fridge-group-5">그 밖의 재료</h3>
+          <div class="fridge-chips">
+            <button class="fridge-chip" type="button" data-key="김치" aria-pressed="false">김치</button>
+            <button class="fridge-chip" type="button" data-key="두부" aria-pressed="false">두부</button>
+            <button class="fridge-chip" type="button" data-key="치즈" aria-pressed="false">치즈</button>
+            <button class="fridge-chip" type="button" data-key="우유" aria-pressed="false">우유</button>
+            <button class="fridge-chip" type="button" data-key="버터" aria-pressed="false">버터</button>
+            <button class="fridge-chip" type="button" data-key="김" aria-pressed="false">김</button>
+            <button class="fridge-chip" type="button" data-key="미역" aria-pressed="false">미역</button>
+            <button class="fridge-chip" type="button" data-key="카레" aria-pressed="false">카레</button>
+            <button class="fridge-chip" type="button" data-key="토마토소스" aria-pressed="false">토마토소스</button>
+          </div>
+        </div>
+      </section>
+
+      <p class="fridge-status" id="fridge-status" role="status"></p>
+      <div class="fridge-results" id="fridge-results">
+        <p class="fridge-empty">재료를 하나 이상 고르면 여기에 만들 수 있는 메뉴가 나와요.</p>
+      </div>
+
+      <script type="application/json" id="fridge-data">{"recipes":[{"id":1,"name":"누룽지","meal":"아침","category":"한식","minutes":15,"difficulty":"쉬움","need":[],"needExtra":["누룽지"],"nice":[],"niceExtra":[]},{"id":2,"name":"전복죽","meal":"아침","category":"한식","minutes":40,"difficulty":"보통","need":["쌀"],"needExtra":["전복"],"nice":[],"niceExtra":[]},{"id":3,"name":"간장계란밥","meal":"아침","category":"한식","minutes":10,"difficulty":"쉬움","need":["밥","달걀"],"needExtra":[],"nice":["김","버터"],"niceExtra":[]},{"id":4,"name":"계란말이","meal":"아침","category":"한식","minutes":15,"difficulty":"보통","need":["달걀"],"needExtra":[],"nice":["대파·쪽파","당근"],"niceExtra":[]},{"id":5,"name":"미역국","meal":"아침","category":"한식","minutes":40,"difficulty":"쉬움","need":["미역","소고기"],"needExtra":[],"nice":[],"niceExtra":[]},{"id":6,"name":"황태해장국","meal":"아침","category":"한식","minutes":30,"difficulty":"쉬움","need":["무","달걀"],"needExtra":["황태채"],"nice":["대파·쪽파"],"niceExtra":[]},{"id":7,"name":"떡국","meal":"아침","category":"한식","minutes":25,"difficulty":"쉬움","need":["떡","소고기","달걀"],"needExtra":[],"nice":["대파·쪽파","김"],"niceExtra":[]},{"id":8,"name":"토스트","meal":"아침","category":"양식","minutes":10,"difficulty":"쉬움","need":["식빵·빵"],"needExtra":[],"nice":["버터"],"niceExtra":["딸기잼"]},{"id":9,"name":"프렌치토스트","meal":"아침","category":"양식","minutes":15,"difficulty":"쉬움","need":["식빵·빵","달걀","우유"],"needExtra":[],"nice":["버터"],"niceExtra":[]},{"id":10,"name":"팬케이크","meal":"아침","category":"양식","minutes":20,"difficulty":"쉬움","need":["달걀","우유"],"needExtra":["베이킹파우더"],"nice":["버터"],"niceExtra":[]},{"id":11,"name":"오믈렛","meal":"아침","category":"양식","minutes":10,"difficulty":"보통","need":["달걀"],"needExtra":[],"nice":["우유","버터","치즈","햄·소시지"],"niceExtra":[]},{"id":12,"name":"에그 베네딕트","meal":"아침","category":"양식","minutes":30,"difficulty":"어려움","need":["달걀","햄·소시지","버터"],"needExtra":["잉글리시 머핀"],"nice":[],"niceExtra":[]},{"id":13,"name":"베이글","meal":"아침","category":"양식","minutes":10,"difficulty":"쉬움","need":[],"needExtra":["베이글","크림치즈"],"nice":["햄·소시지","양파"],"niceExtra":[]},{"id":14,"name":"크루아상","meal":"아침","category":"양식","minutes":10,"difficulty":"쉬움","need":["달걀","치즈","햄·소시지"],"needExtra":["크루아상"],"nice":["상추·양상추"],"niceExtra":[]},{"id":15,"name":"스크램블 에그","meal":"아침","category":"양식","minutes":5,"difficulty":"쉬움","need":["달걀"],"needExtra":[],"nice":["우유","버터"],"niceExtra":[]},{"id":16,"name":"시리얼","meal":"아침","category":"간편식","minutes":3,"difficulty":"쉬움","need":["우유"],"needExtra":["시리얼"],"nice":[],"niceExtra":[]},{"id":17,"name":"오트밀","meal":"아침","category":"간편식","minutes":10,"difficulty":"쉬움","need":[],"needExtra":["오트밀"],"nice":["우유"],"niceExtra":[]},{"id":18,"name":"요거트 그래놀라","meal":"아침","category":"간편식","minutes":5,"difficulty":"쉬움","need":[],"needExtra":["요거트","그래놀라"],"nice":[],"niceExtra":[]},{"id":19,"name":"삶은 달걀","meal":"아침","category":"간편식","minutes":15,"difficulty":"쉬움","need":["달걀"],"needExtra":[],"nice":[],"niceExtra":[]},{"id":20,"name":"군고구마","meal":"아침","category":"간편식","minutes":40,"difficulty":"쉬움","need":["고구마"],"needExtra":[],"nice":[],"niceExtra":[]},{"id":21,"name":"주먹밥","meal":"아침","category":"간편식","minutes":15,"difficulty":"쉬움","need":["밥","참치캔","김"],"needExtra":[],"nice":[],"niceExtra":[]},{"id":22,"name":"김치찌개","meal":"점심","category":"한식","minutes":30,"difficulty":"쉬움","need":["김치","돼지고기"],"needExtra":[],"nice":["두부","대파·쪽파"],"niceExtra":[]},{"id":23,"name":"된장찌개","meal":"점심","category":"한식","minutes":25,"difficulty":"쉬움","need":["두부"],"needExtra":[],"nice":["감자","애호박","양파","대파·쪽파","청양고추"],"niceExtra":[]},{"id":24,"name":"제육볶음","meal":"점심","category":"한식","minutes":25,"difficulty":"쉬움","need":["돼지고기"],"needExtra":[],"nice":["양파","대파·쪽파"],"niceExtra":[]},{"id":25,"name":"비빔밥","meal":"점심","category":"한식","minutes":30,"difficulty":"보통","need":["밥","달걀"],"needExtra":[],"nice":["시금치","콩나물","당근","애호박","소고기"],"niceExtra":[]},{"id":26,"name":"순대국","meal":"점심","category":"한식","minutes":30,"difficulty":"보통","need":["돼지고기"],"needExtra":["순대"],"nice":["대파·쪽파"],"niceExtra":[]},{"id":27,"name":"갈비탕","meal":"점심","category":"한식","minutes":150,"difficulty":"보통","need":["소고기","무"],"needExtra":[],"nice":["양파","대파·쪽파","당면"],"niceExtra":[]},{"id":28,"name":"냉면","meal":"점심","category":"한식","minutes":20,"difficulty":"쉬움","need":[],"needExtra":["냉면 사리","냉면 육수"],"nice":["오이","달걀"],"niceExtra":[]},{"id":29,"name":"삼계탕","meal":"점심","category":"한식","minutes":80,"difficulty":"보통","need":["닭고기","쌀"],"needExtra":[],"nice":["대파·쪽파"],"niceExtra":["수삼","대추"]},{"id":30,"name":"뚝배기 불고기","meal":"점심","category":"한식","minutes":40,"difficulty":"쉬움","need":["소고기"],"needExtra":[],"nice":["양파","버섯","당면","대파·쪽파"],"niceExtra":[]},{"id":31,"name":"부대찌개","meal":"점심","category":"한식","minutes":30,"difficulty":"쉬움","need":["햄·소시지","김치"],"needExtra":[],"nice":["라면","두부","양파","대파·쪽파","치즈"],"niceExtra":[]},{"id":32,"name":"닭갈비","meal":"점심","category":"한식","minutes":50,"difficulty":"보통","need":["닭고기","양배추"],"needExtra":[],"nice":["고구마","양파","대파·쪽파","떡","깻잎"],"niceExtra":[]},{"id":33,"name":"콩나물국밥","meal":"점심","category":"한식","minutes":25,"difficulty":"쉬움","need":["콩나물","밥"],"needExtra":[],"nice":["달걀","대파·쪽파","청양고추","김"],"niceExtra":[]},{"id":34,"name":"짜장면","meal":"점심","category":"중식","minutes":30,"difficulty":"보통","need":["돼지고기","양파"],"needExtra":["중화면","춘장"],"nice":["양배추","애호박"],"niceExtra":[]},{"id":35,"name":"짬뽕","meal":"점심","category":"중식","minutes":30,"difficulty":"보통","need":["오징어"],"needExtra":["중화면"],"nice":["새우","조개","돼지고기","양파","양배추","애호박","대파·쪽파"],"niceExtra":[]},{"id":36,"name":"볶음밥","meal":"점심","category":"중식","minutes":15,"difficulty":"쉬움","need":["밥","달걀"],"needExtra":[],"nice":["대파·쪽파","새우","햄·소시지","당근","양파"],"niceExtra":[]},{"id":37,"name":"탕수육","meal":"점심","category":"중식","minutes":90,"difficulty":"어려움","need":["돼지고기"],"needExtra":[],"nice":["양파","당근","오이","달걀"],"niceExtra":[]},{"id":38,"name":"마파두부밥","meal":"점심","category":"중식","minutes":25,"difficulty":"보통","need":["두부","돼지고기","밥"],"needExtra":["두반장"],"nice":["대파·쪽파"],"niceExtra":[]},{"id":39,"name":"잡채밥","meal":"점심","category":"중식","minutes":50,"difficulty":"보통","need":["당면","밥"],"needExtra":[],"nice":["돼지고기","소고기","시금치","양파","당근","버섯"],"niceExtra":[]},{"id":40,"name":"마라탕","meal":"점심","category":"중식","minutes":30,"difficulty":"보통","need":[],"needExtra":["마라탕 소스"],"nice":["소고기","청경채","숙주","배추","버섯","당면","어묵","두부"],"niceExtra":[]},{"id":41,"name":"초밥","meal":"점심","category":"일식","minutes":40,"difficulty":"어려움","need":["밥","생선회"],"needExtra":[],"nice":[],"niceExtra":[]},{"id":42,"name":"돈카츠","meal":"점심","category":"일식","minutes":30,"difficulty":"보통","need":["돼지고기","달걀"],"needExtra":[],"nice":["양배추"],"niceExtra":[]},{"id":43,"name":"라멘","meal":"점심","category":"일식","minutes":30,"difficulty":"보통","need":[],"needExtra":["생라멘면"],"nice":["돼지고기","달걀","대파·쪽파","김","숙주"],"niceExtra":[]},{"id":44,"name":"우동","meal":"점심","category":"일식","minutes":15,"difficulty":"쉬움","need":[],"needExtra":["우동면"],"nice":["어묵","대파·쪽파"],"niceExtra":[]},{"id":45,"name":"규동","meal":"점심","category":"일식","minutes":20,"difficulty":"쉬움","need":["소고기","양파","밥"],"needExtra":[],"nice":["대파·쪽파"],"niceExtra":[]},{"id":46,"name":"회덮밥","meal":"점심","category":"일식","minutes":20,"difficulty":"쉬움","need":["밥","생선회"],"needExtra":[],"nice":["상추·양상추","오이","당근","깻잎"],"niceExtra":[]},{"id":47,"name":"소바","meal":"점심","category":"일식","minutes":15,"difficulty":"쉬움","need":[],"needExtra":["메밀면","쯔유"],"nice":["무","대파·쪽파","김"],"niceExtra":[]},{"id":48,"name":"파스타","meal":"점심","category":"양식","minutes":35,"difficulty":"쉬움","need":["파스타면","소고기","토마토소스"],"needExtra":[],"nice":["양파","당근","치즈"],"niceExtra":[]},{"id":49,"name":"햄버거","meal":"점심","category":"양식","minutes":30,"difficulty":"보통","need":["소고기"],"needExtra":["햄버거 번"],"nice":["양파","치즈","상추·양상추","토마토"],"niceExtra":[]},{"id":50,"name":"리조또","meal":"점심","category":"양식","minutes":30,"difficulty":"보통","need":["쌀","토마토소스"],"needExtra":[],"nice":["새우","오징어","조개","양파","버터","치즈"],"niceExtra":[]},{"id":51,"name":"샌드위치","meal":"점심","category":"양식","minutes":10,"difficulty":"쉬움","need":["식빵·빵","햄·소시지"],"needExtra":[],"nice":["치즈","상추·양상추","토마토"],"niceExtra":[]},{"id":52,"name":"피자","meal":"점심","category":"양식","minutes":25,"difficulty":"쉬움","need":["토마토소스","치즈"],"needExtra":["또띠아"],"nice":["햄·소시지","양파","파프리카"],"niceExtra":[]},{"id":53,"name":"샐러드","meal":"점심","category":"양식","minutes":15,"difficulty":"쉬움","need":["상추·양상추"],"needExtra":[],"nice":["토마토","오이","달걀","닭고기"],"niceExtra":[]},{"id":54,"name":"떡볶이","meal":"점심","category":"분식","minutes":20,"difficulty":"쉬움","need":["떡"],"needExtra":[],"nice":["어묵","대파·쪽파","달걀"],"niceExtra":[]},{"id":55,"name":"김밥","meal":"점심","category":"분식","minutes":40,"difficulty":"보통","need":["밥","김"],"needExtra":[],"nice":["햄·소시지","달걀","시금치","당근"],"niceExtra":["단무지","게맛살"]},{"id":56,"name":"라볶이","meal":"점심","category":"분식","minutes":20,"difficulty":"쉬움","need":["떡","라면"],"needExtra":[],"nice":["어묵","대파·쪽파","달걀"],"niceExtra":[]},{"id":57,"name":"쫄면","meal":"점심","category":"분식","minutes":20,"difficulty":"쉬움","need":[],"needExtra":["쫄면 사리"],"nice":["양배추","오이","당근","콩나물","달걀"],"niceExtra":[]},{"id":58,"name":"만두","meal":"점심","category":"분식","minutes":60,"difficulty":"보통","need":["만두피","돼지고기"],"needExtra":[],"nice":["두부","김치","숙주","당면","대파·쪽파"],"niceExtra":[]},{"id":59,"name":"칼국수","meal":"점심","category":"분식","minutes":30,"difficulty":"쉬움","need":["조개"],"needExtra":["칼국수 면"],"nice":["감자","애호박","양파","대파·쪽파"],"niceExtra":[]},{"id":60,"name":"잔치국수","meal":"점심","category":"분식","minutes":25,"difficulty":"쉬움","need":["국수·소면"],"needExtra":[],"nice":["애호박","당근","달걀","김"],"niceExtra":[]},{"id":61,"name":"쌀국수","meal":"점심","category":"아시안","minutes":45,"difficulty":"보통","need":["쌀국수 면","소고기"],"needExtra":[],"nice":["양파","숙주","대파·쪽파"],"niceExtra":["피시소스"]},{"id":62,"name":"팟타이","meal":"점심","category":"아시안","minutes":45,"difficulty":"보통","need":["쌀국수 면","새우","달걀"],"needExtra":[],"nice":["두부","숙주","부추"],"niceExtra":["피시소스"]},{"id":63,"name":"카레","meal":"점심","category":"아시안","minutes":40,"difficulty":"쉬움","need":["카레","감자","양파","밥"],"needExtra":[],"nice":["당근","소고기","돼지고기"],"niceExtra":[]},{"id":64,"name":"분짜","meal":"점심","category":"아시안","minutes":40,"difficulty":"보통","need":["돼지고기","쌀국수 면"],"needExtra":[],"nice":["상추·양상추","오이","당근","무"],"niceExtra":["피시소스"]},{"id":65,"name":"나시고렝","meal":"점심","category":"아시안","minutes":20,"difficulty":"쉬움","need":["밥","달걀"],"needExtra":[],"nice":["닭고기","새우","양파","청양고추","오이","토마토"],"niceExtra":[]},{"id":66,"name":"삼겹살","meal":"저녁","category":"고기","minutes":20,"difficulty":"쉬움","need":["돼지고기"],"needExtra":[],"nice":["상추·양상추","깻잎","김치"],"niceExtra":[]},{"id":67,"name":"갈비","meal":"저녁","category":"고기","minutes":90,"difficulty":"보통","need":["소고기"],"needExtra":[],"nice":["양파"],"niceExtra":["배"]},{"id":68,"name":"곱창","meal":"저녁","category":"고기","minutes":30,"difficulty":"보통","need":[],"needExtra":["손질 곱창"],"nice":["양배추","양파","대파·쪽파","깻잎","떡"],"niceExtra":[]},{"id":69,"name":"양꼬치","meal":"저녁","category":"고기","minutes":40,"difficulty":"보통","need":[],"needExtra":["양고기","쯔란"],"nice":[],"niceExtra":[]},{"id":70,"name":"차돌박이","meal":"저녁","category":"고기","minutes":15,"difficulty":"쉬움","need":["소고기"],"needExtra":[],"nice":["부추","양파"],"niceExtra":[]},{"id":71,"name":"치킨","meal":"저녁","category":"고기","minutes":70,"difficulty":"어려움","need":["닭고기"],"needExtra":[],"nice":["우유"],"niceExtra":[]},{"id":72,"name":"보쌈","meal":"저녁","category":"한식","minutes":80,"difficulty":"보통","need":["돼지고기"],"needExtra":[],"nice":["대파·쪽파","양파","배추","김치"],"niceExtra":[]},{"id":73,"name":"족발","meal":"저녁","category":"한식","minutes":240,"difficulty":"어려움","need":[],"needExtra":["족발용 돼지 앞다리"],"nice":["대파·쪽파","양파"],"niceExtra":[]},{"id":74,"name":"감자탕","meal":"저녁","category":"한식","minutes":180,"difficulty":"보통","need":["감자"],"needExtra":["돼지 등뼈"],"nice":["깻잎","대파·쪽파"],"niceExtra":["우거지"]},{"id":75,"name":"닭볶음탕","meal":"저녁","category":"한식","minutes":50,"difficulty":"쉬움","need":["닭고기","감자"],"needExtra":[],"nice":["당근","양파","대파·쪽파","청양고추"],"niceExtra":[]},{"id":76,"name":"찜닭","meal":"저녁","category":"한식","minutes":50,"difficulty":"보통","need":["닭고기","당면"],"needExtra":[],"nice":["감자","당근","양파","대파·쪽파"],"niceExtra":[]},{"id":77,"name":"파전","meal":"저녁","category":"한식","minutes":25,"difficulty":"쉬움","need":["대파·쪽파"],"needExtra":[],"nice":["달걀","오징어","새우","청양고추"],"niceExtra":[]},{"id":78,"name":"아귀찜","meal":"저녁","category":"한식","minutes":50,"difficulty":"어려움","need":["콩나물"],"needExtra":["아귀"],"nice":["대파·쪽파"],"niceExtra":["미나리"]},{"id":79,"name":"김치찜","meal":"저녁","category":"한식","minutes":70,"difficulty":"쉬움","need":["김치","돼지고기"],"needExtra":[],"nice":["양파","대파·쪽파"],"niceExtra":[]},{"id":80,"name":"마라샹궈","meal":"저녁","category":"중식","minutes":30,"difficulty":"보통","need":[],"needExtra":["마라샹궈 소스"],"nice":["소고기","새우","감자","청경채","버섯","당면"],"niceExtra":["연근"]},{"id":81,"name":"훠궈","meal":"저녁","category":"중식","minutes":40,"difficulty":"쉬움","need":[],"needExtra":["훠궈 소스"],"nice":["소고기","청경채","배추","버섯","두부","어묵","당면"],"niceExtra":[]},{"id":82,"name":"깐풍기","meal":"저녁","category":"중식","minutes":40,"difficulty":"보통","need":["닭고기"],"needExtra":[],"nice":["달걀","대파·쪽파","청양고추"],"niceExtra":[]},{"id":83,"name":"양장피","meal":"저녁","category":"중식","minutes":60,"difficulty":"어려움","need":[],"needExtra":["양장피"],"nice":["새우","오징어","돼지고기","오이","당근","달걀","버섯","양파","부추"],"niceExtra":[]},{"id":84,"name":"딤섬","meal":"저녁","category":"중식","minutes":50,"difficulty":"보통","need":["만두피","돼지고기","새우"],"needExtra":[],"nice":["버섯","대파·쪽파","당근"],"niceExtra":[]},{"id":85,"name":"샤브샤브","meal":"저녁","category":"일식","minutes":30,"difficulty":"쉬움","need":["소고기"],"needExtra":[],"nice":["배추","청경채","버섯","두부"],"niceExtra":[]},{"id":86,"name":"스키야키","meal":"저녁","category":"일식","minutes":30,"difficulty":"보통","need":["소고기"],"needExtra":[],"nice":["두부","대파·쪽파","배추","버섯","달걀"],"niceExtra":["쑥갓"]},{"id":87,"name":"모둠 사시미","meal":"저녁","category":"일식","minutes":20,"difficulty":"보통","need":["생선회"],"needExtra":[],"nice":["무","깻잎"],"niceExtra":[]},{"id":88,"name":"오코노미야키","meal":"저녁","category":"일식","minutes":30,"difficulty":"보통","need":["양배추","달걀"],"needExtra":[],"nice":["돼지고기","대파·쪽파"],"niceExtra":["오코노미야키 소스"]},{"id":89,"name":"야키토리","meal":"저녁","category":"일식","minutes":40,"difficulty":"보통","need":["닭고기","대파·쪽파"],"needExtra":[],"nice":[],"niceExtra":[]},{"id":90,"name":"텐동","meal":"저녁","category":"일식","minutes":40,"difficulty":"어려움","need":["새우","밥"],"needExtra":[],"nice":[],"niceExtra":["단호박","가지","연근"]},{"id":91,"name":"스테이크","meal":"저녁","category":"양식","minutes":45,"difficulty":"보통","need":["소고기"],"needExtra":[],"nice":["버터","버섯"],"niceExtra":[]},{"id":92,"name":"감바스","meal":"저녁","category":"양식","minutes":20,"difficulty":"쉬움","need":["새우"],"needExtra":[],"nice":["토마토","식빵·빵"],"niceExtra":["브로콜리"]},{"id":93,"name":"라자냐","meal":"저녁","category":"양식","minutes":80,"difficulty":"어려움","need":["소고기","토마토소스","치즈"],"needExtra":["라자냐 면"],"nice":["양파","달걀"],"niceExtra":[]},{"id":94,"name":"피시 앤 칩스","meal":"저녁","category":"양식","minutes":50,"difficulty":"보통","need":["감자"],"needExtra":["흰살생선"],"nice":[],"niceExtra":[]},{"id":95,"name":"월남쌈","meal":"저녁","category":"가볍게","minutes":30,"difficulty":"쉬움","need":["새우"],"needExtra":["라이스페이퍼"],"nice":["쌀국수 면","상추·양상추","오이","당근","파프리카"],"niceExtra":[]},{"id":96,"name":"포케","meal":"저녁","category":"가볍게","minutes":20,"difficulty":"쉬움","need":["생선회","밥"],"needExtra":[],"nice":["오이","양파"],"niceExtra":["아보카도"]},{"id":97,"name":"두부조림","meal":"저녁","category":"가볍게","minutes":25,"difficulty":"쉬움","need":["두부"],"needExtra":[],"nice":["대파·쪽파"],"niceExtra":[]},{"id":98,"name":"도토리묵무침","meal":"저녁","category":"가볍게","minutes":15,"difficulty":"쉬움","need":[],"needExtra":["도토리묵"],"nice":["상추·양상추","오이","당근"],"niceExtra":[]},{"id":99,"name":"닭가슴살 샐러드","meal":"저녁","category":"가볍게","minutes":25,"difficulty":"쉬움","need":["닭고기","상추·양상추"],"needExtra":[],"nice":["토마토","파프리카"],"niceExtra":[]}]}</script>
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="사이트 안내">
+        <a href="recipes/">냥셰프 레시피 모음</a>
+        <a href="fridge.html">냉장고 털기</a>
+        <a href="about.html">사이트 소개</a>
+        <a href="privacy.html">개인정보처리방침</a>
+      </nav>
+      <p>음식 사진: 위키미디어 공용 · 레시피: 냥셰프</p>
+    </footer>
+  </div>
+
+  <div class="gingham gingham-bottom" aria-hidden="true"></div>
+
+<script src="theme.js?v=1"></script>
+<script src="site.js?v=1"></script>
+<script src="fridge.js?v=1"></script>
+</body>
+</html>

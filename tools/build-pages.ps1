@@ -7,6 +7,8 @@
 #   sitemap.xml               검색엔진에 알려 줄 페이지 목록
 #   rss.xml                   레시피 새 글 목록 (네이버 서치어드바이저 RSS 제출용)
 #   llms.txt                  AI(ChatGPT, Claude 등)가 읽기 좋은 사이트 안내
+#   fridge.html               냉장고 털기 (재료표는 tools/fridge.csv)
+#   recipes/pages.json        레시피 페이지가 있는 메뉴 번호 (메인 화면 공유하기가 읽음)
 #   recipes/shop-links.json   쿠팡 파트너스 재료 링크 (메인 화면 레시피 칸이 읽음)
 #   tools/coupang-links.csv   쿠팡 파트너스 링크를 적는 표 (새 메뉴가 생기면 줄을 더해 줌)
 #
@@ -70,6 +72,8 @@ $Ico = @{
   flame = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"></path></svg>'
   user  = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21 C4 16 8 14 12 14 C16 14 20 16 20 21"></path></svg>'
   cart  = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h3l2.4 11.5h11.2L21 7H6"></path><circle cx="9" cy="19.5" r="1.5"></circle><circle cx="17.5" cy="19.5" r="1.5"></circle></svg>'
+  share = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>'
+  fridge = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"></rect><path d="M5 10h14M9 5v2M9 13v3"></path></svg>'
 }
 $MealIcon = @{ '아침' = $Ico.sun; '점심' = $Ico.bowl; '저녁' = $Ico.moon }
 
@@ -137,8 +141,8 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=4">
-<link rel="stylesheet" href="{{PREFIX}}pages.css?v=2">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=5">
+<link rel="stylesheet" href="{{PREFIX}}pages.css?v=3">
 {{EXTRA_HEAD}}
 </head>
 <body>
@@ -183,6 +187,7 @@ $HeadTemplate = @'
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
         <a href="{{PREFIX}}recipes/">냥셰프 레시피 모음</a>
+        <a href="{{PREFIX}}fridge.html">냉장고 털기</a>
         <a href="{{PREFIX}}about.html">사이트 소개</a>
         <a href="{{PREFIX}}privacy.html">개인정보처리방침</a>
       </nav>
@@ -193,6 +198,8 @@ $HeadTemplate = @'
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="{{PREFIX}}theme.js?v=1"></script>
+<script src="{{PREFIX}}site.js?v=1"></script>
+{{EXTRA_SCRIPTS}}
 </body>
 </html>
 '@
@@ -228,6 +235,7 @@ function Page([hashtable]$p) {
     OG_TYPE     = $(if ($p.OgType) { $p.OgType } else { 'website' })
     OG_IMAGE    = $ogImage
     EXTRA_HEAD  = [string]$p.ExtraHead
+    EXTRA_SCRIPTS = [string]$p.ExtraScripts
     PREFIX      = $prefix
     HOME        = $homeLink
     BODY        = $p.Body
@@ -427,6 +435,9 @@ foreach ($m in $items) {
   $minutesText = ''
   if ($r.minutes) { $minutesText = '집에서 ' + [string]$r.minutes + '분이면 만들 수 있어요. ' }
   $lead = $name + ', ' + $minutesText + '냥셰프가 정리한 ' + $m.meal + ' ' + $m.category + ' 집밥 레시피예요.'
+  # 카톡 등으로 공유할 때 링크 앞에 붙는 한마디
+  $shareText = $name + ' 레시피, 냥셰프가 알려 줄게냥!'
+  if ($r.minutes) { $shareText += ' ' + [string]$r.minutes + '분이면 뚝딱.' }
 
   $descParts = @()
   if ($r.minutes)    { $descParts += ('조리 시간 ' + [string]$r.minutes + '분') }
@@ -485,6 +496,10 @@ foreach ($m in $items) {
 $adNoteTop
       </div>
 
+      <div class="page-actions">
+        <button class="pill-btn" type="button" data-share="recipe" data-share-item="$(Enc $name)" data-share-text="$(Enc $shareText)">$($Ico.share)레시피 공유하기</button>
+      </div>
+
 $photoHtml
 
       <article class="card">
@@ -511,7 +526,8 @@ $tipHtml
 
       <section class="card cta-card">
         <p class="cta-text">오늘 뭐 먹을지 아직 못 정했냥?</p>
-        <a class="accent-btn" href="../">냥셰프에게 메뉴 추천받기</a>
+        <a class="accent-btn" href="../" data-track="cta_pick_menu">냥셰프에게 메뉴 추천받기</a>
+        <a href="../fridge.html" data-track="cta_fridge">냉장고에 있는 재료로 찾아보기 →</a>
       </section>
 
       <section>
@@ -585,6 +601,10 @@ $indexBody = @"
 
       <nav class="chips" aria-label="끼니 바로가기">$jump</nav>
 
+      <div class="page-actions">
+        <a class="pill-btn" href="../fridge.html">$($Ico.fridge)냉장고에 있는 재료로 찾기</a>
+      </div>
+
 $($mealSections -join "`n`n")
 "@
 
@@ -609,6 +629,128 @@ Save 'recipes\index.html' (Page @{
   Canonical   = "$SiteUrl/recipes/"
   ExtraHead   = (JsonLd $listLd) + "`n" + (JsonLd $indexCrumbLd)
   Body        = $indexBody
+})
+
+
+# ── 공유용 레시피 페이지 번호 목록 (메인 화면 "친구에게 공유하기"가 읽음) ──
+# 페이지가 있는 메뉴는 레시피 페이지 주소를 공유함 (카톡 미리보기에 음식 사진이 뜸)
+
+Save 'recipes\pages.json' ((ConvertTo-Json -InputObject @($items | ForEach-Object { [int]$_.id }) -Compress) + "`n")
+
+
+# ── 냉장고 털기 (fridge.html) ─────────────────────────────
+# 레시피마다 "꼭 필요한 재료 / 있으면 좋은 재료"는 tools/fridge.csv 에 사람이 정리해 둠
+# (재료 글에서 자동으로 뽑으면 "토마토소스"가 "토마토"로, "김밥용 김"이 "밥"으로 잡히는 식으로 틀려서)
+# 아래 목록에 있는 이름만 고를 수 있는 버튼이 되고, 나머지(춘장, 중화면 등)는 "더 필요"로만 보여 줌
+# 소금·설탕·간장·고추장·된장·식용유·마늘 같은 기본 양념은 집에 있다고 보고 표에 적지 않음
+# 새 메뉴를 추가하면 tools/fridge.csv 에도 한 줄 더해야 냉장고 털기에 나옴
+
+$FridgeGroups = [ordered]@{
+  '고기·달걀'    = @('달걀', '돼지고기', '소고기', '닭고기', '햄·소시지')
+  '해산물'       = @('새우', '오징어', '조개', '어묵', '참치캔', '생선회')
+  '채소'         = @('양파', '대파·쪽파', '감자', '고구마', '당근', '애호박', '버섯', '양배추', '배추', '콩나물', '숙주', '시금치', '부추', '청경채', '오이', '토마토', '깻잎', '상추·양상추', '청양고추', '파프리카', '무')
+  '밥·면·빵·떡'  = @('밥', '쌀', '라면', '국수·소면', '쌀국수 면', '파스타면', '당면', '떡', '만두피', '식빵·빵')
+  '그 밖의 재료' = @('김치', '두부', '치즈', '우유', '버터', '김', '미역', '카레', '토마토소스')
+}
+$chipSet = @{}
+foreach ($g in $FridgeGroups.Keys) { foreach ($k in $FridgeGroups[$g]) { $chipSet[$k] = $true } }
+
+function SplitItems([string]$s) { @($s -split '/' | ForEach-Object { $_.Trim() } | Where-Object { $_ }) }
+
+$fridgeRows = @{}
+$fridgePath = Join-Path $PSScriptRoot 'fridge.csv'
+if (Test-Path -LiteralPath $fridgePath) {
+  foreach ($row in @((ReadCsvText $fridgePath) -split "\r?\n" | Where-Object { $_.Trim() } | ConvertFrom-Csv)) {
+    $id = ([string]$row.'번호').Trim()
+    if ($id) { $fridgeRows[$id] = @{ Need = (SplitItems $row.'꼭 필요한 재료'); Nice = (SplitItems $row.'있으면 좋은 재료') } }
+  }
+}
+
+$fridgeRecipes = @()
+$noFridge = @()
+foreach ($m in $items) {
+  $row = $fridgeRows[[string]$m.id]
+  if (-not $row) { $noFridge += ('  ' + $m.id + ' ' + $m.name); continue }
+  $fridgeRecipes += [ordered]@{
+    id         = [int]$m.id
+    name       = [string]$m.name
+    meal       = [string]$m.meal
+    category   = [string]$m.category
+    minutes    = $(if ($m.recipes.minutes) { [int]$m.recipes.minutes } else { $null })
+    difficulty = [string]$m.recipes.difficulty
+    need       = @($row.Need | Where-Object { $chipSet[$_] })
+    needExtra  = @($row.Need | Where-Object { -not $chipSet[$_] })
+    nice       = @($row.Nice | Where-Object { $chipSet[$_] })
+    niceExtra  = @($row.Nice | Where-Object { -not $chipSet[$_] })
+  }
+}
+if ($noFridge.Count) { Write-Warning ("tools\fridge.csv 에 재료가 없어서 냉장고 털기에서 빠진 메뉴:`n" + ($noFridge -join "`n")) }
+
+# 레시피에서 실제로 쓰이는 재료만 버튼으로 보여 줌
+$usedChips = @{}
+foreach ($x in $fridgeRecipes) { foreach ($k in (@($x.need) + @($x.nice))) { $usedChips[$k] = $true } }
+
+$groupHtml = @()
+$gi = 0
+foreach ($g in $FridgeGroups.Keys) {
+  $names = @($FridgeGroups[$g] | Where-Object { $usedChips[$_] })
+  if (-not $names.Count) { continue }
+  $gi++
+  $buttons = ($names | ForEach-Object { '            <button class="fridge-chip" type="button" data-key="' + (Enc $_) + '" aria-pressed="false">' + (Enc $_) + '</button>' }) -join "`n"
+  $groupHtml += @"
+        <div class="fridge-group" role="group" aria-labelledby="fridge-group-$gi">
+          <h3 id="fridge-group-$gi">$(Enc $g)</h3>
+          <div class="fridge-chips">
+$buttons
+          </div>
+        </div>
+"@
+}
+
+$fridgeJson = (ConvertTo-Json -InputObject ([ordered]@{ recipes = $fridgeRecipes }) -Depth 5 -Compress).Replace('</', '<\/')
+
+$fridgeBody = @"
+      <nav class="breadcrumb" aria-label="현재 위치">
+        <a href="./">홈</a><span aria-hidden="true">›</span>
+        <span>냉장고 털기</span>
+      </nav>
+
+      <div>
+        <h1 class="page-title">냉장고 털기</h1>
+        <p class="page-lead">집에 있는 재료를 골라 주세요. 냥셰프 레시피 $($fridgeRecipes.Count)가지 중에서 지금 만들 수 있는 메뉴를 찾아 줄게요.</p>
+        <p class="fridge-note">소금·설탕·간장·고추장·된장·식용유·마늘 같은 기본 양념은 집에 있다고 칠게요.</p>
+      </div>
+
+      <section class="card fridge-picker" aria-labelledby="fridge-picker-title">
+        <div class="fridge-head">
+          <h2 id="fridge-picker-title">우리 집 냉장고에는…</h2>
+          <button class="text-btn" id="fridge-reset" type="button" hidden>다 지우기</button>
+        </div>
+$($groupHtml -join "`n")
+      </section>
+
+      <p class="fridge-status" id="fridge-status" role="status"></p>
+      <div class="fridge-results" id="fridge-results">
+        <p class="fridge-empty">재료를 하나 이상 고르면 여기에 만들 수 있는 메뉴가 나와요.</p>
+      </div>
+
+      <script type="application/json" id="fridge-data">$fridgeJson</script>
+"@
+
+$fridgeCrumbLd = [ordered]@{
+  '@context'      = 'https://schema.org'
+  '@type'         = 'BreadcrumbList'
+  itemListElement = @((Crumb 1 '홈' "$SiteUrl/"), (Crumb 2 '냉장고 털기' "$SiteUrl/fridge"))
+}
+
+Save 'fridge.html' (Page @{
+  Prefix       = ''
+  Title        = "냉장고 털기: 있는 재료로 메뉴 찾기 | $SiteName"
+  Description  = '집에 있는 재료를 고르면 냥셰프 집밥 레시피 중에서 바로 만들 수 있는 메뉴와, 한두 가지만 더 있으면 되는 메뉴를 찾아 줘요. 김치, 달걀, 두부, 돼지고기로 오늘 뭐 먹을지 정해 보세요.'
+  Canonical    = "$SiteUrl/fridge"
+  ExtraHead    = JsonLd $fridgeCrumbLd
+  ExtraScripts = '<script src="fridge.js?v=1"></script>'
+  Body         = $fridgeBody
 })
 
 
@@ -673,6 +815,7 @@ $latestDay = if ($Latest) { $Latest.ToString('yyyy-MM-dd') } else { $Today }
 $entries = @(
   @{ Loc = "$SiteUrl/" }
   @{ Loc = "$SiteUrl/recipes/"; Mod = $latestDay }
+  @{ Loc = "$SiteUrl/fridge"; Mod = $latestDay }
   @{ Loc = "$SiteUrl/about" }
   @{ Loc = "$SiteUrl/privacy" }
 ) + @($items | ForEach-Object {
@@ -737,6 +880,7 @@ $llms = @(
   ''
   '- [메뉴 추천 (홈)](' + $SiteUrl + '/): 냥셰프에게 오늘의 메뉴 추천받기'
   '- [레시피 모음](' + $SiteUrl + '/recipes/): 끼니와 종류별 전체 레시피 목록'
+  '- [냉장고 털기](' + $SiteUrl + '/fridge): 집에 있는 재료를 고르면 바로 만들 수 있는 레시피를 찾아 주는 도구'
   '- [사이트 소개](' + $SiteUrl + '/about): 사이트가 하는 일, 사진 출처, 문의처'
 )
 foreach ($meal in $presentMeals) {

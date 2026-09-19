@@ -172,6 +172,12 @@ a.accent-btn { color: var(--accent-text); }
 .shop-box .pill-btn .ico { color: var(--accent); }
 .ad-note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); word-break: keep-all; }
 
+/* ── 화면 아래에 잠깐 뜨는 알림 (site.js) ── */
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 50; max-width: calc(100% - 32px); box-sizing: border-box; padding: 12px 20px; border-radius: 999px; background: var(--text); color: var(--bg); font-size: 15px; line-height: 1.4; text-align: center; word-break: keep-all; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); opacity: 0; transform: translate(-50%, 16px); pointer-events: none; transition: opacity 0.2s, transform 0.2s; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.copy-helper { position: fixed; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+
 /* ── 태블릿 이상 ── */
 @media (min-width: 700px) {
   .card { gap: 20px; padding: 32px 36px 36px; border-radius: 32px; box-shadow: 0 10px 0 var(--shadow); }

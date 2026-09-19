@@ -59,8 +59,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="../style.css?v=4">
-<link rel="stylesheet" href="../pages.css?v=2">
+<link rel="stylesheet" href="../style.css?v=5">
+<link rel="stylesheet" href="../pages.css?v=3">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Recipe","name":"잡채밥","description":"잡채밥 레시피: 조리 시간 50분, 난이도 보통, 2인분 기준. 재료(당면 100g, 돼지고기 또는 소고기 100g, 시금치 1줌 등)와 만드는 법, 냥셰프 팁까지 한눈에 볼 수 있어요.","recipeCategory":"점심","recipeCuisine":"중식","recipeIngredient":["당면 100g","돼지고기 또는 소고기 100g","시금치 1줌","양파 1/2개","당근 1/3개","표고버섯 2개","간장 3큰술","설탕 1큰술","다진 마늘 1작은술","참기름 1큰술","깨 약간","식용유 약간","밥 2공기"],"recipeInstructions":[{"@type":"HowToStep","text":"당면을 물에 30분 불린 뒤 6분 삶아 건진다"},{"@type":"HowToStep","text":"시금치는 데치고 채소와 고기는 채 썬다"},{"@type":"HowToStep","text":"팬에 채소와 고기를 각각 볶는다"},{"@type":"HowToStep","text":"당면에 간장과 설탕을 넣어 볶는다"},{"@type":"HowToStep","text":"모든 재료와 마늘, 참기름, 깨를 넣어 섞는다"},{"@type":"HowToStep","text":"밥 위에 넉넉히 올린다"}],"author":{"@type":"Organization","name":"냥셰프의 오늘 뭐 먹지","url":"https://meal-project.pages.dev/"},"image":["https://commons.wikimedia.org/wiki/Special:FilePath/Korean_cuisine_japchae.jpg?width=800"],"totalTime":"PT50M","recipeYield":"2인분","keywords":"잡채밥, 잡채밥 레시피, 점심 메뉴, 중식, 집밥 레시피","datePublished":"2026-09-17","dateModified":"2026-09-17"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://meal-project.pages.dev/"},{"@type":"ListItem","position":2,"name":"레시피 모음","item":"https://meal-project.pages.dev/recipes/"},{"@type":"ListItem","position":3,"name":"잡채밥 레시피","item":"https://meal-project.pages.dev/recipes/39"}]}</script>
 </head>
@@ -113,6 +113,10 @@
 
       </div>
 
+      <div class="page-actions">
+        <button class="pill-btn" type="button" data-share="recipe" data-share-item="잡채밥" data-share-text="잡채밥 레시피, 냥셰프가 알려 줄게냥! 50분이면 뚝딱."><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>레시피 공유하기</button>
+      </div>
+
       <figure class="photo-hero">
         <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Korean_cuisine_japchae.jpg?width=800" alt="잡채밥" width="800" height="500" loading="eager">
         <figcaption><a href="https://commons.wikimedia.org/wiki/File:Korean_cuisine_japchae.jpg" target="_blank" rel="noopener">사진: 위키미디어 공용</a></figcaption>
@@ -159,7 +163,8 @@
 
       <section class="card cta-card">
         <p class="cta-text">오늘 뭐 먹을지 아직 못 정했냥?</p>
-        <a class="accent-btn" href="../">냥셰프에게 메뉴 추천받기</a>
+        <a class="accent-btn" href="../" data-track="cta_pick_menu">냥셰프에게 메뉴 추천받기</a>
+        <a href="../fridge.html" data-track="cta_fridge">냉장고에 있는 재료로 찾아보기 →</a>
       </section>
 
       <section>
@@ -178,6 +183,7 @@
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
         <a href="../recipes/">냥셰프 레시피 모음</a>
+        <a href="../fridge.html">냉장고 털기</a>
         <a href="../about.html">사이트 소개</a>
         <a href="../privacy.html">개인정보처리방침</a>
       </nav>
@@ -188,5 +194,7 @@
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="../theme.js?v=1"></script>
+<script src="../site.js?v=1"></script>
+
 </body>
 </html>

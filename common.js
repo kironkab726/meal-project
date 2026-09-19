@@ -142,6 +142,8 @@ authForm.addEventListener('submit', async e => {
     authMessageEl.textContent = AUTH_ERRORS[error.code] || `오류: ${error.message}`;
     return;
   }
+  // 가입·로그인 횟수만 통계에 남김 (이메일은 보내지 않음). track은 site.js에 있음
+  if (window.track) window.track(mode === 'signup' ? 'sign_up' : 'login', { method: 'email' });
   if (mode === 'signup' && !data.session) {
     authMessageEl.textContent = '확인 메일을 보냈어요. 메일 속 링크를 누른 뒤, 여기서 로그인하세요.';
     return;

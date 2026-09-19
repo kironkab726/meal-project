@@ -61,8 +61,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=4">
-<link rel="stylesheet" href="pages.css?v=2">
+<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="pages.css?v=3">
 
 </head>
 <body>
@@ -168,8 +168,8 @@
 
         <h2>4. 쿠키와 브라우저 저장소</h2>
         <ul>
-          <li>사이트는 로그인 상태와 다크/라이트 모드 설정을 이용자의 브라우저 저장소(localStorage)에 저장해요.</li>
-          <li>구글 애널리틱스와 마이크로소프트 클라리티는 방문 통계를 위해 쿠키를 사용해요.</li>
+          <li>사이트는 로그인 상태, 다크/라이트 모드 설정, 냉장고 털기에서 고른 재료를 이용자의 브라우저 저장소(localStorage)에 저장해요. 고른 재료는 그 브라우저에만 남고 서버로 보내지 않아요.</li>
+          <li>구글 애널리틱스와 마이크로소프트 클라리티는 방문 통계를 위해 쿠키를 사용해요. 추천받기, 레시피 열기, 공유하기처럼 어떤 버튼을 눌렀는지도 함께 기록하지만, 이메일 같은 개인 정보는 보내지 않아요.</li>
           <li>브라우저 설정에서 쿠키와 사이트 데이터를 막거나 지울 수 있어요. 구글 애널리틱스는 <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">구글 애널리틱스 차단 부가기능</a>으로도 막을 수 있어요.</li>
           <li>쿠키를 막아도 메뉴 추천과 레시피는 쓸 수 있어요. 다만 로그인 유지나 화면 설정 저장은 안 될 수 있어요.</li>
         </ul>
@@ -221,6 +221,7 @@
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
         <a href="recipes/">냥셰프 레시피 모음</a>
+        <a href="fridge.html">냉장고 털기</a>
         <a href="about.html">사이트 소개</a>
         <a href="privacy.html">개인정보처리방침</a>
       </nav>
@@ -231,5 +232,7 @@
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="theme.js?v=1"></script>
+<script src="site.js?v=1"></script>
+
 </body>
 </html>
