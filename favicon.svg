@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 냥셰프 파비콘 (시안 A: 셰프 모자 냥셰프). PNG·ICO는 tools/make-favicon.ps1 이 같은 모양으로 그림 -->
+  <rect width="64" height="64" rx="14" fill="#B8552F"/>
+  <g transform="translate(32 33) scale(0.88) translate(-32 -32)" stroke-linejoin="round" stroke-linecap="round">
+    <g fill="#4A3426" stroke="#4A3426" stroke-width="6">
+      <path d="M12 42 L9 17 L27 30 Z"/>
+      <path d="M52 42 L55 17 L37 30 Z"/>
+      <ellipse cx="32" cy="44" rx="21" ry="14"/>
+    </g>
+    <g fill="#F2B872">
+      <path d="M12 42 L9 17 L27 30 Z"/>
+      <path d="M52 42 L55 17 L37 30 Z"/>
+      <ellipse cx="32" cy="44" rx="21" ry="14"/>
+    </g>
+    <ellipse cx="18" cy="50" rx="3.5" ry="2.2" fill="#F4A28C"/>
+    <ellipse cx="46" cy="50" rx="3.5" ry="2.2" fill="#F4A28C"/>
+    <path d="M21 44 Q25 39.5 29 44 M35 44 Q39 39.5 43 44" fill="none" stroke="#4A3426" stroke-width="4"/>
+    <path d="M29.5 49 L34.5 49 L32 52 Z" fill="#E7837A"/>
+    <g fill="#4A3426" stroke="#4A3426" stroke-width="6">
+      <circle cx="25" cy="17" r="7.5"/>
+      <circle cx="39" cy="17" r="7.5"/>
+      <circle cx="32" cy="12" r="9"/>
+      <rect x="22" y="17" width="20" height="10" rx="2"/>
+    </g>
+    <g fill="#FFFFFF">
+      <circle cx="25" cy="17" r="7.5"/>
+      <circle cx="39" cy="17" r="7.5"/>
+      <circle cx="32" cy="12" r="9"/>
+      <rect x="22" y="17" width="20" height="10" rx="2"/>
+    </g>
+  </g>
+</svg>

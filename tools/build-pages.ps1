@@ -117,6 +117,9 @@ $HeadTemplate = @'
 <meta property="og:title" content="{{TITLE}}">
 <meta property="og:description" content="{{DESCRIPTION}}">
 {{OG_IMAGE}}
+<link rel="icon" href="{{PREFIX}}favicon.ico" sizes="any">
+<link rel="icon" href="{{PREFIX}}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{PREFIX}}apple-touch-icon.png">
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
   (function () {
