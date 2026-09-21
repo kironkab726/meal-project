@@ -19,7 +19,7 @@
 .photo-hero::before, .photo-hero::after { content: ""; position: absolute; z-index: 1; top: -9px; width: 80px; height: 24px; background: var(--tape); pointer-events: none; }
 .photo-hero::before { left: 22px; transform: rotate(-7deg); }
 .photo-hero::after { right: 22px; transform: rotate(6deg); }
-.photo-hero img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 18px; background: var(--photo-bg); }
+.photo-hero img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 18px; background: var(--photo-bg); }
 .photo-hero figcaption { margin-top: 6px; text-align: right; font-size: 12px; }
 
 /* 조리 시간 · 난이도 · 인분 */
@@ -121,11 +121,11 @@ a.chip:hover { color: var(--text); }
 .cta-text { margin: 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 22px; color: var(--quote); word-break: keep-all; }
 
 /* 레시피 링크 목록 (관련 레시피, 레시피 모음) */
-.recipe-links-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.recipe-links-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
 .recipe-links-list a { height: 100%; display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border: 2px solid var(--border-soft); border-radius: 16px; background: var(--paper); color: var(--text); text-decoration: none; }
 .recipe-links-list a:hover { border-color: var(--accent); }
 .recipe-links-list .name { font-family: 'Jua', sans-serif; font-size: 19px; line-height: 1.25; word-break: keep-all; }
-.recipe-links-list .meta { font-size: 13px; color: var(--muted); }
+.recipe-links-list .meta { font-size: 13px; color: var(--muted); word-break: keep-all; }
 
 /* 레시피 모음 */
 .meal-section h2 { display: flex; align-items: center; gap: 8px; }

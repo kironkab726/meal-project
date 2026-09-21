@@ -119,6 +119,10 @@
   .photo img.loading { opacity: 0; }
   .photo-empty { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px; text-align: center; }
   .bowl { width: 180px; height: auto; }
+  /* 아직 고르기 전: 그림 칸을 낮게, 빈 이름 줄은 숨김 (추천 버튼과 고르는 칸이 첫 화면에 들어오게) */
+  .result.is-empty .photo { aspect-ratio: 16 / 7; }
+  .result.is-empty .bowl { width: 110px; }
+  .result.is-empty .result-text { display: none; }
   .photo-label { font-size: 13px; color: var(--muted); }
   .photo-empty.cooking .steam { animation: steam 0.9s ease-in-out infinite; }
   .photo-empty.cooking .steam:nth-child(2) { animation-delay: 0.3s; }
@@ -277,8 +281,9 @@
     .photo-frame::before, .photo-frame::after { top: -10px; width: 88px; height: 26px; }
     .photo-frame::before { left: 26px; }
     .photo-frame::after { right: 26px; }
-    .photo { border-radius: 18px; background-size: 18px 18px; }
+    .photo { aspect-ratio: 16 / 9; border-radius: 18px; background-size: 18px 18px; }
     .bowl { width: 240px; }
+    .result.is-empty .bowl { width: 190px; }
     .photo-label { font-size: 14px; }
     .menu { min-height: 60px; font-size: 52px; line-height: 1.15; }
     .menu .placeholder { line-height: 60px; }
@@ -476,7 +481,13 @@
         <div class="meal-tabs" id="meal-tabs"></div>
         <div class="filters" id="filters"></div>
 
-        <div class="result" id="result" aria-live="polite">
+        <!-- 추천 버튼은 고르는 칸 바로 아래: 휴대폰 첫 화면에서도 보이고, 다시 누를 때 스크롤하지 않아도 됨 -->
+        <button class="accent-btn" id="pick-btn" type="button" disabled>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="16" r="4.5"></circle><circle cx="5.5" cy="10" r="2"></circle><circle cx="9.5" cy="5.5" r="2"></circle><circle cx="14.5" cy="5.5" r="2"></circle><circle cx="18.5" cy="10" r="2"></circle></svg>
+          <span id="pick-label">추천받기</span>
+        </button>
+
+        <div class="result is-empty" id="result" aria-live="polite">
           <div class="photo-frame">
             <div class="photo" id="photo"></div>
           </div>
@@ -517,10 +528,6 @@
           </details>
         </div>
 
-        <button class="accent-btn" id="pick-btn" type="button" disabled>
-          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="16" r="4.5"></circle><circle cx="5.5" cy="10" r="2"></circle><circle cx="9.5" cy="5.5" r="2"></circle><circle cx="14.5" cy="5.5" r="2"></circle><circle cx="18.5" cy="10" r="2"></circle></svg>
-          <span id="pick-label">추천받기</span>
-        </button>
         <a class="search-link" href="search.html" data-track="go_search" data-track-label="main_card">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M16.5 16.5L21 21"></path></svg>
           먹고 싶은 메뉴가 따로 있냥? 레시피 검색하기
@@ -701,6 +708,7 @@
   const filtersEl = document.getElementById('filters');
   const btn = document.getElementById('pick-btn');
   const pickLabelEl = document.getElementById('pick-label');
+  const resultEl = document.getElementById('result');
   const photoEl = document.getElementById('photo');
   const menuEl = document.getElementById('menu');
   const categoryEl = document.getElementById('category');
@@ -880,8 +888,9 @@
       })
     ));
 
-    emptyPhoto('버튼을 누르면 냥빵이가 골라줘요');
+    emptyPhoto('위 버튼을 누르면 냥빵이가 골라줘요');
     showPlaceholder('아직 고르지 않았어요.');
+    resultEl.classList.add('is-empty');   // 고르기 전에는 그림 칸을 낮게
     sayBubble(DEFAULT_BUBBLE);
     renderReactions();
     resetRecipe();
@@ -972,6 +981,14 @@
     mealTabsEl.querySelectorAll('button').forEach(b => { b.disabled = rolling; });
   }
 
+  // 고른 메뉴가 화면 아래로 잘리면 그만큼 내려 줌. 추천 버튼은 화면 위에 남아 있게 그 이상은 내리지 않음
+  function revealResult(reduceMotion) {
+    const overflow = resultEl.getBoundingClientRect().bottom + 16 - window.innerHeight;
+    const room = btn.getBoundingClientRect().top - 12;
+    const by = Math.min(overflow, room);
+    if (by > 0) window.scrollBy({ top: by, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+
   btn.addEventListener('click', () => {
     const list = candidates();
     const pick = randomItem(weightedPool(list));
@@ -989,11 +1006,13 @@
       if (reactions.get(pick.id) === 'like') sayBubble(`${josa(pick.menu, '이', '가')} 나왔다냥! 좋아하는 거 알지냥?`);
       setRolling(false);
       pickLabelEl.textContent = '한 번 더 추천받기';
+      revealResult(reduceMotion);
       savePick(pick);
       track('pick_menu', { meal: pick.meal, category: pick.category, menu_name: pick.menu, filter: category });
     };
 
     current = null;
+    resultEl.classList.remove('is-empty');
     catLineEl.textContent = '';
     sayBubble(DEFAULT_BUBBLE);
     renderReactions();
@@ -1450,6 +1469,7 @@
   // ── 시작 ──────────────────────────────────────────────
 
   function showLoadError(message) {
+    resultEl.classList.remove('is-empty');   // 안내 문구가 보이게
     emptyPhoto('냥빵이가 잠깐 자리를 비웠어요');
     showPlaceholder(message);
   }

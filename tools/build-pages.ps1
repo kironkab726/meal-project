@@ -145,7 +145,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
 <link rel="stylesheet" href="{{PREFIX}}style.css?v=7">
-<link rel="stylesheet" href="{{PREFIX}}pages.css?v=4">
+<link rel="stylesheet" href="{{PREFIX}}pages.css?v=5">
 {{EXTRA_HEAD}}
 </head>
 <body>
@@ -685,7 +685,7 @@ $indexBody = @"
       <form class="card search-form" action="../search.html" method="get" role="search">
         <label for="index-search">찾는 메뉴가 있냥?</label>
         <div class="search-field">
-          <input id="index-search" name="q" type="search" placeholder="메뉴 이름이나 재료 (예: 김치, 두부)" autocomplete="off" enterkeyhint="search">
+          <input id="index-search" name="q" type="search" placeholder="메뉴나 재료 이름" autocomplete="off" enterkeyhint="search">
           <button type="submit">검색</button>
         </div>
       </form>
@@ -908,7 +908,7 @@ $searchBody = @"
         <form class="search-form" id="search-form" action="search.html" method="get" role="search">
           <label for="search-q">무엇을 찾고 있냥?</label>
           <div class="search-field">
-            <input id="search-q" name="q" type="search" placeholder="예: 김치찌개, 두부, 파스타" autocomplete="off" enterkeyhint="search">
+            <input id="search-q" name="q" type="search" placeholder="예: 김치찌개, 두부" autocomplete="off" enterkeyhint="search">
             <button type="submit">검색</button>
           </div>
         </form>
