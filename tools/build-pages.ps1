@@ -24,7 +24,7 @@ $ErrorActionPreference = 'Stop'
 
 $Root     = Split-Path -Parent $PSScriptRoot
 $SiteUrl  = 'https://meal-project.pages.dev'
-$SiteName = '냥빵이의 삼시세끼'
+$SiteName = '냥빵이의 오늘은 뭐 먹지'
 $Utf8     = New-Object System.Text.UTF8Encoding($false)
 $Today    = (Get-Date).ToString('yyyy-MM-dd')
 
@@ -120,7 +120,7 @@ $HeadTemplate = @'
 <meta name="description" content="{{DESCRIPTION}}">
 {{CANONICAL_TAGS}}
 <meta property="og:type" content="{{OG_TYPE}}">
-<meta property="og:site_name" content="냥빵이의 삼시세끼">
+<meta property="og:site_name" content="냥빵이의 오늘은 뭐 먹지">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="{{TITLE}}">
 <meta property="og:description" content="{{DESCRIPTION}}">
@@ -183,8 +183,8 @@ $HeadTemplate = @'
           </g>
         </svg>
         <div class="brand-text">
-          <span class="brand-name">냥빵이<span class="wide-only">의 삼시세끼</span></span>
-          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">삼시세끼</span></span>
+          <span class="brand-name">냥빵이<span class="wide-only">의 오늘은 뭐 먹지</span></span>
+          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">오늘은 뭐 먹지</span></span>
         </div>
       </a>
       <div class="header-actions">

@@ -38,20 +38,20 @@
 <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="rss.xml">
-<title>냥빵이의 삼시세끼 | 아침·점심·저녁 메뉴 추천과 집밥 레시피</title>
+<title>냥빵이의 오늘은 뭐 먹지 | 아침·점심·저녁 메뉴 추천과 집밥 레시피</title>
 <meta name="description" content="오늘 뭐 먹을지 고민될 때, 고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 드려요. 한식·중식·일식·양식·분식 메뉴 추천과 재료, 만드는 법까지 담은 집밥 레시피를 함께 볼 수 있어요.">
 <meta name="robots" content="max-image-preview:large">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="냥빵이의 삼시세끼">
+<meta property="og:site_name" content="냥빵이의 오늘은 뭐 먹지">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="냥빵이의 삼시세끼">
+<meta property="og:title" content="냥빵이의 오늘은 뭐 먹지">
 <meta property="og:description" content="오늘 뭐 먹지? 고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 주고 집밥 레시피까지 알려 줘요.">
 <meta property="og:url" content="https://meal-project.pages.dev/">
 <meta property="og:image" content="https://meal-project.pages.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="식빵처럼 웅크리고 셰프 모자를 쓴 고양이 냥빵이와 '냥빵이의 삼시세끼' 글자">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"냥빵이의 삼시세끼","alternateName":"냥빵이","url":"https://meal-project.pages.dev/","inLanguage":"ko"}</script>
+<meta property="og:image:alt" content="식빵처럼 웅크리고 셰프 모자를 쓴 고양이 냥빵이와 '냥빵이의 오늘은 뭐 먹지' 글자">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"냥빵이의 오늘은 뭐 먹지","alternateName":"냥빵이","url":"https://meal-project.pages.dev/","inLanguage":"ko"}</script>
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
   (function () {
@@ -384,8 +384,8 @@
           </g>
         </svg>
         <div class="brand-text">
-          <span class="brand-name">냥빵이<span class="wide-only">의 삼시세끼</span></span>
-          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">삼시세끼</span></span>
+          <span class="brand-name">냥빵이<span class="wide-only">의 오늘은 뭐 먹지</span></span>
+          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">오늘은 뭐 먹지</span></span>
         </div>
       </div>
       <div class="header-actions">
@@ -1098,7 +1098,7 @@
   async function shareItem(item) {
     const pages = await loadRecipePages();
     shareLink({
-      title: `${item.menu} | 냥빵이의 삼시세끼`,
+      title: `${item.menu} | 냥빵이의 오늘은 뭐 먹지`,
       text: `오늘 ${item.meal} 메뉴는 ${josa(item.menu, '이다냥', '다냥')}! 냥빵이가 골라 준 메뉴와 레시피 보러 가기`,
       url: pages.has(item.id) ? `${SITE_URL}/recipes/${item.id}` : `${SITE_URL}/`,
       contentType: 'menu',

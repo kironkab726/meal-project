@@ -209,7 +209,7 @@ $bold = [System.Drawing.FontStyle]::Bold
 $ink = Brush '#4A3426'
 $muted = Brush '#7A6352'
 $g.DrawString('냥빵이의', (New-Object System.Drawing.Font 'Malgun Gothic', 58, $bold, $px), $ink, 575, 112)
-$g.DrawString('삼시세끼', (New-Object System.Drawing.Font 'Malgun Gothic', 110, $bold, $px), $ink, 562, 176)
+$g.DrawString('오늘은 뭐 먹지', (New-Object System.Drawing.Font 'Malgun Gothic', 84, $bold, $px), $ink, 568, 186)
 $sub = New-Object System.Drawing.Font 'Malgun Gothic', 34, ([System.Drawing.FontStyle]::Regular), $px
 $g.DrawString('식빵 고양이 요리사가 골라 주는', $sub, $muted, 580, 352)
 $g.DrawString('아침·점심·저녁 메뉴와 집밥 레시피', $sub, $muted, 580, 402)
