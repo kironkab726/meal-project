@@ -151,3 +151,9 @@ a.chip:hover { color: var(--text); }
   .content h2 { font-size: 28px; }
   .prose h2 { font-size: 24px; }
 }
+
+/* 레시피 아래 "완성했다냥!" (누르면 요리 자랑 쓰기 창으로) */
+.done-box { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 16px; border: 2px dashed var(--chip-on-border); border-radius: 18px; background: var(--well); text-align: center; }
+.done-box p { margin: 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.35; color: var(--quote); word-break: keep-all; }
+.done-box .accent-btn { align-self: stretch; }
+@media (min-width: 700px) { .done-box .accent-btn { align-self: center; min-width: 280px; } }

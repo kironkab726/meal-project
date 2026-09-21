@@ -213,6 +213,8 @@
   .board-video .video-credit a { color: var(--text); }
   .board-status { margin: 0 0 8px; padding: 18px; border-radius: 16px; background: var(--paper); color: var(--muted); text-align: center; word-break: keep-all; }
   .board-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .board-done { display: flex; flex-direction: column; align-items: stretch; gap: 10px; padding-top: 16px; border-top: 2px dashed var(--border); text-align: center; }
+  .board-done p { margin: 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.35; color: var(--quote); word-break: keep-all; }
   .board-actions .ico { color: var(--accent); }
   .board-paper { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 24px 18px 20px; border-radius: 18px; background: var(--paper); box-shadow: 0 5px 0 var(--wood-edge); }
   .board-paper::before { content: ""; position: absolute; top: -10px; left: 50%; width: 90px; height: 24px; margin-left: -45px; background: var(--tape); transform: rotate(-3deg); }
@@ -557,6 +559,7 @@
         <a href="recipes/">냥빵이 레시피 모음</a>
         <a href="search.html">레시피 검색</a>
         <a href="fridge.html">냉장고 털기</a>
+        <a href="cooked.html">요리 자랑</a>
         <a href="about.html">사이트 소개</a>
         <a href="privacy.html">개인정보처리방침</a>
       </nav>
@@ -625,6 +628,7 @@
           <ul class="side-menu-list">
             <li><a href="search.html" data-track="side_menu" data-track-label="레시피 검색"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M16.5 16.5L21 21"></path></svg>레시피 검색</a></li>
             <li><a href="fridge.html" data-track="side_menu" data-track-label="냉장고 털기"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"></rect><path d="M5 10h14M9 5v2M9 13v3"></path></svg>냉장고 털기</a></li>
+            <li><a href="cooked.html" data-track="side_menu" data-track-label="요리 자랑"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>요리 자랑</a></li>
             <li><a href="board.html" data-track="side_menu" data-track-label="메뉴 건의함"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"></path><path d="M13 7l4 4"></path></svg>메뉴 건의함</a></li>
           </ul>
         </section>
@@ -1346,6 +1350,18 @@
 
   const playIconTpl = document.getElementById('play-icon');
 
+  // 레시피 맨 아래 "완성했다냥!": 요리 자랑 페이지의 쓰기 창으로 (cooked.html)
+  function doneBox(item) {
+    const box = document.createElement('div');
+    box.className = 'board-done';
+    const link = textEl('a', 'accent-btn', '완성했다냥!');
+    link.href = `cooked.html?menu=${item.id}`;
+    link.dataset.track = 'cook_done_cta';
+    link.dataset.trackLabel = 'board';
+    box.append(textEl('p', '', '다 만들었냥? 완성한 요리를 기록하고 자랑해 줘냥!'), link);
+    return box;
+  }
+
   async function openBoard(item) {
     if (!item) return;
     boardItem = item;
@@ -1377,7 +1393,7 @@
       if (boardItem === item) boardRecipeEl.replaceChildren(...recipeLoadError(item));
       return;
     }
-    if (boardItem === item) boardRecipeEl.replaceChildren(...buildRecipeParts(item, recipe, shopLinks, { checklist: true }));
+    if (boardItem === item) boardRecipeEl.replaceChildren(...buildRecipeParts(item, recipe, shopLinks, { checklist: true }), doneBox(item));
   }
 
   chooseBtn.addEventListener('click', () => openBoard(current));

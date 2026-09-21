@@ -145,7 +145,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
 <link rel="stylesheet" href="{{PREFIX}}style.css?v=7">
-<link rel="stylesheet" href="{{PREFIX}}pages.css?v=5">
+<link rel="stylesheet" href="{{PREFIX}}pages.css?v=6">
 {{EXTRA_HEAD}}
 </head>
 <body>
@@ -205,6 +205,7 @@ $HeadTemplate = @'
         <a href="{{PREFIX}}recipes/">냥빵이 레시피 모음</a>
         <a href="{{PREFIX}}search.html">레시피 검색</a>
         <a href="{{PREFIX}}fridge.html">냉장고 털기</a>
+        <a href="{{PREFIX}}cooked.html">요리 자랑</a>
         <a href="{{PREFIX}}about.html">사이트 소개</a>
         <a href="{{PREFIX}}privacy.html">개인정보처리방침</a>
       </nav>
@@ -602,6 +603,10 @@ $($stepHtml -join "`n")
         </section>
 
 $tipHtml
+        <div class="done-box">
+          <p>레시피대로 다 만들었냥? 완성한 요리를 기록하고 자랑해 줘냥!</p>
+          <a class="accent-btn" href="../cooked.html?menu=$($m.id)" data-track="cook_done_cta" data-track-label="recipe_page">완성했다냥!</a>
+        </div>
         <a class="search-more" href="https://www.10000recipe.com/recipe/list.html?q=$([Uri]::EscapeDataString($name))" target="_blank" rel="noopener">다른 레시피도 찾아보기 →</a>
       </article>
 
