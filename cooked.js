@@ -8,6 +8,8 @@
 (function () {
   const PAGE_SIZE = 12;
   const BUCKET = 'cook-photos';
+  const DAILY_LIMIT = 10;   // 한 사람이 24시간에 남길 수 있는 요리 기록 수 (supabase-cooks.sql 과 맞춤)
+  const LIMIT_MESSAGE = '오늘은 여기까지다냥! 요리 기록은 하루에 10개까지 남길 수 있어요. 내일 또 올려 줘냥.';
   const COLUMNS = 'id, user_id, menu_id, menu_name, photo_path, comment, is_public, created_at, profiles(nickname)';
 
   const $ = id => document.getElementById(id);
@@ -520,7 +522,18 @@
         showNicknameField();
       }
 
-      // 2) 사진 올리기
+      // 2) 하루 한도 (24시간에 10개, supabase-cooks.sql 규칙과 같음). 넘었으면 사진을 올리기 전에 알려 줌
+      const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+      const { count, error: countError } = await db.from('cooks')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', currentUser.id)
+        .gt('created_at', since);
+      if (!countError && count >= DAILY_LIMIT) {
+        writeMessage.textContent = LIMIT_MESSAGE;
+        return;
+      }
+
+      // 3) 사진 올리기
       let photoPath = null;
       if (photo) {
         writeMessage.textContent = '사진을 올리는 중…';
@@ -528,12 +541,14 @@
           photoPath = await uploadPhoto();
         } catch (err) {
           console.error(err);
-          writeMessage.textContent = '사진을 올리지 못했어요. 잠시 뒤 다시 시도하거나 사진 없이 저장해 주세요.';
+          writeMessage.textContent = /row-level security/i.test(err.message || '')
+            ? '오늘 올릴 수 있는 사진을 다 썼다냥! 사진은 하루에 10장까지예요. 사진 없이 저장하거나 내일 올려 줘냥.'
+            : '사진을 올리지 못했어요. 잠시 뒤 다시 시도하거나 사진 없이 저장해 주세요.';
           return;
         }
       }
 
-      // 3) 기록 저장
+      // 4) 기록 저장
       writeMessage.textContent = '저장하는 중…';
       const { data, error } = await db.from('cooks')
         .insert({ user_id: currentUser.id, menu_id: menu.id, menu_name: menu.name, photo_path: photoPath, comment: comment || null, is_public: isPublic })
@@ -542,11 +557,13 @@
       if (error) {
         console.error(error);
         if (photoPath) await db.storage.from(BUCKET).remove([photoPath, photoPath.replace(/\.jpg$/, '_s.jpg')]);
-        writeMessage.textContent = '저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.';
+        writeMessage.textContent = error.code === '42501'   // 권한 규칙에 걸림 = 하루 한도를 넘김
+          ? LIMIT_MESSAGE
+          : '저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.';
         return;
       }
 
-      // 4) 화면에 바로 보여 주기
+      // 5) 화면에 바로 보여 주기
       feeds.mine.rows.unshift(data);
       if (isPublic) feeds.all.rows.unshift({ ...data });
       writeForm.reset();

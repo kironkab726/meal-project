@@ -26,10 +26,17 @@ create policy "signed-in users read requests" on public.menu_requests
   for select to authenticated
   using (true);
 
+-- 쓰기는 본인 이름으로만, 24시간에 10개까지 (도배 막기)
 drop policy if exists "add own requests" on public.menu_requests;
 create policy "add own requests" on public.menu_requests
   for insert to authenticated
-  with check ((select auth.uid()) = user_id);
+  with check (
+    (select auth.uid()) = user_id
+    and (
+      select count(*) from public.menu_requests r
+      where r.user_id = (select auth.uid()) and r.created_at > now() - interval '1 day'
+    ) < 10
+  );
 
 drop policy if exists "remove own requests" on public.menu_requests;
 create policy "remove own requests" on public.menu_requests

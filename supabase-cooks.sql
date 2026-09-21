@@ -110,12 +110,17 @@ create policy "read own cooks" on public.cooks
   for select to authenticated
   using ((select auth.uid()) = user_id);
 
+-- 쓰기는 본인 이름으로만, 사진은 자기 폴더 것만, 그리고 24시간에 10개까지 (도배 막기)
 drop policy if exists "add own cooks" on public.cooks;
 create policy "add own cooks" on public.cooks
   for insert to authenticated
   with check (
     (select auth.uid()) = user_id
     and (photo_path is null or photo_path like (select auth.uid())::text || '/%')
+    and (
+      select count(*) from public.cooks c
+      where c.user_id = (select auth.uid()) and c.created_at > now() - interval '1 day'
+    ) < 10
   );
 
 drop policy if exists "edit own cooks" on public.cooks;
@@ -158,10 +163,20 @@ on conflict (id) do update
       allowed_mime_types = excluded.allowed_mime_types;
 
 -- 자기 폴더(사용자 번호 이름)에만 올리고 지울 수 있음. 지우기에는 읽기 권한도 필요함
+-- 올리기는 24시간에 파일 20개까지 (요리 사진 10장 = 큰 사진 + 작은 사진 두 파일씩)
 drop policy if exists "upload own cook photos" on storage.objects;
 create policy "upload own cook photos" on storage.objects
   for insert to authenticated
-  with check (bucket_id = 'cook-photos' and (storage.foldername(name))[1] = (select auth.uid())::text);
+  with check (
+    bucket_id = 'cook-photos'
+    and (storage.foldername(name))[1] = (select auth.uid())::text
+    and (
+      select count(*) from storage.objects o
+      where o.bucket_id = 'cook-photos'
+        and (storage.foldername(o.name))[1] = (select auth.uid())::text
+        and o.created_at > now() - interval '1 day'
+    ) < 20
+  );
 
 drop policy if exists "see own cook photo files" on storage.objects;
 create policy "see own cook photo files" on storage.objects

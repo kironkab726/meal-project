@@ -109,8 +109,9 @@ function renderAccount() {
   button.className = 'pill-btn';
 
   if (currentUser) {
-    button.textContent = '로그아웃';
-    button.addEventListener('click', () => db.auth.signOut());
+    button.append(icon('user'), '내 계정');
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.addEventListener('click', openAccount);
     accountEl.replaceChildren(textEl('span', 'email', currentUser.email), button);
   } else {
     button.append(icon('user'), '로그인');
@@ -157,6 +158,110 @@ authForm.addEventListener('submit', async e => {
   authForm.reset();
   authDialog.close();
 });
+
+
+// ── 내 계정: 로그아웃 · 회원 탈퇴 ─────────────────────
+// 창은 처음 열 때 만들어서 세 페이지(index, board, cooked)가 똑같이 씀
+
+let accountDialog = null;
+
+function buildAccountDialog() {
+  const dialog = document.createElement('dialog');
+  dialog.className = 'account-dialog';
+  dialog.setAttribute('aria-labelledby', 'account-title');
+  dialog.dataset.clarityMask = 'True';   // 이메일이 방문 기록 녹화에 담기지 않게
+
+  const title = textEl('h2', '', '내 계정');
+  title.id = 'account-title';
+  const email = textEl('p', 'account-email', '');
+
+  const logout = textEl('button', 'pill-btn', '로그아웃');
+  logout.type = 'button';
+  logout.addEventListener('click', async () => {
+    dialog.close();
+    await db.auth.signOut();
+  });
+
+  const danger = document.createElement('section');
+  danger.className = 'account-danger';
+  const leave = textEl('button', 'danger-btn', '회원 탈퇴');
+  leave.type = 'button';
+  leave.addEventListener('click', deleteAccount);
+  danger.append(
+    textEl('h3', '', '회원 탈퇴'),
+    textEl('p', '', '탈퇴하면 계정과 함께 추천 기록, 좋아요·별로예요, 메뉴 건의, 닉네임, 요리 기록과 사진이 모두 지워지고 되돌릴 수 없어요.'),
+    leave,
+  );
+
+  const message = textEl('p', 'account-message', '');
+  message.setAttribute('role', 'status');
+
+  const close = textEl('button', 'auth-close', '×');
+  close.type = 'button';
+  close.setAttribute('aria-label', '닫기');
+  close.addEventListener('click', () => dialog.close());
+
+  const body = document.createElement('div');
+  body.className = 'account-body';
+  body.append(title, email, logout, danger, message, close);
+  dialog.append(body);
+  dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+  document.body.append(dialog);
+  return dialog;
+}
+
+function openAccount() {
+  if (!currentUser) return;
+  if (!accountDialog) accountDialog = buildAccountDialog();
+  accountDialog.querySelector('.account-email').textContent = currentUser.email;
+  accountDialog.querySelector('.account-message').textContent = '';
+  accountDialog.querySelectorAll('button').forEach(b => { b.disabled = false; });
+  accountDialog.showModal();
+}
+
+// 요리 사진 파일을 먼저 지우고(SQL로는 못 지움), 계정을 지우면 나머지 기록은 데이터베이스가 함께 지움
+async function deleteAccount() {
+  if (!currentUser) return;
+  const answer = prompt('정말 탈퇴할까요? 모든 기록과 사진이 지워지고 되돌릴 수 없어요.\n탈퇴하려면 아래에 "탈퇴"라고 적어 주세요.');
+  if ((answer || '').trim() !== '탈퇴') return;
+
+  const message = accountDialog.querySelector('.account-message');
+  const buttons = accountDialog.querySelectorAll('button');
+  const fail = text => {
+    message.textContent = text;
+    buttons.forEach(b => { b.disabled = false; });
+  };
+  buttons.forEach(b => { b.disabled = true; });
+  message.textContent = '요리 사진을 지우는 중이에요…';
+
+  const uid = currentUser.id;
+  const bucket = db.storage.from('cook-photos');
+  for (let round = 0; round < 50; round++) {
+    const { data, error } = await bucket.list(uid, { limit: 100 });
+    if (error) {
+      console.error(error);
+      return fail('사진을 지우지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+    }
+    if (!data.length) break;
+    const { error: removeError } = await bucket.remove(data.map(f => `${uid}/${f.name}`));
+    if (removeError) {
+      console.error(removeError);
+      return fail('사진을 지우지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+    }
+  }
+
+  message.textContent = '계정과 기록을 지우는 중이에요…';
+  const { error } = await db.rpc('delete_my_account');
+  if (error) {
+    console.error(error);
+    return fail('탈퇴하지 못했어요. 잠시 뒤 다시 시도하거나 사이트 소개의 문의처로 알려 주세요.');
+  }
+
+  if (window.track) window.track('delete_account');
+  await db.auth.signOut({ scope: 'local' }).catch(() => {});   // 계정이 이미 없으니 이 브라우저의 로그인만 정리
+  alert('탈퇴가 끝났어요. 그동안 함께해 줘서 고마웠다냥!');
+  location.href = './';
+}
 
 renderAccount();
 
