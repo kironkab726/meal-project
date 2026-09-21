@@ -145,7 +145,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
 <link rel="stylesheet" href="{{PREFIX}}style.css?v=6">
-<link rel="stylesheet" href="{{PREFIX}}pages.css?v=3">
+<link rel="stylesheet" href="{{PREFIX}}pages.css?v=4">
 {{EXTRA_HEAD}}
 </head>
 <body>
@@ -190,6 +190,7 @@ $HeadTemplate = @'
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
         <a href="{{PREFIX}}recipes/">냥셰프 레시피 모음</a>
+        <a href="{{PREFIX}}search.html">레시피 검색</a>
         <a href="{{PREFIX}}fridge.html">냉장고 털기</a>
         <a href="{{PREFIX}}about.html">사이트 소개</a>
         <a href="{{PREFIX}}privacy.html">개인정보처리방침</a>
@@ -668,6 +669,14 @@ $indexBody = @"
         <p class="page-lead">아침·점심·저녁 집밥 레시피 $($items.Count)가지를 모았어요. 메뉴를 누르면 재료와 만드는 법을 볼 수 있어요.</p>
       </div>
 
+      <form class="card search-form" action="../search.html" method="get" role="search">
+        <label for="index-search">찾는 메뉴가 있냥?</label>
+        <div class="search-field">
+          <input id="index-search" name="q" type="search" placeholder="메뉴 이름이나 재료 (예: 김치, 두부)" autocomplete="off" enterkeyhint="search">
+          <button type="submit">검색</button>
+        </div>
+      </form>
+
       <nav class="chips" aria-label="끼니 바로가기">$jump</nav>
 
       <div class="page-actions">
@@ -839,6 +848,86 @@ Save 'fridge.html' (Page @{
 })
 
 
+# ── 레시피 검색 (search.html) ─────────────────────────────
+# 레시피 전체를 목록으로 미리 넣어 두고 (자바스크립트가 없어도 전체 목록은 보임),
+# search.js 가 검색어·끼니·조리 시간·난이도에 맞게 거르고 순서를 바꿈.
+# 검색 결과 페이지는 검색엔진에 올리지 않는 게 권장이라 noindex (대표 주소 없이 만듦)
+
+$searchItems = foreach ($m in $items) {
+  $r = $m.recipes
+  $meta = @([string]$m.meal, [string]$m.category)
+  if ($r.minutes) { $meta += ([string]$r.minutes + '분') }
+  if ($r.difficulty) { $meta += [string]$r.difficulty }
+  $ingredientData = (Lines $r.ingredients) -join '|'
+  '          <li data-name="' + (Enc $m.name) + '" data-meal="' + (Enc $m.meal) + '" data-category="' + (Enc $m.category) + '" data-minutes="' + [string]$r.minutes + '" data-difficulty="' + (Enc $r.difficulty) + '" data-ingredients="' + (Enc $ingredientData) + '">' +
+    '<a href="recipes/' + $m.id + '.html"><span class="name">' + (Enc $m.name) + '</span><span class="meta">' + (Enc ($meta -join ' · ')) + '</span><span class="snippet" hidden></span></a></li>'
+}
+
+function FilterChips([string]$filter, [string]$label, [string[]]$values, [string[]]$labels) {
+  $buttons = for ($i = 0; $i -lt $values.Count; $i++) {
+    $pressed = if ($i -eq 0) { 'true' } else { 'false' }
+    '<button class="filter-chip" type="button" data-filter="' + $filter + '" data-value="' + (Enc $values[$i]) + '" aria-pressed="' + $pressed + '">' + (Enc $labels[$i]) + '</button>'
+  }
+  '          <div class="filter-group" role="group" aria-label="' + (Enc $label) + '"><span class="filter-group-label" aria-hidden="true">' + (Enc $label) + '</span>' + ($buttons -join '') + '</div>'
+}
+
+$mealValues = @('') + @($presentMeals)
+$searchFilters = @(
+  (FilterChips 'meal' '끼니' $mealValues (@('전체') + @($presentMeals)))
+  (FilterChips 'time' '조리 시간' @('', '15', '30', '60') @('상관없이', '15분 이내', '30분 이내', '1시간 이내'))
+  (FilterChips 'difficulty' '난이도' @('', '쉬움', '보통', '어려움') @('전체', '쉬움', '보통', '어려움'))
+) -join "`n"
+
+$suggestions = (@('김치', '달걀', '두부', '닭고기', '면', '찌개', 'ㄱㅊㅉㄱ') | ForEach-Object { '<button class="chip suggest-chip" type="button" data-q="' + (Enc $_) + '">' + (Enc $_) + '</button>' }) -join ''
+
+$searchBody = @"
+      <nav class="breadcrumb" aria-label="현재 위치">
+        <a href="./">홈</a><span aria-hidden="true">›</span>
+        <span>레시피 검색</span>
+      </nav>
+
+      <div>
+        <h1 class="page-title">레시피 검색</h1>
+        <p class="page-lead">메뉴 이름이나 재료로 냥셰프 레시피 $($items.Count)가지를 찾아보세요. "ㄱㅊㅉㄱ"처럼 초성으로도 찾을 수 있어요.</p>
+      </div>
+
+      <section class="card search-panel">
+        <form class="search-form" id="search-form" action="search.html" method="get" role="search">
+          <label for="search-q">무엇을 찾고 있냥?</label>
+          <div class="search-field">
+            <input id="search-q" name="q" type="search" placeholder="예: 김치찌개, 두부, 파스타" autocomplete="off" enterkeyhint="search">
+            <button type="submit">검색</button>
+          </div>
+        </form>
+        <div class="search-filters">
+$searchFilters
+        </div>
+        <div class="search-suggest"><span class="filter-group-label">이런 건 어때요?</span>$suggestions</div>
+      </section>
+
+      <p class="search-status" id="search-status" role="status">레시피 $($items.Count)개</p>
+      <ul class="recipe-links-list search-results" id="search-results">
+$($searchItems -join "`n")
+      </ul>
+      <div class="search-empty" id="search-empty" hidden>
+        <p>찾는 레시피가 아직 없어요. 다른 말로 찾아보거나, 가진 재료로 찾아보세요.</p>
+        <div class="page-actions">
+          <button class="pill-btn" id="search-reset" type="button" hidden>끼니·시간·난이도 조건 풀기</button>
+          <a class="pill-btn" href="fridge.html">$($Ico.fridge)냉장고 털기</a>
+          <a class="pill-btn" href="board.html">메뉴 건의하기</a>
+        </div>
+      </div>
+"@
+
+Save 'search.html' (Page @{
+  Prefix       = ''
+  Title        = "레시피 검색 | $SiteName"
+  Description  = "메뉴 이름, 재료, 초성으로 냥셰프 집밥 레시피 $($items.Count)가지를 찾아보세요. 끼니와 조리 시간, 난이도로도 고를 수 있어요."
+  ExtraScripts = '<script src="search.js?v=1"></script>'
+  Body         = $searchBody
+})
+
+
 # ── 사이트 소개, 개인정보처리방침 (본문은 tools/pages/*.html) ──
 
 $staticPages = @(
@@ -966,6 +1055,7 @@ $llms = @(
   '- [메뉴 추천 (홈)](' + $SiteUrl + '/): 냥셰프에게 오늘의 메뉴 추천받기'
   '- [레시피 모음](' + $SiteUrl + '/recipes/): 끼니와 종류별 전체 레시피 목록'
   '- [냉장고 털기](' + $SiteUrl + '/fridge): 집에 있는 재료를 고르면 바로 만들 수 있는 레시피를 찾아 주는 도구'
+  '- [레시피 검색](' + $SiteUrl + '/search): 메뉴 이름, 재료, 초성으로 레시피를 찾는 검색 (예: ' + $SiteUrl + '/search?q=두부)'
   '- [사이트 소개](' + $SiteUrl + '/about): 사이트가 하는 일, 사진 출처, 문의처'
 )
 foreach ($meal in $presentMeals) {
