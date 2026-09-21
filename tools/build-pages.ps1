@@ -144,7 +144,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=7">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=8">
 <link rel="stylesheet" href="{{PREFIX}}pages.css?v=6">
 {{EXTRA_HEAD}}
 </head>

@@ -1,0 +1,7 @@
+# Cloudflare Pages가 모든 페이지 응답에 붙이는 보안 설정
+# - X-Frame-Options: 다른 사이트가 우리 페이지(로그인 창 포함)를 몰래 품어서 클릭을 가로채지 못하게 함
+# - Permissions-Policy: 쓰지 않는 카메라·마이크·위치·결제 기능은 아예 끔 (사진 고르기는 파일 선택이라 영향 없음)
+# (nosniff, Referrer-Policy 는 Cloudflare가 이미 붙여 줌. pages.dev 는 브라우저가 늘 HTTPS로만 엶)
+/*
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()

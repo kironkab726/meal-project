@@ -129,6 +129,12 @@ authForm.addEventListener('submit', async e => {
   const password = authForm.elements.password.value;
   const buttons = authForm.querySelectorAll('.auth-actions button');
 
+  // 만 14세 미만은 법정대리인 동의 없이 가입할 수 없어서, 가입할 때 나이를 확인받음
+  if (mode === 'signup' && authForm.elements.age14 && !authForm.elements.age14.checked) {
+    authMessageEl.textContent = '만 14세 이상만 가입할 수 있어요. 맞다면 "만 14세 이상이에요"에 체크해 주세요.';
+    return;
+  }
+
   buttons.forEach(b => { b.disabled = true; });
   authMessageEl.textContent = mode === 'signup' ? '가입하는 중…' : '로그인하는 중…';
 

@@ -149,6 +149,8 @@ dialog label { display: block; margin-bottom: 12px; font-size: 15px; color: var(
 dialog input { display: block; width: 100%; height: 48px; margin-top: 4px; padding: 0 14px; font: inherit; font-size: 16px; color: var(--text); border: 2px solid var(--border); border-radius: 14px; background: var(--bg); }
 dialog input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .auth-message { min-height: 1.5rem; margin: 0 0 10px; font-size: 14px; }
+dialog label.auth-age { display: flex; align-items: center; gap: 8px; min-height: 44px; margin-bottom: 4px; color: var(--text); cursor: pointer; }
+dialog .auth-age input { flex-shrink: 0; width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
 .auth-actions { display: flex; gap: 8px; }
 .auth-actions button { flex: 1; height: 48px; border: 2px solid var(--border); border-radius: 14px; background: var(--paper); font-family: 'Jua', sans-serif; font-size: 18px; cursor: pointer; }
 .auth-actions button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }

@@ -67,7 +67,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -391,7 +391,7 @@
         </div>
       </div>
       <div class="header-actions">
-        <div class="account" id="account"></div>
+        <div class="account" id="account" data-clarity-mask="True"></div>
         <button class="icon-btn" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
           <svg class="ico icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
           <svg class="ico icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
@@ -642,7 +642,7 @@
     </div>
   </dialog>
 
-  <dialog id="auth-dialog">
+  <dialog id="auth-dialog" data-clarity-mask="True">
     <form id="auth-form">
       <h2>로그인</h2>
       <p class="auth-note" id="auth-note"></p>
@@ -652,6 +652,7 @@
       <label>비밀번호 (6자 이상)
         <input type="password" name="password" autocomplete="current-password" minlength="6" required>
       </label>
+      <label class="auth-age"><input type="checkbox" name="age14">만 14세 이상이에요 (회원가입할 때 체크)</label>
       <p class="auth-message" id="auth-message" role="status"></p>
       <div class="auth-actions">
         <button type="submit" value="login" class="primary">로그인</button>
@@ -694,11 +695,12 @@
     </div>
   </template>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- 로그인·데이터베이스 부품: 버전을 고정하고, 파일이 바뀌면 브라우저가 실행을 거부하게 지문(integrity)을 붙임 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" integrity="sha384-iLddHTLokph6Omwoyid4XKxHaWa6w41BnoEj0q5oOrzmYPpHIKt1wyjReA7s//pP" crossorigin="anonymous"></script>
 <script src="config.js"></script>
 <script src="theme.js?v=1"></script>
 <script src="site.js?v=2"></script>
-<script src="common.js?v=5"></script>
+<script src="common.js?v=6"></script>
 <script>
   // 추천 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
 
