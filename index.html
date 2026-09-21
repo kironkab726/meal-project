@@ -138,7 +138,8 @@
   .reactions button .ico { width: 18px; height: 18px; }
   .reactions button[data-reaction="like"][aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 700; }
   .reactions button[data-reaction="dislike"][aria-pressed="true"] { background: var(--sunk); border-color: var(--muted); color: var(--muted); text-decoration: line-through; }
-  .credit { align-self: flex-end; font-size: 12px; }
+  .photo-credit { margin: -4px 2px 0; align-self: flex-end; font-size: 12px; line-height: 1.5; color: var(--muted); text-align: right; word-break: keep-all; }
+  .photo-credit a { color: var(--link); }
   .share-btn { height: 44px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); color: var(--text); font-family: inherit; font-size: 15px; cursor: pointer; }
   .share-btn:hover { border-color: var(--text); }
   .share-btn .ico { width: 18px; height: 18px; color: var(--accent); }
@@ -273,7 +274,7 @@
     .result-actions { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
     .reactions button { flex: none; font-size: 16px; }
     .share-btn { font-size: 16px; }
-    .credit { align-self: auto; margin-left: auto; font-size: 13px; }
+    .photo-credit { font-size: 13px; }
     .history { margin-top: 56px; gap: 16px; }
     .history-head { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; }
     .history h2 { font-size: 30px; }
@@ -477,6 +478,7 @@
           <div class="photo-frame">
             <div class="photo" id="photo"></div>
           </div>
+          <p class="photo-credit" id="credit" hidden></p>
           <div class="result-text">
             <span class="tag" id="category"></span>
             <div class="menu" id="menu"></div>
@@ -499,9 +501,8 @@
             </div>
             <button class="share-btn" id="share-btn" type="button" hidden>
               <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>
-              친구에게 공유하기
+              공유하기
             </button>
-            <a class="credit" id="credit" target="_blank" rel="noopener" hidden>사진: 위키미디어 공용</a>
           </div>
 
           <details class="recipe" id="recipe" hidden>
@@ -568,7 +569,7 @@
           <div class="board-video" id="board-video"></div>
           <div class="board-actions">
             <a class="pill-btn" id="board-page" href="#" data-track="go_recipe_page_from_board" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"></path><path d="M4 19a2 2 0 0 1 2-2h13"></path><path d="M9 7h6"></path></svg>레시피 페이지로 크게 보기</a>
-            <button class="pill-btn" id="board-share" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>친구에게 공유하기</button>
+            <button class="pill-btn" id="board-share" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>공유하기</button>
           </div>
         </div>
         <div class="board-paper" id="board-recipe"></div>
@@ -913,7 +914,41 @@
     img.src = photoUrl(item.photo);
     photoEl.replaceChildren(img);
 
-    creditEl.href = photoPage(item.photo);
+    showCredit(item);
+  }
+
+  // 사진 아래 출처: "사진: 작가 · 라이선스 · 위키미디어" (위키미디어 사진은 대부분 작가와 라이선스를 밝혀야 쓸 수 있음)
+  // 출처표는 build-pages.ps1 이 tools/photos.csv 로 만든 recipes/photo-credits.json
+  let photoCreditsLoad = null;
+  function loadPhotoCredits() {
+    if (!photoCreditsLoad) {
+      photoCreditsLoad = fetch('recipes/photo-credits.json')
+        .then(res => (res.ok ? res.json() : {}))
+        .then(data => (data && typeof data === 'object' ? data : {}))
+        .catch(() => ({}));
+    }
+    return photoCreditsLoad;
+  }
+
+  function outLink(text, href, rel) {
+    const a = textEl('a', '', text);
+    a.href = href;
+    a.target = '_blank';
+    a.rel = rel || 'noopener';
+    return a;
+  }
+
+  async function showCredit(item) {
+    creditEl.hidden = true;
+    const credits = await loadPhotoCredits();
+    // 그사이 다른 메뉴 사진으로 바뀌었으면 버림
+    if (!photoEl.querySelector('img') || photoEl.querySelector('img').alt !== item.menu) return;
+    const c = credits[item.photo] || {};
+    const parts = ['사진: '];
+    if (c.a) parts.push(c.a, ' · ');
+    if (c.l) parts.push(c.u ? outLink(c.l, c.u, 'noopener license') : c.l, ' · ');
+    parts.push(outLink('위키미디어', photoPage(item.photo)));
+    creditEl.replaceChildren(...parts);
     creditEl.hidden = false;
   }
 

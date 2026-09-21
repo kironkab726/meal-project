@@ -9,6 +9,7 @@
 #   llms.txt                  AI(ChatGPT, Claude 등)가 읽기 좋은 사이트 안내
 #   fridge.html               냉장고 털기 (재료표는 tools/fridge.csv)
 #   recipes/pages.json        레시피 페이지가 있는 메뉴 번호 (메인 화면 공유하기가 읽음)
+#   recipes/photo-credits.json 음식 사진 출처 (작가, 라이선스. 출처표는 tools/photos.csv)
 #   recipes/videos.json       메뉴별 요리 영상 (메인 화면 "오늘은 이걸로 할래!" 도마가 읽음, 영상표는 tools/videos.csv)
 #   recipes/shop-links.json   쿠팡 파트너스 재료 링크 (메인 화면 레시피 칸이 읽음)
 #   tools/coupang-links.csv   쿠팡 파트너스 링크를 적는 표 (새 메뉴가 생기면 줄을 더해 줌)
@@ -325,6 +326,39 @@ if (Test-Path -LiteralPath $LinksPath) {
   $oldCsv = ''
 }
 
+# ── 음식 사진 출처 (tools/photos.csv: 사진 파일, 메뉴, 작가, 라이선스, 라이선스 주소) ──
+# 위키미디어 사진 대부분은 "작가 이름 + 라이선스"를 표시해야 상업적으로 쓸 수 있어서 사진 아래에 보여 줌
+# 새 사진이 생기면 tools\photo-credits.ps1 을 먼저 실행해 표를 채우세요.
+function LicenseLabel([string]$license) {
+  switch ($license) {
+    'Public domain' { '퍼블릭 도메인' }
+    'KOGL Type 1'   { '공공누리 제1유형' }
+    default         { $license }
+  }
+}
+
+$Credits = @{}
+$photosPath = Join-Path $PSScriptRoot 'photos.csv'
+if (Test-Path -LiteralPath $photosPath) {
+  foreach ($row in @((ReadCsvText $photosPath) -split "\r?\n" | Where-Object { $_.Trim() } | ConvertFrom-Csv)) {
+    $Credits[([string]$row.'사진 파일').Trim()] = [ordered]@{ a = ([string]$row.'작가').Trim(); l = (LicenseLabel ([string]$row.'라이선스').Trim()); u = ([string]$row.'라이선스 주소').Trim() }
+  }
+}
+
+# "사진: 작가 · 라이선스 · 위키미디어" (라이선스와 위키미디어는 링크)
+function PhotoCreditHtml([string]$photo) {
+  $filePage = 'https://commons.wikimedia.org/wiki/File:' + [Uri]::EscapeDataString($photo)
+  $c = $Credits[$photo]
+  $parts = @()
+  if ($c -and $c.a) { $parts += (Enc $c.a) }
+  if ($c -and $c.l) {
+    if ($c.u) { $parts += ('<a href="' + (Enc $c.u) + '" target="_blank" rel="noopener license">' + (Enc $c.l) + '</a>') }
+    else { $parts += (Enc $c.l) }
+  }
+  $parts += ('<a href="' + $filePage + '" target="_blank" rel="noopener">위키미디어</a>')
+  '사진: ' + ($parts -join ' · ')
+}
+
 # ── 요리 영상 (tools/videos.csv: 번호, 영상 ID, 채널, 영상 제목) ─────
 # 유튜브에서 "퍼가기"가 허용된 영상만 넣음. 영상이 내려가면 이 표에서 ID만 바꾸면 됨
 $Videos = @{}
@@ -399,7 +433,7 @@ foreach ($m in $items) {
     $photoHtml = @(
       '      <figure class="photo-hero">'
       '        <img src="' + (Enc $photoUrl) + '" alt="' + (Enc $name) + '" width="800" height="500" loading="eager">'
-      '        <figcaption><a href="https://commons.wikimedia.org/wiki/File:' + $file + '" target="_blank" rel="noopener">사진: 위키미디어 공용</a></figcaption>'
+      '        <figcaption>' + (PhotoCreditHtml ([string]$m.photo)) + '</figcaption>'
       '      </figure>'
     ) -join "`n"
   }
@@ -676,6 +710,17 @@ Save 'recipes\pages.json' ((ConvertTo-Json -InputObject @($items | ForEach-Objec
 $videoMap = [ordered]@{}
 foreach ($m in $items) { if ($Videos[[string]$m.id]) { $videoMap[[string]$m.id] = $Videos[[string]$m.id] } }
 Save 'recipes\videos.json' ((ConvertTo-Json -InputObject $videoMap -Depth 3 -Compress) + "`n")
+
+# 메인 화면이 사진 아래에 보여 줄 출처 (사진 파일 이름 → 작가, 라이선스, 라이선스 주소)
+$creditMap = [ordered]@{}
+$noCredit = @()
+foreach ($m in $menus) {
+  $photo = [string]$m.photo
+  if (-not $photo) { continue }
+  if ($Credits[$photo]) { $creditMap[$photo] = $Credits[$photo] } else { $noCredit += ('  ' + $m.id + ' ' + $m.name + ': ' + $photo) }
+}
+Save 'recipes\photo-credits.json' ((ConvertTo-Json -InputObject $creditMap -Depth 3 -Compress) + "`n")
+if ($noCredit.Count) { Write-Warning ("tools\photos.csv 에 출처가 없는 사진 (tools\photo-credits.ps1 을 실행하세요):`n" + ($noCredit -join "`n")) }
 
 
 # ── 냉장고 털기 (fridge.html) ─────────────────────────────
