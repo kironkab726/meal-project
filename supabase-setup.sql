@@ -1,4 +1,4 @@
--- 오늘 뭐 먹지 — Supabase 설정
+-- 냥빵이의 삼시세끼 — Supabase 설정
 -- Supabase 대시보드 → SQL Editor → New query 에 이 파일 내용을 전부 붙여넣고 Run 을 누르세요.
 -- 여러 번 실행해도 안전합니다 (이미 있는 테이블과 메뉴는 건너뜁니다).
 

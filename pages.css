@@ -39,7 +39,7 @@ a.chip:hover { color: var(--text); }
 .step-list li { counter-increment: step; position: relative; min-height: 28px; padding-left: 40px; line-height: 1.65; word-break: keep-all; }
 .step-list li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--accent); color: var(--accent-text); font-family: 'Jua', sans-serif; font-size: 15px; line-height: 1; }
 
-/* 냥셰프 팁 */
+/* 냥빵이 팁 */
 .tip-note { margin: 0; padding: 12px 16px; border-radius: 14px; background: var(--note); color: var(--note-text); font-family: 'Gaegu', cursive; font-weight: 700; font-size: 20px; line-height: 1.4; word-break: keep-all; }
 .tip-note strong { margin-right: 8px; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 16px; color: var(--text); }
 

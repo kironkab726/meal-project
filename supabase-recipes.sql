@@ -1,4 +1,4 @@
--- 냥셰프 레시피 — Supabase 설정 (supabase-setup.sql 다음에 실행)
+-- 냥빵이 레시피 — Supabase 설정 (supabase-setup.sql 다음에 실행)
 -- Supabase 대시보드 → SQL Editor → New query 에 이 파일 내용을 전부 붙여넣고 Run 을 누르세요.
 -- 여러 번 실행해도 안전합니다 (이미 들어간 레시피는 덮어쓰지 않습니다).
 --
@@ -15,7 +15,7 @@ create table if not exists public.recipes (
   servings    int check (servings > 0),                             -- 몇 인분
   ingredients text not null default '',                             -- 한 줄에 재료 하나
   steps       text not null default '',                             -- 한 줄에 순서 하나
-  tip         text,                                                 -- 냥셰프 팁
+  tip         text,                                                 -- 냥빵이 팁
   updated_at  timestamptz not null default now()
 );
 

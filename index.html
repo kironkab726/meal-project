@@ -37,21 +37,21 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="alternate" type="application/rss+xml" title="냥셰프 레시피" href="rss.xml">
-<title>냥셰프의 오늘 뭐 먹지 | 아침·점심·저녁 메뉴 추천과 집밥 레시피</title>
-<meta name="description" content="오늘 뭐 먹을지 고민될 때, 고양이 요리사 냥셰프가 아침·점심·저녁 메뉴를 골라 드려요. 한식·중식·일식·양식·분식 메뉴 추천과 재료, 만드는 법까지 담은 집밥 레시피를 함께 볼 수 있어요.">
+<link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="rss.xml">
+<title>냥빵이의 삼시세끼 | 아침·점심·저녁 메뉴 추천과 집밥 레시피</title>
+<meta name="description" content="오늘 뭐 먹을지 고민될 때, 고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 드려요. 한식·중식·일식·양식·분식 메뉴 추천과 재료, 만드는 법까지 담은 집밥 레시피를 함께 볼 수 있어요.">
 <meta name="robots" content="max-image-preview:large">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="냥셰프의 오늘 뭐 먹지">
+<meta property="og:site_name" content="냥빵이의 삼시세끼">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="냥셰프의 오늘 뭐 먹지">
-<meta property="og:description" content="오늘 뭐 먹지? 고양이 요리사 냥셰프가 아침·점심·저녁 메뉴를 골라 주고 집밥 레시피까지 알려 줘요.">
+<meta property="og:title" content="냥빵이의 삼시세끼">
+<meta property="og:description" content="오늘 뭐 먹지? 고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 주고 집밥 레시피까지 알려 줘요.">
 <meta property="og:url" content="https://meal-project.pages.dev/">
 <meta property="og:image" content="https://meal-project.pages.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="셰프 모자를 쓴 고양이 냥셰프와 '냥셰프의 오늘 뭐 먹지' 글자">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"냥셰프의 오늘 뭐 먹지","alternateName":"냥셰프","url":"https://meal-project.pages.dev/","inLanguage":"ko"}</script>
+<meta property="og:image:alt" content="식빵처럼 웅크리고 셰프 모자를 쓴 고양이 냥빵이와 '냥빵이의 삼시세끼' 글자">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"냥빵이의 삼시세끼","alternateName":"냥빵이","url":"https://meal-project.pages.dev/","inLanguage":"ko"}</script>
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
   (function () {
@@ -67,14 +67,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
   .layout { position: relative; z-index: 1; width: 100%; max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 6px; }
   .chef-caption, .note, .doodle-mid { display: none; }
 
-  /* 냥셰프 표정: 좋아요/별로예요에 따라 바뀜 */
+  /* 냥빵이 표정: 좋아요/별로예요에 따라 바뀜 */
   .chef-cat { transform-origin: 50% 100%; }
   .chef-cat .face-like, .chef-cat .face-dislike { display: none; }
   .chef-cat[data-mood="like"] .face-default, .chef-cat[data-mood="dislike"] .face-default { display: none; }
@@ -298,7 +298,7 @@
     .h-meta { font-size: 14px; }
   }
 
-  /* 넓은 화면: 왼쪽 냥셰프(+메모지, 건의함), 오른쪽 추천 카드 */
+  /* 넓은 화면: 왼쪽 냥빵이(+메모지, 건의함), 오른쪽 추천 카드 */
   @media (min-width: 1200px) {
     .layout { max-width: none; grid-template-columns: 440px minmax(0, 640px); grid-template-rows: auto 1fr; justify-content: center; align-items: start; column-gap: 52px; row-gap: 0; padding-top: 18px; }
     .chef { grid-column: 1; grid-row: 1; flex-direction: column; gap: 14px; padding-top: 8px; }
@@ -351,23 +351,36 @@
 
     <header class="site-header">
       <div class="brand">
-        <svg class="brand-cat" viewBox="0 0 120 120" aria-hidden="true">
-          <path class="ink" d="M22 64 L28 22 L54 46 Z" fill="#F2B872"></path>
-          <path class="ink" d="M98 64 L92 22 L66 46 Z" fill="#F2B872"></path>
-          <ellipse class="ink" cx="60" cy="72" rx="44" ry="36" fill="#F2B872"></ellipse>
-          <circle class="ink" cx="43" cy="30" r="15" fill="#FFFFFF"></circle>
-          <circle class="ink" cx="60" cy="21" r="18" fill="#FFFFFF"></circle>
-          <circle class="ink" cx="77" cy="30" r="15" fill="#FFFFFF"></circle>
-          <rect class="ink" x="38" y="32" width="44" height="18" rx="5" fill="#FFFFFF"></rect>
-          <path class="ink-line" d="M40 72 Q47 65 54 72"></path>
-          <path class="ink-line" d="M66 72 Q73 65 80 72"></path>
-          <ellipse cx="36" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
-          <ellipse cx="84" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
-          <path d="M56 80 L64 80 L60 85 Z" fill="#E7837A"></path>
+        <svg class="brand-cat" viewBox="50 12 300 300" aria-hidden="true">
+          <path class="nb-ear" d="M104 128 L112 44 L178 92 Z" fill="#C8733A"></path>
+          <path d="M120 114 L124 66 L160 94 Z" fill="#F4A28C"></path>
+          <path class="nb-ear" d="M296 128 L288 44 L222 92 Z" fill="#C8733A"></path>
+          <path d="M280 114 L276 66 L240 94 Z" fill="#F4A28C"></path>
+          <path d="M90 392 L90 214 C52 206 44 130 100 112 C140 70 260 70 300 112 C356 130 348 206 310 214 L310 392 Q310 404 298 404 L102 404 Q90 404 90 392 Z" fill="#C8733A"></path>
+          <path class="nb-stripe" d="M68 156 L86 162 M68 178 L88 180 M332 156 L314 162 M332 178 L312 180"></path>
+          <path d="M108 384 L108 204 C74 196 66 142 114 128 C150 94 250 94 286 128 C334 142 326 196 292 204 L292 384 Q292 390 286 390 L114 390 Q108 390 108 384 Z" fill="#FFE9C2"></path>
+          <g transform="rotate(-8 200 84)">
+            <circle cx="176" cy="52" r="20" fill="#FFFFFF"></circle>
+            <circle cx="224" cy="52" r="20" fill="#FFFFFF"></circle>
+            <circle cx="200" cy="40" r="24" fill="#FFFFFF"></circle>
+            <rect x="170" y="54" width="60" height="36" rx="8" fill="#FFFFFF"></rect>
+            <path class="nb-pleat" d="M186 64 L186 82 M200 62 L200 82 M214 64 L214 82"></path>
+          </g>
+          <ellipse cx="136" cy="262" rx="17" ry="10" fill="#F4A28C" opacity="0.9"></ellipse>
+          <ellipse cx="264" cy="262" rx="17" ry="10" fill="#F4A28C" opacity="0.9"></ellipse>
+          <path d="M191 250 Q200 246 209 250 L200 259 Z" fill="#E7837A"></path>
+          <g>
+            <ellipse cx="152" cy="232" rx="9" ry="11" fill="#4A3426"></ellipse>
+            <ellipse cx="248" cy="232" rx="9" ry="11" fill="#4A3426"></ellipse>
+            <circle cx="155" cy="228" r="3" fill="#FFFFFF"></circle>
+            <circle cx="251" cy="228" r="3" fill="#FFFFFF"></circle>
+            <path class="nb-line" d="M200 259 Q196 270 186 268 M200 259 Q204 270 214 268"></path>
+            <path class="nb-whisker" d="M122 248 L82 242 M122 260 L84 264 M278 248 L318 242 M278 260 L316 264"></path>
+          </g>
         </svg>
         <div class="brand-text">
-          <span class="brand-name">냥셰프<span class="wide-only">의 오늘 뭐 먹지</span></span>
-          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">오늘 뭐 먹지</span></span>
+          <span class="brand-name">냥빵이<span class="wide-only">의 삼시세끼</span></span>
+          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">삼시세끼</span></span>
         </div>
       </div>
       <div class="header-actions">
@@ -397,85 +410,62 @@
         <div class="chef-art">
           <div class="plate" aria-hidden="true"></div>
           <div class="plate-ring" aria-hidden="true"></div>
-          <svg class="chef-cat" data-mood="default" viewBox="0 0 380 400" role="img" aria-label="요리사 모자를 쓰고 나무 국자를 든 고양이">
-            <path class="tail-out" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
-            <path class="tail-in" d="M282 352 Q352 342 348 282 Q345 252 320 252"></path>
-            <ellipse class="ink" cx="190" cy="336" rx="112" ry="66" fill="#F2B872"></ellipse>
-            <path class="ink" d="M130 300 Q190 290 250 300 L240 402 L140 402 Z" fill="#FFFBF3"></path>
-            <path class="ink-thin" d="M165 350 L215 350 L212 378 Q190 384 168 378 Z"></path>
-            <path class="ink" d="M78 176 L86 88 L150 128 Z" fill="#F2B872"></path>
-            <path class="ink" d="M302 176 L294 88 L230 128 Z" fill="#F2B872"></path>
-            <path d="M94 150 L99 110 L128 129 Z" fill="#F4A28C"></path>
-            <path d="M286 150 L281 110 L252 129 Z" fill="#F4A28C"></path>
-            <ellipse class="ink" cx="190" cy="210" rx="122" ry="98" fill="#F2B872"></ellipse>
-            <path class="stripe" d="M170 130 Q175 146 172 160"></path>
-            <path class="stripe" d="M190 128 L190 158"></path>
-            <path class="stripe" d="M210 130 Q205 146 208 160"></path>
-            <path class="stripe" d="M74 198 L98 205"></path>
-            <path class="stripe" d="M72 218 L96 221"></path>
-            <path class="stripe" d="M306 198 L282 205"></path>
-            <path class="stripe" d="M308 218 L284 221"></path>
-            <circle class="ink" cx="140" cy="62" r="42" fill="#FFFFFF"></circle>
-            <circle class="ink" cx="240" cy="62" r="42" fill="#FFFFFF"></circle>
-            <circle class="ink" cx="190" cy="44" r="50" fill="#FFFFFF"></circle>
-            <rect class="ink" x="122" y="70" width="136" height="56" rx="12" fill="#FFFFFF"></rect>
-            <path class="pleat" d="M160 80 L160 116"></path>
-            <path class="pleat" d="M190 80 L190 116"></path>
-            <path class="pleat" d="M220 80 L220 116"></path>
-            <ellipse class="blush" cx="122" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
-            <ellipse class="blush" cx="258" cy="238" rx="18" ry="10" fill="#F4A28C" opacity="0.8"></ellipse>
-            <ellipse cx="190" cy="248" rx="44" ry="30" fill="#FFF1DC"></ellipse>
-            <path class="ink3" d="M180 232 Q190 228 200 232 L190 244 Z" fill="#E7837A"></path>
-            <!-- 표정: 기본 (눈웃음) -->
+          <svg class="chef-cat" data-mood="default" viewBox="10 10 380 400" role="img" aria-label="식빵처럼 웅크리고 셰프 모자를 쓴 고양이 냥빵이">
+            <path class="nb-tail" d="M282 386 C340 394 372 362 362 322 C356 300 340 294 332 306"></path>
+            <path class="nb-ear" d="M104 128 L112 44 L178 92 Z" fill="#C8733A"></path>
+            <path d="M120 114 L124 66 L160 94 Z" fill="#F4A28C"></path>
+            <path class="nb-ear" d="M296 128 L288 44 L222 92 Z" fill="#C8733A"></path>
+            <path d="M280 114 L276 66 L240 94 Z" fill="#F4A28C"></path>
+            <path d="M90 392 L90 214 C52 206 44 130 100 112 C140 70 260 70 300 112 C356 130 348 206 310 214 L310 392 Q310 404 298 404 L102 404 Q90 404 90 392 Z" fill="#C8733A"></path>
+            <path class="nb-stripe" d="M68 156 L86 162 M68 178 L88 180 M332 156 L314 162 M332 178 L312 180"></path>
+            <path d="M108 384 L108 204 C74 196 66 142 114 128 C150 94 250 94 286 128 C334 142 326 196 292 204 L292 384 Q292 390 286 390 L114 390 Q108 390 108 384 Z" fill="#FFE9C2"></path>
+            <ellipse cx="160" cy="392" rx="30" ry="17" fill="#E49A5A"></ellipse>
+            <ellipse cx="240" cy="392" rx="30" ry="17" fill="#E49A5A"></ellipse>
+            <path class="nb-toe" d="M152 384 L152 395 M168 384 L168 395 M232 384 L232 395 M248 384 L248 395"></path>
+            <g transform="rotate(-8 200 84)">
+              <circle cx="176" cy="52" r="20" fill="#FFFFFF"></circle>
+              <circle cx="224" cy="52" r="20" fill="#FFFFFF"></circle>
+              <circle cx="200" cy="40" r="24" fill="#FFFFFF"></circle>
+              <rect x="170" y="54" width="60" height="36" rx="8" fill="#FFFFFF"></rect>
+              <path class="nb-pleat" d="M186 64 L186 82 M200 62 L200 82 M214 64 L214 82"></path>
+            </g>
+            <ellipse class="blush" cx="136" cy="262" rx="17" ry="10" fill="#F4A28C" opacity="0.9"></ellipse>
+            <ellipse class="blush" cx="264" cy="262" rx="17" ry="10" fill="#F4A28C" opacity="0.9"></ellipse>
+            <path d="M191 250 Q200 246 209 250 L200 259 Z" fill="#E7837A"></path>
+            <!-- 표정: 기본 (동그란 눈, 고양이 입) -->
             <g class="face face-default">
-              <path class="ink-line" d="M132 208 Q148 190 164 208"></path>
-              <path class="ink-line" d="M216 208 Q232 190 248 208"></path>
-              <path class="ink-thin" d="M190 244 Q184 258 172 254"></path>
-              <path class="ink-thin" d="M190 244 Q196 258 208 254"></path>
+              <ellipse cx="152" cy="232" rx="9" ry="11" fill="#4A3426"></ellipse>
+              <ellipse cx="248" cy="232" rx="9" ry="11" fill="#4A3426"></ellipse>
+              <circle cx="155" cy="228" r="3" fill="#FFFFFF"></circle>
+              <circle cx="251" cy="228" r="3" fill="#FFFFFF"></circle>
+              <path class="nb-line" d="M200 259 Q196 270 186 268 M200 259 Q204 270 214 268"></path>
+              <path class="nb-whisker" d="M122 248 L82 242 M122 260 L84 264 M278 248 L318 242 M278 260 L316 264"></path>
             </g>
-            <!-- 표정: 좋아요 (하트 눈, 활짝 웃는 입, 반짝이) -->
+            <!-- 표정: 좋아요 (웃는 눈, 활짝 벌린 입, 반짝이) -->
             <g class="face face-like">
-              <path class="ink3" d="M148 218 C134 208 130 198 136 192 C141 187 147 190 148 195 C149 190 155 187 160 192 C166 198 162 208 148 218 Z" fill="#E7837A"></path>
-              <path class="ink3" d="M232 218 C218 208 214 198 220 192 C225 187 231 190 232 195 C233 190 239 187 244 192 C250 198 246 208 232 218 Z" fill="#E7837A"></path>
-              <path class="ink-thin" d="M190 244 L190 250"></path>
-              <path class="ink3" d="M170 250 Q190 276 210 250 Z" fill="#9C4A3A"></path>
-              <ellipse cx="190" cy="259" rx="8" ry="4" fill="#F4A28C"></ellipse>
-              <path class="ink3" d="M40 134 L44 146 L56 150 L44 154 L40 166 L36 154 L24 150 L36 146 Z" fill="#F2C46D"></path>
-              <path class="ink3" d="M344 126 L347 137 L358 140 L347 143 L344 154 L341 143 L330 140 L341 137 Z" fill="#F2C46D"></path>
+              <path class="nb-line" d="M138 236 Q152 220 166 236 M234 236 Q248 220 262 236"></path>
+              <path class="nb-mouth" d="M186 262 Q200 286 214 262 Z" fill="#9C4A3A"></path>
+              <ellipse cx="200" cy="270" rx="7" ry="3.5" fill="#F4A28C"></ellipse>
+              <path class="nb-whisker" d="M122 246 L84 236 M122 258 L84 258 M278 246 L316 236 M278 258 L316 258"></path>
+              <path d="M62 70 L66 80 L76 84 L66 88 L62 98 L58 88 L48 84 L58 80 Z" fill="#F2C46D"></path>
+              <path d="M340 68 L343 77 L352 80 L343 83 L340 92 L337 83 L328 80 L337 77 Z" fill="#F2C46D"></path>
             </g>
-            <!-- 표정: 별로예요 (처진 눈썹, 눈물, 삐죽 입, 식은땀) -->
+            <!-- 표정: 별로예요 (뚱한 반쯤 감은 눈, 삐뚤한 입, 식은땀) -->
             <g class="face face-dislike">
-              <path class="ink-thin" d="M130 186 L162 176"></path>
-              <path class="ink-thin" d="M250 186 L218 176"></path>
-              <ellipse cx="148" cy="206" rx="9" ry="11" fill="#4A3426"></ellipse>
-              <ellipse cx="232" cy="206" rx="9" ry="11" fill="#4A3426"></ellipse>
-              <circle cx="151" cy="202" r="3" fill="#FFFFFF"></circle>
-              <circle cx="235" cy="202" r="3" fill="#FFFFFF"></circle>
-              <path class="ink3" d="M136 218 Q129 230 136 237 Q143 230 136 218 Z" fill="#A9D8EC"></path>
-              <path class="ink3" d="M244 218 Q237 230 244 237 Q251 230 244 218 Z" fill="#A9D8EC"></path>
-              <path class="ink-thin" d="M174 260 Q190 246 206 260"></path>
-              <path class="ink3" d="M50 160 Q38 180 50 188 Q62 180 50 160 Z" fill="#A9D8EC"></path>
+              <path d="M142 231 A10 9 0 0 0 162 231 Z" fill="#4A3426"></path>
+              <path d="M238 231 A10 9 0 0 0 258 231 Z" fill="#4A3426"></path>
+              <path class="nb-line" d="M138 231 L166 231 M234 231 L262 231"></path>
+              <path class="nb-line" d="M186 270 Q193 264 200 270 Q207 276 214 270"></path>
+              <path class="nb-whisker" d="M122 254 L84 262 M122 264 L88 276 M278 254 L316 262 M278 264 L312 276"></path>
+              <path d="M332 108 Q320 126 332 136 Q344 126 332 108 Z" fill="#A9D8EC"></path>
             </g>
-            <path class="ink-thin" d="M120 242 L66 232"></path>
-            <path class="ink-thin" d="M120 254 L64 260"></path>
-            <path class="ink-thin" d="M260 242 L314 232"></path>
-            <path class="ink-thin" d="M260 254 L316 260"></path>
-            <path class="ink scarf" d="M146 300 Q190 318 234 300 L206 334 Q190 342 174 334 Z"></path>
-            <circle class="ink3 scarf" cx="190" cy="316" r="9"></circle>
-            <path class="spoon-out" d="M300 358 L338 216"></path>
-            <path class="spoon-in" d="M300 358 L338 216"></path>
-            <ellipse class="ink" cx="342" cy="196" rx="21" ry="28" transform="rotate(14 342 196)" fill="#D9A574"></ellipse>
-            <ellipse class="ink" cx="298" cy="352" rx="26" ry="22" fill="#F2B872"></ellipse>
-            <path class="ink-thin" d="M290 342 L290 354 M304 340 L304 354"></path>
-            <ellipse class="ink" cx="94" cy="360" rx="26" ry="22" fill="#F2B872"></ellipse>
-            <path class="ink-thin" d="M86 350 L86 362 M100 348 L100 362"></path>
           </svg>
         </div>
 
         <p class="chef-caption">고민은 짧게, 한 끼는 맛있게.</p>
 
         <div class="note">
-          <span class="note-title">냥셰프의 비밀 레시피</span>
+          <span class="note-title">냥빵이의 비밀 레시피</span>
           <span class="note-line">좋아요한 메뉴는 더 자주 만들고,</span>
           <span class="note-line">별로예요한 메뉴는 빼 둘게요냥.</span>
         </div>
@@ -520,7 +510,7 @@
           <details class="recipe" id="recipe" hidden>
             <summary class="recipe-summary">
               <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"></path><path d="M4 19a2 2 0 0 1 2-2h13"></path><path d="M9 7h6"></path></svg>
-              냥셰프 레시피 보기
+              냥빵이 레시피 보기
               <svg class="ico recipe-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
             </summary>
             <div class="recipe-body" id="recipe-body"></div>
@@ -538,7 +528,7 @@
       </section>
 
       <a class="board-link" href="board.html">
-        <span class="board-link-title">냥셰프 메뉴 건의함</span>
+        <span class="board-link-title">냥빵이 메뉴 건의함</span>
         <span class="board-link-desc">먹고 싶은 메뉴가 있냥? 적어 주면 참고할게냥!</span>
         <span class="board-link-foot">
           <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>로그인한 집사만</span>
@@ -549,7 +539,7 @@
 
     <section class="history">
       <div class="history-head">
-        <h2>냥셰프의 최근 추천</h2>
+        <h2>냥빵이의 최근 추천</h2>
         <span class="history-note" id="history-note"></span>
       </div>
       <ol class="history-list" id="history-list"></ol>
@@ -557,13 +547,13 @@
 
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
-        <a href="recipes/">냥셰프 레시피 모음</a>
+        <a href="recipes/">냥빵이 레시피 모음</a>
         <a href="search.html">레시피 검색</a>
         <a href="fridge.html">냉장고 털기</a>
         <a href="about.html">사이트 소개</a>
         <a href="privacy.html">개인정보처리방침</a>
       </nav>
-      <p>음식 사진: 위키미디어 공용 · 레시피: 냥셰프</p>
+      <p>음식 사진: 위키미디어 공용 · 레시피: 냥빵이</p>
     </footer>
   </div>
 
@@ -600,12 +590,12 @@
     <div class="side-menu-inner">
       <div class="gingham" aria-hidden="true"></div>
       <div class="side-menu-head">
-        <h2 id="side-menu-title">냥셰프 메뉴판</h2>
+        <h2 id="side-menu-title">냥빵이 메뉴판</h2>
         <button class="icon-btn" id="menu-close" type="button" aria-label="메뉴 닫기">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
         </button>
       </div>
-      <p class="side-menu-lead">추천받은 메뉴를 집에서 만들어 보고 싶다면? 한식, 중식, 일식, 양식, 분식까지 집밥 레시피를 재료와 만드는 법, 냥셰프 팁과 함께 정리해 뒀어요.</p>
+      <p class="side-menu-lead">추천받은 메뉴를 집에서 만들어 보고 싶다면? 한식, 중식, 일식, 양식, 분식까지 집밥 레시피를 재료와 만드는 법, 냥빵이 팁과 함께 정리해 뒀어요.</p>
       <form class="side-search" action="search.html" method="get" role="search">
         <label for="side-search-q">레시피 검색</label>
         <div class="side-search-field">
@@ -613,7 +603,7 @@
           <button type="submit">검색</button>
         </div>
       </form>
-      <nav aria-label="냥셰프 메뉴판">
+      <nav aria-label="냥빵이 메뉴판">
         <section>
           <h3>레시피 모음</h3>
           <ul class="side-menu-list">
@@ -767,7 +757,7 @@
     const ro = batchim && lastSyllable(m) !== 8 ? '으로' : '로';   // 받침 ㄹ은 '로'
     const lines = [
       `오늘은 ${m}${batchim ? '이' : '가'} 딱이다냥!`,
-      `냥셰프 추천은 ${m}${batchim ? '이다' : '다'}냥!`,
+      `냥빵이 추천은 ${m}${batchim ? '이다' : '다'}냥!`,
       `${m}${batchim ? '이면' : '면'} 실패 없다냥!`,
       `${m}, 맛있게 만들어 줄게냥!`,
     ];
@@ -781,7 +771,7 @@
   }
 
 
-  // ── 냥셰프 표정과 말풍선 ──────────────────────────────
+  // ── 냥빵이 표정과 말풍선 ──────────────────────────────
 
   const DEFAULT_BUBBLE = '오늘은 뭘 만들어 줄까냥?';
 
@@ -819,7 +809,7 @@
 
     const m = item.menu;
     const lines = mood === 'like'
-      ? [`${josa(m, '을', '를')} 좋아해 줘서 고맙다냥!`, '냥셰프 기분 최고다냥!', `${m}, 더 자주 만들어 줄게냥!`]
+      ? [`${josa(m, '을', '를')} 좋아해 줘서 고맙다냥!`, '냥빵이 기분 최고다냥!', `${m}, 더 자주 만들어 줄게냥!`]
       : [`${josa(m, '은', '는')} 빼 둘게냥…`, '흑, 입맛에 안 맞았냥…', '다음엔 더 잘 골라 줄게냥…'];
     sayBubble(randomItem(lines));
     replay(chefCatEl, mood === 'like' ? 'mood-pop' : 'mood-droop');
@@ -881,7 +871,7 @@
 
     // 탭 제목(document.title)은 검색 결과에 쓰이므로 끼니에 따라 바꾸지 않고 고정해 둠
     headingEl.textContent = `오늘 ${meal} 뭐 먹지?`;
-    pickLabelEl.textContent = `냥셰프에게 ${meal} 추천받기`;
+    pickLabelEl.textContent = `냥빵이에게 ${meal} 추천받기`;
 
     filtersEl.replaceChildren(...['전체', ...Object.keys(MEALS[meal])].map(c =>
       makeToggle(c, c === category, () => {
@@ -890,7 +880,7 @@
       })
     ));
 
-    emptyPhoto('버튼을 누르면 냥셰프가 골라줘요');
+    emptyPhoto('버튼을 누르면 냥빵이가 골라줘요');
     showPlaceholder('아직 고르지 않았어요.');
     sayBubble(DEFAULT_BUBBLE);
     renderReactions();
@@ -1013,7 +1003,7 @@
 
     // 룰렛처럼 이름이 잠깐 섞였다가 멈추고, 사진은 멈춘 뒤에 불러옴
     setRolling(true);
-    emptyPhoto('냥셰프가 고르는 중…', true);
+    emptyPhoto('냥빵이가 고르는 중…', true);
     let ticks = 0;
     const timer = setInterval(() => {
       showName(randomItem(list));
@@ -1089,8 +1079,8 @@
   async function shareItem(item) {
     const pages = await loadRecipePages();
     shareLink({
-      title: `${item.menu} | 냥셰프의 오늘 뭐 먹지`,
-      text: `오늘 ${item.meal} 메뉴는 ${josa(item.menu, '이다냥', '다냥')}! 냥셰프가 골라 준 메뉴와 레시피 보러 가기`,
+      title: `${item.menu} | 냥빵이의 삼시세끼`,
+      text: `오늘 ${item.meal} 메뉴는 ${josa(item.menu, '이다냥', '다냥')}! 냥빵이가 골라 준 메뉴와 레시피 보러 가기`,
       url: pages.has(item.id) ? `${SITE_URL}/recipes/${item.id}` : `${SITE_URL}/`,
       contentType: 'menu',
       itemId: item.menu,
@@ -1135,7 +1125,7 @@
   }
 
   async function showRecipe(item) {
-    if (!recipeCache.has(item.id)) recipeBodyEl.replaceChildren(textEl('p', 'recipe-status', '냥셰프가 레시피를 꺼내는 중…'));
+    if (!recipeCache.has(item.id)) recipeBodyEl.replaceChildren(textEl('p', 'recipe-status', '냥빵이가 레시피를 꺼내는 중…'));
     let recipe;
     try {
       recipe = await getRecipe(item);
@@ -1207,7 +1197,7 @@
   // 레시피 화면 조각들을 만듦. options.checklist: 재료를 체크할 수 있게 (도마), options.links: 아래 링크 줄
   function buildRecipeParts(item, recipe, shopLinks, options) {
     const opts = options || {};
-    if (!recipe) return [textEl('p', 'recipe-status', '아직 냥셰프 레시피가 없어요.'), recipeSearchLink(item)];
+    if (!recipe) return [textEl('p', 'recipe-status', '아직 냥빵이 레시피가 없어요.'), recipeSearchLink(item)];
 
     const parts = [];
 
@@ -1257,7 +1247,7 @@
 
     if (recipe.tip) {
       const tip = textEl('p', 'recipe-tip', recipe.tip);
-      tip.prepend(textEl('span', 'recipe-tip-label', '냥셰프 팁'));
+      tip.prepend(textEl('span', 'recipe-tip-label', '냥빵이 팁'));
       parts.push(tip);
     }
 
@@ -1306,7 +1296,7 @@
       a.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(`${item.menu} 레시피`)}`;
       a.target = '_blank';
       a.rel = 'noopener';
-      return [textEl('p', 'board-status', '이 메뉴는 아직 냥셰프가 고른 영상이 없어요.'), a];
+      return [textEl('p', 'board-status', '이 메뉴는 아직 냥빵이가 고른 영상이 없어요.'), a];
     }
     const frame = document.createElement('div');
     frame.className = 'video-lite';
@@ -1326,7 +1316,7 @@
     play.append(thumb, iconWrap);
     frame.append(play);
 
-    const credit = textEl('p', 'video-credit', '냥셰프가 고른 영상이에요. 레시피와 조금 다를 수 있어요. · ');
+    const credit = textEl('p', 'video-credit', '냥빵이가 고른 영상이에요. 레시피와 조금 다를 수 있어요. · ');
     const link = textEl('a', '', `${video.c || '영상 원본'} · YouTube`);
     link.href = `https://www.youtube.com/watch?v=${video.v}`;
     link.target = '_blank';
@@ -1343,7 +1333,7 @@
     boardTitleEl.textContent = item.menu;
     boardLineEl.textContent = `좋아, 오늘은 ${josa(item.menu, '이다냥', '다냥')}! 도마 위에 재료부터 올려 보자냥.`;
     boardVideoEl.replaceChildren(textEl('p', 'board-status', '요리 영상을 꺼내는 중…'));
-    boardRecipeEl.replaceChildren(textEl('p', 'recipe-status', '냥셰프가 레시피를 꺼내는 중…'));
+    boardRecipeEl.replaceChildren(textEl('p', 'recipe-status', '냥빵이가 레시피를 꺼내는 중…'));
     boardPageEl.hidden = true;
     boardEl.showModal();
     boardEl.querySelector('.board-wood').scrollTop = 0;
@@ -1460,7 +1450,7 @@
   // ── 시작 ──────────────────────────────────────────────
 
   function showLoadError(message) {
-    emptyPhoto('냥셰프가 잠깐 자리를 비웠어요');
+    emptyPhoto('냥빵이가 잠깐 자리를 비웠어요');
     showPlaceholder(message);
   }
 

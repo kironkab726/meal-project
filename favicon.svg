@@ -1,32 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- 냥셰프 파비콘 (시안 A: 셰프 모자 냥셰프). PNG·ICO는 tools/make-favicon.ps1 이 같은 모양으로 그림 -->
-  <rect width="64" height="64" rx="14" fill="#B8552F"/>
-  <g transform="translate(32 33) scale(0.88) translate(-32 -32)" stroke-linejoin="round" stroke-linecap="round">
-    <g fill="#4A3426" stroke="#4A3426" stroke-width="6">
-      <path d="M12 42 L9 17 L27 30 Z"/>
-      <path d="M52 42 L55 17 L37 30 Z"/>
-      <ellipse cx="32" cy="44" rx="21" ry="14"/>
+  <!-- 냥빵이 파비콘: 진한 갈색 바탕 + 식빵 냥빵이 얼굴. 좌표는 index.html 의 냥빵이 그림(400 칸)과 같음.
+       PNG·ICO는 tools/make-favicon.ps1 이 같은 모양으로 그림 -->
+  <rect width="64" height="64" rx="14" fill="#4A3426"/>
+  <g transform="translate(2 2) scale(0.2) translate(-50 -12)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M104 128 L112 44 L178 92 Z" fill="#C8733A" stroke="#C8733A" stroke-width="10"/>
+    <path d="M120 114 L124 66 L160 94 Z" fill="#F4A28C"/>
+    <path d="M296 128 L288 44 L222 92 Z" fill="#C8733A" stroke="#C8733A" stroke-width="10"/>
+    <path d="M280 114 L276 66 L240 94 Z" fill="#F4A28C"/>
+    <path d="M90 392 L90 214 C52 206 44 130 100 112 C140 70 260 70 300 112 C356 130 348 206 310 214 L310 392 Q310 404 298 404 L102 404 Q90 404 90 392 Z" fill="#C8733A"/>
+    <path d="M68 156 L86 162 M68 178 L88 180 M332 156 L314 162 M332 178 L312 180" fill="none" stroke="#A85A28" stroke-width="7"/>
+    <path d="M108 384 L108 204 C74 196 66 142 114 128 C150 94 250 94 286 128 C334 142 326 196 292 204 L292 384 Q292 390 286 390 L114 390 Q108 390 108 384 Z" fill="#FFE9C2"/>
+    <g transform="rotate(-8 200 84)" fill="#FFFFFF">
+      <circle cx="176" cy="52" r="20"/>
+      <circle cx="224" cy="52" r="20"/>
+      <circle cx="200" cy="40" r="24"/>
+      <rect x="170" y="54" width="60" height="36" rx="8"/>
     </g>
-    <g fill="#F2B872">
-      <path d="M12 42 L9 17 L27 30 Z"/>
-      <path d="M52 42 L55 17 L37 30 Z"/>
-      <ellipse cx="32" cy="44" rx="21" ry="14"/>
-    </g>
-    <ellipse cx="18" cy="50" rx="3.5" ry="2.2" fill="#F4A28C"/>
-    <ellipse cx="46" cy="50" rx="3.5" ry="2.2" fill="#F4A28C"/>
-    <path d="M21 44 Q25 39.5 29 44 M35 44 Q39 39.5 43 44" fill="none" stroke="#4A3426" stroke-width="4"/>
-    <path d="M29.5 49 L34.5 49 L32 52 Z" fill="#E7837A"/>
-    <g fill="#4A3426" stroke="#4A3426" stroke-width="6">
-      <circle cx="25" cy="17" r="7.5"/>
-      <circle cx="39" cy="17" r="7.5"/>
-      <circle cx="32" cy="12" r="9"/>
-      <rect x="22" y="17" width="20" height="10" rx="2"/>
-    </g>
-    <g fill="#FFFFFF">
-      <circle cx="25" cy="17" r="7.5"/>
-      <circle cx="39" cy="17" r="7.5"/>
-      <circle cx="32" cy="12" r="9"/>
-      <rect x="22" y="17" width="20" height="10" rx="2"/>
-    </g>
+    <ellipse cx="136" cy="262" rx="17" ry="10" fill="#F4A28C"/>
+    <ellipse cx="264" cy="262" rx="17" ry="10" fill="#F4A28C"/>
+    <ellipse cx="152" cy="232" rx="10" ry="12" fill="#4A3426"/>
+    <ellipse cx="248" cy="232" rx="10" ry="12" fill="#4A3426"/>
+    <path d="M191 250 Q200 246 209 250 L200 259 Z" fill="#E7837A"/>
+    <path d="M200 259 Q196 270 186 268 M200 259 Q204 270 214 268" fill="none" stroke="#4A3426" stroke-width="6"/>
   </g>
 </svg>

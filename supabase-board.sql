@@ -1,4 +1,4 @@
--- 냥셰프 메뉴 건의함 — Supabase 설정 (supabase-setup.sql 다음에 실행)
+-- 냥빵이 메뉴 건의함 — Supabase 설정 (supabase-setup.sql 다음에 실행)
 -- Supabase 대시보드 → SQL Editor → New query 에 이 파일 내용을 전부 붙여넣고 Run 을 누르세요.
 -- 여러 번 실행해도 안전합니다.
 

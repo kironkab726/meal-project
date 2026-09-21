@@ -1,4 +1,4 @@
-﻿# 냥셰프 글 페이지 생성기
+﻿# 냥빵이 글 페이지 생성기
 #
 # Supabase의 menus + recipes 데이터를 읽어서 아래 파일을 새로 만듭니다.
 #   recipes/<메뉴번호>.html   메뉴별 레시피 페이지
@@ -24,7 +24,7 @@ $ErrorActionPreference = 'Stop'
 
 $Root     = Split-Path -Parent $PSScriptRoot
 $SiteUrl  = 'https://meal-project.pages.dev'
-$SiteName = '냥셰프의 오늘 뭐 먹지'
+$SiteName = '냥빵이의 삼시세끼'
 $Utf8     = New-Object System.Text.UTF8Encoding($false)
 $Today    = (Get-Date).ToString('yyyy-MM-dd')
 
@@ -120,7 +120,7 @@ $HeadTemplate = @'
 <meta name="description" content="{{DESCRIPTION}}">
 {{CANONICAL_TAGS}}
 <meta property="og:type" content="{{OG_TYPE}}">
-<meta property="og:site_name" content="냥셰프의 오늘 뭐 먹지">
+<meta property="og:site_name" content="냥빵이의 삼시세끼">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="{{TITLE}}">
 <meta property="og:description" content="{{DESCRIPTION}}">
@@ -129,7 +129,7 @@ $HeadTemplate = @'
 <link rel="icon" href="{{PREFIX}}favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{{PREFIX}}favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="{{PREFIX}}apple-touch-icon.png">
-<link rel="alternate" type="application/rss+xml" title="냥셰프 레시피" href="{{PREFIX}}rss.xml">
+<link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="{{PREFIX}}rss.xml">
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
   (function () {
@@ -144,7 +144,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=6">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=7">
 <link rel="stylesheet" href="{{PREFIX}}pages.css?v=4">
 {{EXTRA_HEAD}}
 </head>
@@ -155,23 +155,36 @@ $HeadTemplate = @'
   <div class="page">
     <header class="site-header">
       <a class="brand" href="{{HOME}}">
-        <svg class="brand-cat" viewBox="0 0 120 120" aria-hidden="true">
-          <path class="ink" d="M22 64 L28 22 L54 46 Z" fill="#F2B872"></path>
-          <path class="ink" d="M98 64 L92 22 L66 46 Z" fill="#F2B872"></path>
-          <ellipse class="ink" cx="60" cy="72" rx="44" ry="36" fill="#F2B872"></ellipse>
-          <circle class="ink" cx="43" cy="30" r="15" fill="#FFFFFF"></circle>
-          <circle class="ink" cx="60" cy="21" r="18" fill="#FFFFFF"></circle>
-          <circle class="ink" cx="77" cy="30" r="15" fill="#FFFFFF"></circle>
-          <rect class="ink" x="38" y="32" width="44" height="18" rx="5" fill="#FFFFFF"></rect>
-          <path class="ink-line" d="M40 72 Q47 65 54 72"></path>
-          <path class="ink-line" d="M66 72 Q73 65 80 72"></path>
-          <ellipse cx="36" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
-          <ellipse cx="84" cy="82" rx="7" ry="4" fill="#F4A28C"></ellipse>
-          <path d="M56 80 L64 80 L60 85 Z" fill="#E7837A"></path>
+        <svg class="brand-cat" viewBox="50 12 300 300" aria-hidden="true">
+          <path class="nb-ear" d="M104 128 L112 44 L178 92 Z" fill="#C8733A"></path>
+          <path d="M120 114 L124 66 L160 94 Z" fill="#F4A28C"></path>
+          <path class="nb-ear" d="M296 128 L288 44 L222 92 Z" fill="#C8733A"></path>
+          <path d="M280 114 L276 66 L240 94 Z" fill="#F4A28C"></path>
+          <path d="M90 392 L90 214 C52 206 44 130 100 112 C140 70 260 70 300 112 C356 130 348 206 310 214 L310 392 Q310 404 298 404 L102 404 Q90 404 90 392 Z" fill="#C8733A"></path>
+          <path class="nb-stripe" d="M68 156 L86 162 M68 178 L88 180 M332 156 L314 162 M332 178 L312 180"></path>
+          <path d="M108 384 L108 204 C74 196 66 142 114 128 C150 94 250 94 286 128 C334 142 326 196 292 204 L292 384 Q292 390 286 390 L114 390 Q108 390 108 384 Z" fill="#FFE9C2"></path>
+          <g transform="rotate(-8 200 84)">
+            <circle cx="176" cy="52" r="20" fill="#FFFFFF"></circle>
+            <circle cx="224" cy="52" r="20" fill="#FFFFFF"></circle>
+            <circle cx="200" cy="40" r="24" fill="#FFFFFF"></circle>
+            <rect x="170" y="54" width="60" height="36" rx="8" fill="#FFFFFF"></rect>
+            <path class="nb-pleat" d="M186 64 L186 82 M200 62 L200 82 M214 64 L214 82"></path>
+          </g>
+          <ellipse cx="136" cy="262" rx="17" ry="10" fill="#F4A28C" opacity="0.9"></ellipse>
+          <ellipse cx="264" cy="262" rx="17" ry="10" fill="#F4A28C" opacity="0.9"></ellipse>
+          <path d="M191 250 Q200 246 209 250 L200 259 Z" fill="#E7837A"></path>
+          <g>
+            <ellipse cx="152" cy="232" rx="9" ry="11" fill="#4A3426"></ellipse>
+            <ellipse cx="248" cy="232" rx="9" ry="11" fill="#4A3426"></ellipse>
+            <circle cx="155" cy="228" r="3" fill="#FFFFFF"></circle>
+            <circle cx="251" cy="228" r="3" fill="#FFFFFF"></circle>
+            <path class="nb-line" d="M200 259 Q196 270 186 268 M200 259 Q204 270 214 268"></path>
+            <path class="nb-whisker" d="M122 248 L82 242 M122 260 L84 264 M278 248 L318 242 M278 260 L316 264"></path>
+          </g>
         </svg>
         <div class="brand-text">
-          <span class="brand-name">냥셰프<span class="wide-only">의 오늘 뭐 먹지</span></span>
-          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">오늘 뭐 먹지</span></span>
+          <span class="brand-name">냥빵이<span class="wide-only">의 삼시세끼</span></span>
+          <span class="brand-sub"><span class="wide-only">고양이 요리사가 골라주는 오늘의 한 끼</span><span class="narrow-only">삼시세끼</span></span>
         </div>
       </a>
       <div class="header-actions">
@@ -189,13 +202,13 @@ $HeadTemplate = @'
 
     <footer class="site-footer">
       <nav aria-label="사이트 안내">
-        <a href="{{PREFIX}}recipes/">냥셰프 레시피 모음</a>
+        <a href="{{PREFIX}}recipes/">냥빵이 레시피 모음</a>
         <a href="{{PREFIX}}search.html">레시피 검색</a>
         <a href="{{PREFIX}}fridge.html">냉장고 털기</a>
         <a href="{{PREFIX}}about.html">사이트 소개</a>
         <a href="{{PREFIX}}privacy.html">개인정보처리방침</a>
       </nav>
-      <p>음식 사진: 위키미디어 공용 · 레시피: 냥셰프</p>
+      <p>음식 사진: 위키미디어 공용 · 레시피: 냥빵이</p>
     </footer>
   </div>
 
@@ -460,7 +473,7 @@ foreach ($m in $items) {
   if ($r.servings) { $servingsText = ' <small>(' + [string]$r.servings + '인분 기준)</small>' }
 
   $tipHtml = ''
-  if ($r.tip) { $tipHtml = '        <p class="tip-note"><strong>냥셰프 팁</strong>' + (Enc $r.tip) + '</p>' }
+  if ($r.tip) { $tipHtml = '        <p class="tip-note"><strong>냥빵이 팁</strong>' + (Enc $r.tip) + '</p>' }
 
   # 쿠팡 파트너스 링크가 있으면: 제목 아래에 안내 문구, 재료 아래에 버튼
   $adNoteTop = ''
@@ -471,7 +484,7 @@ foreach ($m in $items) {
     $shopHtml = @(
       '          <div class="shop-box">'
       '            <a class="pill-btn" href="' + (Enc $shopUrl) + '" target="_blank" rel="sponsored nofollow noopener">' + $Ico.cart + '쿠팡에서 재료 보기</a>'
-      '            <p class="ad-note">쿠팡 파트너스 링크예요. 이 링크로 사면 냥셰프가 수수료를 받지만, 내는 가격은 똑같아요.</p>'
+      '            <p class="ad-note">쿠팡 파트너스 링크예요. 이 링크로 사면 냥빵이가 수수료를 받지만, 내는 가격은 똑같아요.</p>'
       '          </div>'
     ) -join "`n"
   }
@@ -489,7 +502,7 @@ foreach ($m in $items) {
       '            <span class="video-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></span>'
       '          </button>'
       '        </div>'
-      '        <p class="video-credit">냥셰프가 고른 영상이에요. 레시피와 조금 다를 수 있어요. · <a href="https://www.youtube.com/watch?v=' + $video.v + '" target="_blank" rel="noopener">' + (Enc $video.c) + ' · YouTube</a></p>'
+      '        <p class="video-credit">냥빵이가 고른 영상이에요. 레시피와 조금 다를 수 있어요. · <a href="https://www.youtube.com/watch?v=' + $video.v + '" target="_blank" rel="noopener">' + (Enc $video.c) + ' · YouTube</a></p>'
       '      </section>'
     ) -join "`n"
   }
@@ -502,9 +515,9 @@ foreach ($m in $items) {
 
   $minutesText = ''
   if ($r.minutes) { $minutesText = '집에서 ' + [string]$r.minutes + '분이면 만들 수 있어요. ' }
-  $lead = $name + ', ' + $minutesText + '냥셰프가 정리한 ' + $m.meal + ' ' + $m.category + ' 집밥 레시피예요.'
+  $lead = $name + ', ' + $minutesText + '냥빵이가 정리한 ' + $m.meal + ' ' + $m.category + ' 집밥 레시피예요.'
   # 카톡 등으로 공유할 때 링크 앞에 붙는 한마디
-  $shareText = $name + ' 레시피, 냥셰프가 알려 줄게냥!'
+  $shareText = $name + ' 레시피, 냥빵이가 알려 줄게냥!'
   if ($r.minutes) { $shareText += ' ' + [string]$r.minutes + '분이면 뚝딱.' }
 
   $descParts = @()
@@ -515,7 +528,7 @@ foreach ($m in $items) {
   $mainIngredients = @($ingredients | Where-Object { $_ -notmatch '^[^:]{1,12}:' } | Select-Object -First 3)
   $ingredientText = '재료와 만드는 법'
   if ($mainIngredients.Count) { $ingredientText = '재료(' + ($mainIngredients -join ', ') + ' 등)와 만드는 법' }
-  $description = $name + ' 레시피: ' + ($descParts -join ', ') + '. ' + $ingredientText + ', 냥셰프 팁까지 한눈에 볼 수 있어요.'
+  $description = $name + ' 레시피: ' + ($descParts -join ', ') + '. ' + $ingredientText + ', 냥빵이 팁까지 한눈에 볼 수 있어요.'
   $Descriptions[[string]$m.id] = $description
 
   # 검색엔진용 레시피 정보 (schema.org Recipe)
@@ -596,7 +609,7 @@ $videoHtml
 
       <section class="card cta-card">
         <p class="cta-text">오늘 뭐 먹을지 아직 못 정했냥?</p>
-        <a class="accent-btn" href="../" data-track="cta_pick_menu">냥셰프에게 메뉴 추천받기</a>
+        <a class="accent-btn" href="../" data-track="cta_pick_menu">냥빵이에게 메뉴 추천받기</a>
         <a href="../fridge.html" data-track="cta_fridge">냉장고에 있는 재료로 찾아보기 →</a>
       </section>
 
@@ -665,7 +678,7 @@ $indexBody = @"
       </nav>
 
       <div>
-        <h1 class="page-title">냥셰프 레시피 모음</h1>
+        <h1 class="page-title">냥빵이 레시피 모음</h1>
         <p class="page-lead">아침·점심·저녁 집밥 레시피 $($items.Count)가지를 모았어요. 메뉴를 누르면 재료와 만드는 법을 볼 수 있어요.</p>
       </div>
 
@@ -702,8 +715,8 @@ $indexCrumbLd = [ordered]@{
 
 Save 'recipes\index.html' (Page @{
   Prefix      = '../'
-  Title       = "냥셰프 레시피 모음 | 집밥 레시피 $($items.Count)가지"
-  Description = "김치찌개부터 파스타, 샤브샤브까지. 아침·점심·저녁 집밥 레시피 $($items.Count)가지를 재료와 만드는 법, 냥셰프 팁과 함께 모았어요."
+  Title       = "냥빵이 레시피 모음 | 집밥 레시피 $($items.Count)가지"
+  Description = "김치찌개부터 파스타, 샤브샤브까지. 아침·점심·저녁 집밥 레시피 $($items.Count)가지를 재료와 만드는 법, 냥빵이 팁과 함께 모았어요."
   Canonical   = "$SiteUrl/recipes/"
   ExtraHead   = (JsonLd $listLd) + "`n" + (JsonLd $indexCrumbLd)
   Body        = $indexBody
@@ -811,7 +824,7 @@ $fridgeBody = @"
 
       <div>
         <h1 class="page-title">냉장고 털기</h1>
-        <p class="page-lead">집에 있는 재료를 골라 주세요. 냥셰프 레시피 $($fridgeRecipes.Count)가지 중에서 지금 만들 수 있는 메뉴를 찾아 줄게요.</p>
+        <p class="page-lead">집에 있는 재료를 골라 주세요. 냥빵이 레시피 $($fridgeRecipes.Count)가지 중에서 지금 만들 수 있는 메뉴를 찾아 줄게요.</p>
         <p class="fridge-note">소금·설탕·간장·고추장·된장·식용유·마늘 같은 기본 양념은 집에 있다고 칠게요.</p>
       </div>
 
@@ -840,10 +853,10 @@ $fridgeCrumbLd = [ordered]@{
 Save 'fridge.html' (Page @{
   Prefix       = ''
   Title        = "냉장고 털기: 있는 재료로 메뉴 찾기 | $SiteName"
-  Description  = '집에 있는 재료를 고르면 냥셰프 집밥 레시피 중에서 바로 만들 수 있는 메뉴와, 한두 가지만 더 있으면 되는 메뉴를 찾아 줘요. 김치, 달걀, 두부, 돼지고기로 오늘 뭐 먹을지 정해 보세요.'
+  Description  = '집에 있는 재료를 고르면 냥빵이 집밥 레시피 중에서 바로 만들 수 있는 메뉴와, 한두 가지만 더 있으면 되는 메뉴를 찾아 줘요. 김치, 달걀, 두부, 돼지고기로 오늘 뭐 먹을지 정해 보세요.'
   Canonical    = "$SiteUrl/fridge"
   ExtraHead    = JsonLd $fridgeCrumbLd
-  ExtraScripts = '<script src="fridge.js?v=1"></script>'
+  ExtraScripts = '<script src="fridge.js?v=2"></script>'
   Body         = $fridgeBody
 })
 
@@ -888,7 +901,7 @@ $searchBody = @"
 
       <div>
         <h1 class="page-title">레시피 검색</h1>
-        <p class="page-lead">메뉴 이름이나 재료로 냥셰프 레시피 $($items.Count)가지를 찾아보세요. "ㄱㅊㅉㄱ"처럼 초성으로도 찾을 수 있어요.</p>
+        <p class="page-lead">메뉴 이름이나 재료로 냥빵이 레시피 $($items.Count)가지를 찾아보세요. "ㄱㅊㅉㄱ"처럼 초성으로도 찾을 수 있어요.</p>
       </div>
 
       <section class="card search-panel">
@@ -922,7 +935,7 @@ $($searchItems -join "`n")
 Save 'search.html' (Page @{
   Prefix       = ''
   Title        = "레시피 검색 | $SiteName"
-  Description  = "메뉴 이름, 재료, 초성으로 냥셰프 집밥 레시피 $($items.Count)가지를 찾아보세요. 끼니와 조리 시간, 난이도로도 고를 수 있어요."
+  Description  = "메뉴 이름, 재료, 초성으로 냥빵이 집밥 레시피 $($items.Count)가지를 찾아보세요. 끼니와 조리 시간, 난이도로도 고를 수 있어요."
   ExtraScripts = '<script src="search.js?v=1"></script>'
   Body         = $searchBody
 })
@@ -931,13 +944,13 @@ Save 'search.html' (Page @{
 # ── 사이트 소개, 개인정보처리방침 (본문은 tools/pages/*.html) ──
 
 $staticPages = @(
-  @{ File = 'about';   Title = "사이트 소개 | $SiteName";     Description = '고양이 요리사 냥셰프가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 레시피를 알려 주는 사이트예요.' }
+  @{ File = 'about';   Title = "사이트 소개 | $SiteName";     Description = '고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 레시피를 알려 주는 사이트예요.' }
   @{ File = 'privacy'; Title = "개인정보처리방침 | $SiteName"; Description = ($SiteName + '가 어떤 개인정보를 왜 모으고 어떻게 보호하는지 알려 드려요.') }
 )
 # 광고·제휴 안내: 쿠팡 파트너스 링크가 하나라도 켜져 있을 때와 아닐 때 문구가 다름
 if ($shopLinks.Count) {
   $affiliateAbout = @(
-    '        <p>일부 레시피에는 "쿠팡에서 재료 보기" 버튼이 있어요. 쿠팡 파트너스 제휴 링크라서, 이 버튼을 거쳐 쿠팡에서 물건을 사면 냥셰프가 쿠팡에게서 일정액의 수수료를 받아요. 사는 분이 내는 가격은 똑같아요.</p>'
+    '        <p>일부 레시피에는 "쿠팡에서 재료 보기" 버튼이 있어요. 쿠팡 파트너스 제휴 링크라서, 이 버튼을 거쳐 쿠팡에서 물건을 사면 냥빵이가 쿠팡에게서 일정액의 수수료를 받아요. 사는 분이 내는 가격은 똑같아요.</p>'
     '        <p>' + $AdNote + '</p>'
     '        <p>쿠팡으로 이동한 뒤의 정보 처리는 <a href="privacy.html">개인정보처리방침</a>에 적어 두었어요.</p>'
   ) -join "`n"
@@ -946,7 +959,7 @@ if ($shopLinks.Count) {
     '        <ul>'
     '          <li>이 사이트는 버튼을 누르기 전까지 쿠팡에 어떤 정보도 보내지 않아요.</li>'
     '          <li>버튼을 누르면 쿠팡으로 이동하고, 쿠팡이 어느 사이트를 거쳐 왔는지 쿠키로 기록해요. 그다음부터는 <a href="https://privacy.coupang.com/ko/center/coupang/" target="_blank" rel="noopener">쿠팡의 개인정보처리방침</a>이 적용돼요.</li>'
-    '          <li>냥셰프는 쿠팡에서 어떤 상품이 몇 개 팔렸는지 같은 통계만 받고, 누가 샀는지는 알 수 없어요.</li>'
+    '          <li>냥빵이는 쿠팡에서 어떤 상품이 몇 개 팔렸는지 같은 통계만 받고, 누가 샀는지는 알 수 없어요.</li>'
     '        </ul>'
     '        <p>그 밖의 광고는 아직 없어요. 새 광고를 넣게 되면 광고 업체와 광고용 쿠키 사용 내용을 이 방침에 먼저 추가할게요.</p>'
   ) -join "`n"
@@ -1016,7 +1029,7 @@ $rss = @(
   '<channel>'
   '  <title>' + (Xml ($SiteName + ' 레시피')) + '</title>'
   '  <link>' + $SiteUrl + '/</link>'
-  '  <description>고양이 요리사 냥셰프가 정리한 아침·점심·저녁 집밥 레시피</description>'
+  '  <description>고양이 요리사 냥빵이가 정리한 아침·점심·저녁 집밥 레시피</description>'
   '  <language>ko</language>'
   '  <atom:link href="' + $SiteUrl + '/rss.xml" rel="self" type="application/rss+xml"/>'
 )
@@ -1044,7 +1057,7 @@ Save 'rss.xml' (($rss -join "`n") + "`n")
 $llms = @(
   '# ' + $SiteName
   ''
-  '> 고양이 요리사 캐릭터 "냥셰프"가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 집밥 레시피 ' + $items.Count + '가지를 알려 주는 한국어 사이트입니다.'
+  '> 고양이 요리사 캐릭터 "냥빵이"가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 집밥 레시피 ' + $items.Count + '가지를 알려 주는 한국어 사이트입니다.'
   ''
   '- 메뉴 추천: 끼니(아침·점심·저녁)와 음식 종류를 고르면 메뉴 하나를 무작위로 추천합니다. 로그인하면 좋아요/별로예요에 맞춰 추천이 달라집니다.'
   '- 레시피: 메뉴마다 조리 시간, 난이도, 인분, 재료, 만드는 법, 요리 팁을 정리한 페이지가 있습니다.'
@@ -1052,7 +1065,7 @@ $llms = @(
   ''
   '## 주요 페이지'
   ''
-  '- [메뉴 추천 (홈)](' + $SiteUrl + '/): 냥셰프에게 오늘의 메뉴 추천받기'
+  '- [메뉴 추천 (홈)](' + $SiteUrl + '/): 냥빵이에게 오늘의 메뉴 추천받기'
   '- [레시피 모음](' + $SiteUrl + '/recipes/): 끼니와 종류별 전체 레시피 목록'
   '- [냉장고 털기](' + $SiteUrl + '/fridge): 집에 있는 재료를 고르면 바로 만들 수 있는 레시피를 찾아 주는 도구'
   '- [레시피 검색](' + $SiteUrl + '/search): 메뉴 이름, 재료, 초성으로 레시피를 찾는 검색 (예: ' + $SiteUrl + '/search?q=두부)'

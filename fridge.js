@@ -1,4 +1,4 @@
-// 냉장고 털기: 고른 재료로 만들 수 있는 냥셰프 레시피를 찾아 줌
+// 냉장고 털기: 고른 재료로 만들 수 있는 냥빵이 레시피를 찾아 줌
 // 레시피별 "꼭 필요한 재료 / 있으면 좋은 재료" 데이터는 build-pages.ps1 이 tools/fridge.csv 를 읽어 페이지에 넣어 줌
 //   need, nice           : 고를 수 있는 재료 (버튼이 있는 것)
 //   needExtra, niceExtra : 버튼이 없는 재료 (춘장, 중화면처럼 따로 사야 하는 것)
@@ -113,7 +113,7 @@
       details.append(el('summary', '', `장을 조금 더 보면 만들 수 있어요 (${more.length})`), list(more, 'more'));
       parts.push(details);
     }
-    if (!parts.length) parts.push(el('p', 'fridge-empty', '이 재료가 들어가는 냥셰프 레시피가 아직 없어요. 다른 재료도 골라 보세요.'));
+    if (!parts.length) parts.push(el('p', 'fridge-empty', '이 재료가 들어가는 냥빵이 레시피가 아직 없어요. 다른 재료도 골라 보세요.'));
 
     resultsEl.replaceChildren(...parts);
     statusEl.textContent = `고른 재료 ${selected.size}개 · 바로 만들 수 있는 메뉴 ${ready.length}개 · 한두 가지만 더 있으면 되는 메뉴 ${almost.length}개`;
