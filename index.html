@@ -67,7 +67,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -181,6 +181,54 @@
   .h-menu { grid-area: menu; font-family: 'Jua', sans-serif; font-size: 20px; line-height: 1.2; }
   .h-meta { grid-area: meta; font-size: 13px; color: var(--muted); }
   .h-time { grid-area: time; font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+  /* "오늘은 이걸로 할래!" 버튼 */
+  .choose-btn { width: 100%; min-height: 54px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 2px solid var(--chip-on-border); border-radius: 16px; background: var(--chip-on-bg); color: var(--chip-on-text); font-family: 'Jua', sans-serif; font-size: 20px; box-shadow: 0 4px 0 var(--chip-on-border); cursor: pointer; transition: transform 0.08s, box-shadow 0.08s; }
+  .choose-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--chip-on-border); }
+  .choose-btn .ico { width: 22px; height: 22px; }
+  .choose-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* 도마: 고른 메뉴의 요리 영상과 레시피를 나무 도마 위에 올려 보여 줌 */
+  :root { --wood: #E4B47C; --wood-grain: rgba(120, 72, 30, 0.09); --wood-edge: #B9804A; }
+  :root[data-theme="dark"] { --wood: #6E4B2F; --wood-grain: rgba(0, 0, 0, 0.2); --wood-edge: #3F2A1A; }
+  dialog.board { width: min(960px, calc(100vw - 24px)); max-width: none; max-height: none; margin: auto; padding: 0; border: none; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
+  dialog.board[open] { animation: board-in 0.25s ease-out; }
+  @keyframes board-in { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: none; } }
+  body:has(dialog.board[open]) { overflow: hidden; }
+  .board-wood { position: relative; max-height: calc(100dvh - 40px); box-sizing: border-box; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; padding: 30px 20px 24px; border: 3px solid var(--bubble-line); border-radius: 36px; background-color: var(--wood); background-image: repeating-linear-gradient(176deg, var(--wood-grain) 0 2px, transparent 2px 22px), repeating-linear-gradient(183deg, var(--wood-grain) 0 1px, transparent 1px 37px); box-shadow: 0 10px 0 var(--wood-edge); }
+  .board-wood::before { content: ""; position: absolute; top: 12px; left: 50%; width: 60px; height: 12px; margin-left: -30px; border-radius: 999px; background: var(--wood-edge); }
+  .board-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .board-heading { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; min-width: 0; }
+  .board-heading h2 { margin: 0; font-size: 34px; line-height: 1.15; color: var(--text); word-break: keep-all; }
+  .board-line { margin: 0; font-family: 'Gaegu', cursive; font-weight: 700; font-size: 21px; line-height: 1.35; color: var(--text); word-break: keep-all; }
+  .board-grid { display: flex; flex-direction: column; gap: 18px; }
+  .board-left { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .board-video .video-lite { border: 3px solid var(--bubble-line); }
+  .board-video .video-credit { color: var(--text); }
+  .board-video .video-credit a { color: var(--text); }
+  .board-status { margin: 0 0 8px; padding: 18px; border-radius: 16px; background: var(--paper); color: var(--muted); text-align: center; word-break: keep-all; }
+  .board-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .board-actions .ico { color: var(--accent); }
+  .board-paper { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 24px 18px 20px; border-radius: 18px; background: var(--paper); box-shadow: 0 5px 0 var(--wood-edge); }
+  .board-paper::before { content: ""; position: absolute; top: -10px; left: 50%; width: 90px; height: 24px; margin-left: -45px; background: var(--tape); transform: rotate(-3deg); }
+  .recipe-ingredients.checklist li { padding-left: 0; }
+  .recipe-ingredients.checklist li::before { display: none; }
+  .checklist label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; }
+  .checklist input { flex-shrink: 0; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); }
+  .checklist input:checked + span { color: var(--muted); text-decoration: line-through; }
+  @media (min-width: 820px) {
+    .board-wood { padding: 36px 32px 30px; }
+    .board-heading h2 { font-size: 42px; }
+    .board-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; gap: 24px; }
+  }
+  @media (max-width: 699px) {
+    dialog.board { width: calc(100vw - 16px); }
+    .board-wood { max-height: calc(100dvh - 24px); padding: 28px 14px 18px; border-radius: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    dialog.board[open] { animation: none; }
+    .choose-btn { transition: none; }
+  }
 
   /* 오른쪽 메뉴판: 머리글의 "레시피 메뉴" 버튼을 누르면 오른쪽에서 나옴
      (닫혀 있어도 링크는 페이지 안에 있어서 검색 로봇이 읽음) */
@@ -434,6 +482,10 @@
             <div class="menu" id="menu"></div>
             <p class="cat-line" id="cat-line"></p>
           </div>
+          <button class="choose-btn" id="choose-btn" type="button" aria-haspopup="dialog" aria-controls="board" hidden>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="13" r="7"></circle><path d="M17 13h5M7.5 11.5c.8-1 2.2-1.5 3.5-1"></path></svg>
+            오늘은 이걸로 할래!
+          </button>
           <div class="result-actions">
             <div class="reactions" id="reactions" hidden>
               <button type="button" data-reaction="like" aria-pressed="false">
@@ -498,6 +550,33 @@
   </div>
 
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
+
+  <dialog class="board" id="board" aria-labelledby="board-title">
+    <div class="board-wood">
+      <div class="board-head">
+        <div class="board-heading">
+          <span class="tag">오늘의 요리</span>
+          <h2 id="board-title"></h2>
+          <p class="board-line" id="board-line"></p>
+        </div>
+        <button class="icon-btn" id="board-close" type="button" aria-label="도마 닫기">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+        </button>
+      </div>
+      <div class="board-grid">
+        <div class="board-left">
+          <div class="board-video" id="board-video"></div>
+          <div class="board-actions">
+            <a class="pill-btn" id="board-page" href="#" data-track="go_recipe_page_from_board" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"></path><path d="M4 19a2 2 0 0 1 2-2h13"></path><path d="M9 7h6"></path></svg>레시피 페이지로 크게 보기</a>
+            <button class="pill-btn" id="board-share" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>친구에게 공유하기</button>
+          </div>
+        </div>
+        <div class="board-paper" id="board-recipe"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <template id="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></template>
 
   <dialog class="side-menu" id="side-menu" aria-labelledby="side-menu-title">
     <div class="side-menu-inner">
@@ -591,7 +670,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script src="theme.js?v=1"></script>
-<script src="site.js?v=1"></script>
+<script src="site.js?v=2"></script>
 <script src="common.js?v=5"></script>
 <script>
   // 추천 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
@@ -891,6 +970,7 @@
   function renderReactions() {
     reactionsEl.hidden = !current;
     shareBtn.hidden = !current;
+    chooseBtn.hidden = !current;
     const mine = current ? reactions.get(current.id) : undefined;
     reactionsEl.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.reaction === mine));
     setMood(mine);
@@ -944,9 +1024,9 @@
     return recipePagesLoad;
   }
 
-  shareBtn.addEventListener('click', async () => {
-    if (!current) return;
-    const item = current;
+  shareBtn.addEventListener('click', () => { if (current) shareItem(current); });
+
+  async function shareItem(item) {
     const pages = await loadRecipePages();
     shareLink({
       title: `${item.menu} | 냥셰프의 오늘 뭐 먹지`,
@@ -955,7 +1035,7 @@
       contentType: 'menu',
       itemId: item.menu,
     });
-  });
+  }
 
 
   // ── 레시피 ────────────────────────────────────────────
@@ -977,26 +1057,35 @@
     }
   });
 
-  async function showRecipe(item) {
+  // 메뉴 하나의 레시피를 Supabase에서 한 번만 불러옴 (레시피 칸과 도마가 함께 씀)
+  async function getRecipe(item) {
     if (!recipeCache.has(item.id)) {
-      recipeBodyEl.replaceChildren(textEl('p', 'recipe-status', '냥셰프가 레시피를 꺼내는 중…'));
       const { data, error } = await db.from('recipes')
         .select('minutes, difficulty, servings, ingredients, steps, tip')
         .eq('menu_id', item.id)
         .maybeSingle();
-      if (current !== item) return;   // 그사이 다른 메뉴로 바뀌었으면 버림
-      if (error) {
-        console.error(error);
-        recipeBodyEl.replaceChildren(
-          textEl('p', 'recipe-status', '레시피를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'),
-          recipeSearchLink(item),
-        );
-        return;
-      }
+      if (error) throw error;
       recipeCache.set(item.id, data);
     }
+    return recipeCache.get(item.id);
+  }
+
+  function recipeLoadError(item) {
+    return [textEl('p', 'recipe-status', '레시피를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'), recipeSearchLink(item)];
+  }
+
+  async function showRecipe(item) {
+    if (!recipeCache.has(item.id)) recipeBodyEl.replaceChildren(textEl('p', 'recipe-status', '냥셰프가 레시피를 꺼내는 중…'));
+    let recipe;
+    try {
+      recipe = await getRecipe(item);
+    } catch (err) {
+      console.error(err);
+      if (current === item) recipeBodyEl.replaceChildren(...recipeLoadError(item));
+      return;
+    }
     const shopLinks = await loadShopLinks();
-    if (current === item) renderRecipe(item, recipeCache.get(item.id), shopLinks);
+    if (current === item) recipeBodyEl.replaceChildren(...buildRecipeParts(item, recipe, shopLinks, { links: true }));
   }
 
   // Table Editor에서 한 줄에 하나씩 적은 글을 목록으로 나눔
@@ -1055,11 +1144,10 @@
     return box;
   }
 
-  function renderRecipe(item, recipe, shopLinks) {
-    if (!recipe) {
-      recipeBodyEl.replaceChildren(textEl('p', 'recipe-status', '아직 냥셰프 레시피가 없어요.'), recipeSearchLink(item));
-      return;
-    }
+  // 레시피 화면 조각들을 만듦. options.checklist: 재료를 체크할 수 있게 (도마), options.links: 아래 링크 줄
+  function buildRecipeParts(item, recipe, shopLinks, options) {
+    const opts = options || {};
+    if (!recipe) return [textEl('p', 'recipe-status', '아직 냥셰프 레시피가 없어요.'), recipeSearchLink(item)];
 
     const parts = [];
 
@@ -1073,20 +1161,28 @@
     const ingredients = lines(recipe.ingredients);
     if (ingredients.length) {
       const ul = document.createElement('ul');
-      ul.className = 'recipe-ingredients';
+      ul.className = opts.checklist ? 'recipe-ingredients checklist' : 'recipe-ingredients';
       ingredients.forEach(line => {
         const li = document.createElement('li');
         // "양념: 간장 2큰술, 설탕 1큰술" 같은 줄은 한 줄 전체로 보여줌
         const labelled = line.match(/^([^:]{1,12}):\s*(.+)$/);
-        if (labelled) {
-          li.className = 'wide';
-          li.append(textEl('strong', '', `${labelled[1]}:`), ` ${labelled[2]}`);
+        const content = labelled ? [textEl('strong', '', `${labelled[1]}:`), ` ${labelled[2]}`] : [line];
+        if (labelled) li.className = 'wide';
+        if (opts.checklist) {
+          // 도마에서는 준비한 재료를 하나씩 체크할 수 있음
+          const label = document.createElement('label');
+          const box = document.createElement('input');
+          box.type = 'checkbox';
+          const text = document.createElement('span');
+          text.append(...content);
+          label.append(box, text);
+          li.append(label);
         } else {
-          li.textContent = line;
+          li.append(...content);
         }
         ul.append(li);
       });
-      parts.push(recipeSection('재료', ul));
+      parts.push(recipeSection(opts.checklist ? '재료 (준비한 건 체크!)' : '재료', ul));
       const shop = shopBox(shopLinks[item.id]);   // 쿠팡에서 재료 보기 (링크가 있을 때만)
       if (shop) parts.push(shop);
     }
@@ -1105,17 +1201,130 @@
       parts.push(tip);
     }
 
-    // 메뉴마다 따로 만든 레시피 페이지 (recipes/메뉴번호.html)
-    const pageLink = textEl('a', 'recipe-more', '레시피 페이지로 크게 보기 →');
-    pageLink.href = `recipes/${item.id}.html`;
-    pageLink.dataset.track = 'go_recipe_page';
-    pageLink.dataset.trackLabel = item.menu;
-    const links = document.createElement('div');
-    links.className = 'recipe-links';
-    links.append(pageLink, recipeSearchLink(item));
-    parts.push(links);
-    recipeBodyEl.replaceChildren(...parts);
+    if (opts.links) {
+      // 메뉴마다 따로 만든 레시피 페이지 (recipes/메뉴번호.html)
+      const pageLink = textEl('a', 'recipe-more', '레시피 페이지로 크게 보기 →');
+      pageLink.href = `recipes/${item.id}.html`;
+      pageLink.dataset.track = 'go_recipe_page';
+      pageLink.dataset.trackLabel = item.menu;
+      const links = document.createElement('div');
+      links.className = 'recipe-links';
+      links.append(pageLink, recipeSearchLink(item));
+      parts.push(links);
+    }
+    return parts;
   }
+
+
+  // ── 오늘은 이걸로 할래! → 도마 위에 레시피와 요리 영상 ──
+
+  const chooseBtn = document.getElementById('choose-btn');
+  const boardEl = document.getElementById('board');
+  const boardTitleEl = document.getElementById('board-title');
+  const boardLineEl = document.getElementById('board-line');
+  const boardVideoEl = document.getElementById('board-video');
+  const boardRecipeEl = document.getElementById('board-recipe');
+  const boardPageEl = document.getElementById('board-page');
+  let boardItem = null;   // 지금 도마에 올린 메뉴
+
+  // build-pages.ps1 이 tools/videos.csv 로 만든 메뉴별 요리 영상 (메뉴 번호 → { v: 영상 ID, c: 채널, t: 제목 })
+  let videosLoad = null;
+  function loadVideos() {
+    if (!videosLoad) {
+      videosLoad = fetch('recipes/videos.json')
+        .then(res => (res.ok ? res.json() : {}))
+        .then(data => (data && typeof data === 'object' ? data : {}))
+        .catch(() => ({}));
+    }
+    return videosLoad;
+  }
+
+  function videoParts(item, video) {
+    if (!video || !/^[\w-]{11}$/.test(video.v || '')) {
+      // 영상이 아직 없는 메뉴는 유튜브 검색으로 안내
+      const a = textEl('a', 'pill-btn', `유튜브에서 ${item.menu} 영상 찾아보기`);
+      a.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(`${item.menu} 레시피`)}`;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      return [textEl('p', 'board-status', '이 메뉴는 아직 냥셰프가 고른 영상이 없어요.'), a];
+    }
+    const frame = document.createElement('div');
+    frame.className = 'video-lite';
+    const play = document.createElement('button');
+    play.type = 'button';
+    play.className = 'video-play';
+    play.dataset.video = video.v;
+    play.dataset.title = video.t || `${item.menu} 요리 영상`;
+    play.setAttribute('aria-label', `요리 영상 재생: ${play.dataset.title}`);
+    const thumb = new Image();
+    thumb.src = `https://i.ytimg.com/vi/${video.v}/hqdefault.jpg`;
+    thumb.alt = '';
+    const iconWrap = document.createElement('span');
+    iconWrap.className = 'video-play-icon';
+    iconWrap.setAttribute('aria-hidden', 'true');
+    iconWrap.append(playIconTpl.content.firstElementChild.cloneNode(true));
+    play.append(thumb, iconWrap);
+    frame.append(play);
+
+    const credit = textEl('p', 'video-credit', '냥셰프가 고른 영상이에요. 레시피와 조금 다를 수 있어요. · ');
+    const link = textEl('a', '', `${video.c || '영상 원본'} · YouTube`);
+    link.href = `https://www.youtube.com/watch?v=${video.v}`;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    credit.append(link);
+    return [frame, credit];
+  }
+
+  const playIconTpl = document.getElementById('play-icon');
+
+  async function openBoard(item) {
+    if (!item) return;
+    boardItem = item;
+    boardTitleEl.textContent = item.menu;
+    boardLineEl.textContent = `좋아, 오늘은 ${josa(item.menu, '이다냥', '다냥')}! 도마 위에 재료부터 올려 보자냥.`;
+    boardVideoEl.replaceChildren(textEl('p', 'board-status', '요리 영상을 꺼내는 중…'));
+    boardRecipeEl.replaceChildren(textEl('p', 'recipe-status', '냥셰프가 레시피를 꺼내는 중…'));
+    boardPageEl.hidden = true;
+    boardEl.showModal();
+    boardEl.querySelector('.board-wood').scrollTop = 0;
+    setMood('like');
+    replay(chefCatEl, 'mood-pop');
+    sayBubble(`오늘은 ${item.menu}! 같이 만들어 보자냥!`);
+    track('choose_menu', { menu_name: item.menu, meal: item.meal, category: item.category });
+
+    const [videos, pages, shopLinks] = await Promise.all([loadVideos(), loadRecipePages(), loadShopLinks()]);
+    if (boardItem !== item || !boardEl.open) return;
+    boardVideoEl.replaceChildren(...videoParts(item, videos[item.id]));
+    if (pages.has(item.id)) {
+      boardPageEl.href = `recipes/${item.id}.html`;
+      boardPageEl.hidden = false;
+    }
+
+    let recipe;
+    try {
+      recipe = await getRecipe(item);
+    } catch (err) {
+      console.error(err);
+      if (boardItem === item) boardRecipeEl.replaceChildren(...recipeLoadError(item));
+      return;
+    }
+    if (boardItem === item) boardRecipeEl.replaceChildren(...buildRecipeParts(item, recipe, shopLinks, { checklist: true }));
+  }
+
+  chooseBtn.addEventListener('click', () => openBoard(current));
+  document.getElementById('board-close').addEventListener('click', () => boardEl.close());
+  document.getElementById('board-share').addEventListener('click', () => { if (boardItem) shareItem(boardItem); });
+  // 도마 바깥(어두운 부분)을 누르면 닫힘
+  boardEl.addEventListener('click', e => {
+    if (e.target === boardEl) boardEl.close();
+  });
+  // 닫으면 재생 중인 영상도 멈춤 (플레이어를 치움)
+  boardEl.addEventListener('close', () => {
+    boardItem = null;
+    boardVideoEl.replaceChildren();
+    setMood(current ? reactions.get(current.id) : undefined);
+    sayBubble(DEFAULT_BUBBLE);
+  });
 
 
   // ── 추천 기록 ─────────────────────────────────────────

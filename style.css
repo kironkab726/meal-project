@@ -172,6 +172,18 @@ a.accent-btn { color: var(--accent-text); }
 .shop-box .pill-btn .ico { color: var(--accent); }
 .ad-note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); word-break: keep-all; }
 
+/* ── 요리 영상 (누르기 전엔 미리보기 그림, 누르면 유튜브 플레이어. site.js) ── */
+.video-lite { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px; background: #1B1411; }
+.video-lite iframe, .video-play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-play { display: block; margin: 0; padding: 0; background: none; cursor: pointer; }
+.video-play img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.video-play-icon { position: absolute; left: 50%; top: 50%; width: 72px; height: 50px; margin: -25px 0 0 -36px; display: flex; align-items: center; justify-content: center; border-radius: 16px; background: var(--accent); box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3); transition: transform 0.15s; }
+.video-play-icon svg { width: 26px; height: 26px; fill: #FFFFFF; }
+.video-play:hover .video-play-icon { transform: scale(1.08); }
+.video-play:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.video-credit { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); word-break: keep-all; }
+@media (prefers-reduced-motion: reduce) { .video-play-icon { transition: none; } }
+
 /* ── 화면 아래에 잠깐 뜨는 알림 (site.js) ── */
 .toast { position: fixed; left: 50%; bottom: 24px; z-index: 50; max-width: calc(100% - 32px); box-sizing: border-box; padding: 12px 20px; border-radius: 999px; background: var(--text); color: var(--bg); font-size: 15px; line-height: 1.4; text-align: center; word-break: keep-all; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); opacity: 0; transform: translate(-50%, 16px); pointer-events: none; transition: opacity 0.2s, transform 0.2s; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }

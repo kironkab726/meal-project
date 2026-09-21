@@ -77,7 +77,27 @@
     }
   }
 
+  // 요리 영상: 처음엔 미리보기 그림만 보여 주고, 누르면 그때 유튜브 플레이어를 붙임
+  // (페이지가 빨리 뜨고, 누르기 전까지는 유튜브 쿠키가 생기지 않음)
+  function playVideo(btn) {
+    const id = btn.dataset.video || '';
+    if (!/^[\w-]{11}$/.test(id)) return;
+    const frame = document.createElement('iframe');
+    frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
+    frame.title = btn.dataset.title || '요리 영상';
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    btn.replaceWith(frame);
+    track('play_video', { video_id: id, label: btn.dataset.title || '' });
+  }
+
   document.addEventListener('click', e => {
+    const playBtn = e.target.closest('.video-play');
+    if (playBtn) {
+      playVideo(playBtn);
+      return;
+    }
     const shareBtn = e.target.closest('[data-share]');
     if (shareBtn) {
       const canonical = document.querySelector('link[rel="canonical"]');

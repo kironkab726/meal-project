@@ -9,6 +9,7 @@
 #   llms.txt                  AI(ChatGPT, Claude 등)가 읽기 좋은 사이트 안내
 #   fridge.html               냉장고 털기 (재료표는 tools/fridge.csv)
 #   recipes/pages.json        레시피 페이지가 있는 메뉴 번호 (메인 화면 공유하기가 읽음)
+#   recipes/videos.json       메뉴별 요리 영상 (메인 화면 "오늘은 이걸로 할래!" 도마가 읽음, 영상표는 tools/videos.csv)
 #   recipes/shop-links.json   쿠팡 파트너스 재료 링크 (메인 화면 레시피 칸이 읽음)
 #   tools/coupang-links.csv   쿠팡 파트너스 링크를 적는 표 (새 메뉴가 생기면 줄을 더해 줌)
 #
@@ -142,7 +143,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=5">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=6">
 <link rel="stylesheet" href="{{PREFIX}}pages.css?v=3">
 {{EXTRA_HEAD}}
 </head>
@@ -199,7 +200,7 @@ $HeadTemplate = @'
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="{{PREFIX}}theme.js?v=1"></script>
-<script src="{{PREFIX}}site.js?v=1"></script>
+<script src="{{PREFIX}}site.js?v=2"></script>
 {{EXTRA_SCRIPTS}}
 </body>
 </html>
@@ -324,6 +325,19 @@ if (Test-Path -LiteralPath $LinksPath) {
   $oldCsv = ''
 }
 
+# ── 요리 영상 (tools/videos.csv: 번호, 영상 ID, 채널, 영상 제목) ─────
+# 유튜브에서 "퍼가기"가 허용된 영상만 넣음. 영상이 내려가면 이 표에서 ID만 바꾸면 됨
+$Videos = @{}
+$videosPath = Join-Path $PSScriptRoot 'videos.csv'
+if (Test-Path -LiteralPath $videosPath) {
+  foreach ($row in @((ReadCsvText $videosPath) -split "\r?\n" | Where-Object { $_.Trim() } | ConvertFrom-Csv)) {
+    $vid = ([string]$row.'영상 ID').Trim()
+    if ($vid -match '^[\w-]{11}$') {
+      $Videos[([string]$row.'번호').Trim()] = [ordered]@{ v = $vid; c = ([string]$row.'채널').Trim(); t = ([string]$row.'영상 제목').Trim() }
+    }
+  }
+}
+
 $shopLinks = [ordered]@{}   # 메뉴 번호 → 쓸 수 있는 파트너스 링크
 $badLinks  = @()
 $csvLines  = @((@($ColId, $ColName, $ColMeal, $ColSource, $ColLink) | ForEach-Object { CsvField $_ }) -join ',')
@@ -427,6 +441,24 @@ foreach ($m in $items) {
     ) -join "`n"
   }
 
+  # 요리 영상 (누르기 전에는 미리보기 그림만)
+  $videoHtml = ''
+  $video = $Videos[[string]$m.id]
+  if ($video) {
+    $videoHtml = @(
+      '      <section class="card" aria-labelledby="video-title">'
+      '        <h2 id="video-title">영상으로 보기</h2>'
+      '        <div class="video-lite">'
+      '          <button class="video-play" type="button" data-video="' + $video.v + '" data-title="' + (Enc $video.t) + '" aria-label="' + (Enc ('요리 영상 재생: ' + $video.t)) + '">'
+      '            <img src="https://i.ytimg.com/vi/' + $video.v + '/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
+      '            <span class="video-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></span>'
+      '          </button>'
+      '        </div>'
+      '        <p class="video-credit">냥셰프가 고른 영상이에요. 레시피와 조금 다를 수 있어요. · <a href="https://www.youtube.com/watch?v=' + $video.v + '" target="_blank" rel="noopener">' + (Enc $video.c) + ' · YouTube</a></p>'
+      '      </section>'
+    ) -join "`n"
+  }
+
   # 같은 종류 메뉴 먼저, 모자라면 같은 끼니의 다른 종류로 채움
   $same   = @($items | Where-Object { $_.meal -eq $m.meal -and $_.category -eq $m.category -and $_.id -ne $m.id })
   $others = @($items | Where-Object { $_.meal -eq $m.meal -and $_.category -ne $m.category })
@@ -524,6 +556,8 @@ $($stepHtml -join "`n")
 $tipHtml
         <a class="search-more" href="https://www.10000recipe.com/recipe/list.html?q=$([Uri]::EscapeDataString($name))" target="_blank" rel="noopener">다른 레시피도 찾아보기 →</a>
       </article>
+
+$videoHtml
 
       <section class="card cta-card">
         <p class="cta-text">오늘 뭐 먹을지 아직 못 정했냥?</p>
@@ -637,6 +671,11 @@ Save 'recipes\index.html' (Page @{
 # 페이지가 있는 메뉴는 레시피 페이지 주소를 공유함 (카톡 미리보기에 음식 사진이 뜸)
 
 Save 'recipes\pages.json' ((ConvertTo-Json -InputObject @($items | ForEach-Object { [int]$_.id }) -Compress) + "`n")
+
+# 메인 화면 "오늘은 이걸로 할래!" 도마에서 쓰는 요리 영상 목록 (메뉴 번호 → 영상 ID, 채널, 제목)
+$videoMap = [ordered]@{}
+foreach ($m in $items) { if ($Videos[[string]$m.id]) { $videoMap[[string]$m.id] = $Videos[[string]$m.id] } }
+Save 'recipes\videos.json' ((ConvertTo-Json -InputObject $videoMap -Depth 3 -Compress) + "`n")
 
 
 # ── 냉장고 털기 (fridge.html) ─────────────────────────────
@@ -902,4 +941,4 @@ $llms += '- [개인정보처리방침](' + $SiteUrl + '/privacy)'
 $llms += '- [사이트맵](' + $SiteUrl + '/sitemap.xml)'
 Save 'llms.txt' (($llms -join "`n") + "`n")
 
-Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs), rss.xml, llms.txt, coupang links {2}" -f $items.Count, $entries.Count, $shopLinks.Count)
+Write-Host ("Done: {0} recipe pages, recipes/index.html, about.html, privacy.html, sitemap.xml ({1} URLs), rss.xml, llms.txt, coupang links {2}, videos {3}" -f $items.Count, $entries.Count, $shopLinks.Count, $videoMap.Count)
