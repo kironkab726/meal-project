@@ -2,6 +2,7 @@
 #
 # favicon.svg 와 같은 모양을 그려서 아래 파일을 만듭니다.
 #   favicon.ico            브라우저 탭용 (16 · 32 · 48px 묶음)
+#   favicon-192.png        구글 검색 결과용 큰 파비콘 (구글은 48px보다 큰 것을 권장)
 #   apple-touch-icon.png   휴대폰 홈 화면에 추가할 때 쓰는 180px 아이콘 (모서리는 폰이 둥글게 깎음)
 #   og-image.png           카카오톡·SNS에 링크를 붙였을 때 뜨는 1200x630 미리보기 그림
 #
@@ -113,6 +114,11 @@ function PngBytes($bitmap) {
   , $bytes   # 바이트 배열을 한 덩어리로 돌려줌
 }
 
+# favicon-192.png
+$big192 = DrawIcon 192 $false
+$big192.Save((Join-Path $Root 'favicon-192.png'), [System.Drawing.Imaging.ImageFormat]::Png)
+$big192.Dispose()
+
 # apple-touch-icon.png
 $touch = DrawIcon 180 $true
 $touch.Save((Join-Path $Root 'apple-touch-icon.png'), [System.Drawing.Imaging.ImageFormat]::Png)
@@ -168,4 +174,4 @@ $g.Dispose()
 $og.Save((Join-Path $Root 'og-image.png'), [System.Drawing.Imaging.ImageFormat]::Png)
 $og.Dispose()
 
-Write-Host 'Done: favicon.ico (16, 32, 48px), apple-touch-icon.png (180px), og-image.png (1200x630)'
+Write-Host 'Done: favicon.ico (16, 32, 48px), favicon-192.png, apple-touch-icon.png (180px), og-image.png (1200x630)'

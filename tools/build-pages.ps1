@@ -125,6 +125,7 @@ $HeadTemplate = @'
 {{OG_IMAGE}}
 <link rel="icon" href="{{PREFIX}}favicon.ico" sizes="any">
 <link rel="icon" href="{{PREFIX}}favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{{PREFIX}}favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="{{PREFIX}}apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="냥셰프 레시피" href="{{PREFIX}}rss.xml">
 <script>
