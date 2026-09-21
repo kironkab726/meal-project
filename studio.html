@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 운영자용 도구 페이지: 검색 결과에 올리지 않음 -->
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>냥빵이 숏폼 만들기</title>
+<script>
+  (function () {
+    let theme = null;
+    try { theme = localStorage.getItem('menu-picker-theme'); } catch (e) {}
+    if (theme !== 'dark' && theme !== 'light') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
+<link rel="stylesheet" href="style.css?v=9">
+<style>
+  .studio { position: relative; z-index: 1; width: 100%; max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; padding: 8px 0 40px; }
+  .studio h1 { margin: 0; font-family: 'Jua', sans-serif; font-weight: 400; font-size: 34px; }
+  .studio-lead { margin: 4px 0 0; font-size: 15px; line-height: 1.6; color: var(--muted); word-break: keep-all; }
+  .studio-grid { display: flex; flex-direction: column; gap: 18px; }
+  .controls { display: flex; flex-direction: column; gap: 16px; }
+  .field-name { display: block; margin-bottom: 6px; font-family: 'Jua', sans-serif; font-size: 18px; }
+  .controls select { display: block; width: 100%; height: 50px; padding: 0 12px; font: inherit; font-size: 16px; color: var(--text); border: 2px solid var(--border); border-radius: 14px; background: var(--bg); }
+  .meal-tabs { align-self: flex-start; }
+  .control-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .control-buttons .accent-btn { flex: 1 1 220px; }
+  .status { min-height: 1.4em; margin: 0; font-size: 15px; color: var(--quote); word-break: keep-all; }
+  .progress { width: 100%; height: 10px; overflow: hidden; border-radius: 999px; background: var(--sunk); }
+  .progress span { display: block; width: 0; height: 100%; background: var(--accent); transition: width 0.1s; }
+  .stage { display: flex; justify-content: center; }
+  .stage canvas, .stage video { display: block; width: min(360px, 100%); aspect-ratio: 9 / 16; height: auto; border-radius: 22px; border: 3px solid var(--bubble-line); background: #FBF3E4; }
+  .result { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .result[hidden] { display: none; }
+  .result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .tips { margin: 0; padding-left: 1.2em; font-size: 14px; line-height: 1.7; color: var(--muted); word-break: keep-all; }
+  @media (min-width: 820px) {
+    .studio-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; align-items: start; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+  <div class="gingham gingham-top" aria-hidden="true"></div>
+  <div class="page">
+    <main class="studio">
+      <a class="back-link" href="./" style="color: var(--muted); text-decoration: none;">← 사이트로 돌아가기</a>
+      <div>
+        <h1>냥빵이 숏폼 만들기</h1>
+        <p class="studio-lead">메뉴를 골라 "영상 만들기"를 누르면 11초짜리 세로 영상(1080×1920, MP4)이 만들어져요. 쇼츠·릴스·틱톡에 그대로 올리면 돼요. 음악은 각 앱에서 넣어 주세요.</p>
+      </div>
+
+      <div class="studio-grid">
+        <section class="card controls">
+          <div>
+            <span class="field-name">끼니</span>
+            <div class="meal-tabs" id="meal-tabs" role="group" aria-label="끼니 고르기"></div>
+          </div>
+          <label>
+            <span class="field-name">메뉴</span>
+            <select id="menu-select"><option value="">메뉴를 불러오는 중…</option></select>
+          </label>
+          <div class="control-buttons">
+            <button class="pill-btn" id="preview-btn" type="button" disabled>미리보기 재생</button>
+            <button class="accent-btn" id="make-btn" type="button" disabled>영상 만들기</button>
+          </div>
+          <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+          <p class="status" id="status" role="status"></p>
+          <ul class="tips">
+            <li>"무작위로 뽑기"는 누를 때마다 다른 메뉴가 나와요.</li>
+            <li>음식 사진은 위키미디어 사진이라 영상 속 사진 아래에 작가와 라이선스가 들어가요. 지우지 말아 주세요.</li>
+            <li>앱이 영상을 못 읽으면 캡컷 같은 편집 앱에서 한 번 열었다가 다시 저장하면 돼요.</li>
+          </ul>
+        </section>
+
+        <div class="stage-wrap">
+          <div class="stage"><canvas id="canvas" width="1080" height="1920" aria-label="영상 미리보기"></canvas></div>
+          <div class="result" id="result" hidden>
+            <div class="stage"><video id="result-video" controls playsinline muted loop></video></div>
+            <div class="result-actions">
+              <a class="accent-btn" id="download-link" download>MP4 저장하기</a>
+              <button class="pill-btn" id="share-btn" type="button" hidden>앱으로 보내기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" integrity="sha384-iLddHTLokph6Omwoyid4XKxHaWa6w41BnoEj0q5oOrzmYPpHIKt1wyjReA7s//pP" crossorigin="anonymous"></script>
+<!-- 브라우저가 만든 영상 조각을 MP4 파일 하나로 묶는 도구 (MIT). 버전 고정 + 지문 -->
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.2.2/build/mp4-muxer.js" integrity="sha384-wr0AQH9RBAKio/g7bHM5245MBCU5B/b0Y9u42cTxRYQQJXKEijZvWEJKL9JG26hs" crossorigin="anonymous"></script>
+<script src="config.js"></script>
+<script src="studio.js?v=1"></script>
+</body>
+</html>
