@@ -48,7 +48,12 @@ create table if not exists public.cook_reports (
 );
 
 -- 신고가 3개 이상인지 (신고한 사람은 숨기고 개수만 알려 줌)
-create or replace function public.cook_is_hidden(p_cook_id bigint)
+-- 권한 규칙 안에서만 쓰는 함수라, 바깥(API)에서는 부를 수 없는 private 스키마에 둠
+-- (Security Advisor 의 "SECURITY DEFINER 함수를 누구나 실행" 경고 해결)
+create schema if not exists private;
+grant usage on schema private to anon, authenticated;
+
+create or replace function private.cook_is_hidden(p_cook_id bigint)
 returns boolean
 language sql
 stable
@@ -58,8 +63,8 @@ as $$
   select count(*) >= 3 from public.cook_reports where cook_id = p_cook_id
 $$;
 
-revoke all on function public.cook_is_hidden(bigint) from public;
-grant execute on function public.cook_is_hidden(bigint) to anon, authenticated;
+revoke all on function private.cook_is_hidden(bigint) from public;
+grant execute on function private.cook_is_hidden(bigint) to anon, authenticated;
 
 
 -- 4) 권한 -------------------------------------------------------------------
@@ -95,7 +100,10 @@ create policy "rename own profile" on public.profiles
 drop policy if exists "public cooks are readable" on public.cooks;
 create policy "public cooks are readable" on public.cooks
   for select to anon, authenticated
-  using (is_public and not public.cook_is_hidden(id));
+  using (is_public and not private.cook_is_hidden(id));
+
+-- 예전에 public 스키마에 만들었던 같은 함수는 지움 (위 규칙이 새 함수를 쓰게 바꾼 다음이라 지울 수 있음)
+drop function if exists public.cook_is_hidden(bigint);
 
 drop policy if exists "read own cooks" on public.cooks;
 create policy "read own cooks" on public.cooks
