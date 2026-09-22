@@ -129,6 +129,12 @@ $HeadTemplate = @'
 <link rel="icon" href="{{PREFIX}}favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{{PREFIX}}favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="{{PREFIX}}apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBF3E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241C17" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="냥빵이">
 <link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="{{PREFIX}}rss.xml">
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
@@ -144,7 +150,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=9">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=10">
 <link rel="stylesheet" href="{{PREFIX}}pages.css?v=6">
 {{EXTRA_HEAD}}
 </head>
@@ -201,6 +207,7 @@ $HeadTemplate = @'
     </main>
 
     <footer class="site-footer">
+      <button class="pill-btn install-btn" type="button" data-install hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>냥빵이 앱 설치하기</button>
       <nav aria-label="사이트 안내">
         <a href="{{PREFIX}}recipes/">냥빵이 레시피 모음</a>
         <a href="{{PREFIX}}search.html">레시피 검색</a>
@@ -216,7 +223,7 @@ $HeadTemplate = @'
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="{{PREFIX}}theme.js?v=1"></script>
-<script src="{{PREFIX}}site.js?v=2"></script>
+<script src="{{PREFIX}}site.js?v=3"></script>
 {{EXTRA_SCRIPTS}}
 </body>
 </html>

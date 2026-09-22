@@ -37,6 +37,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBF3E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241C17" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="냥빵이">
 <link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="rss.xml">
 <title>냥빵이의 오늘은 뭐 먹지 | 아침·점심·저녁 메뉴 추천과 집밥 레시피</title>
 <meta name="description" content="오늘 뭐 먹을지 고민될 때, 고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 드려요. 한식·중식·일식·양식·분식 메뉴 추천과 재료, 만드는 법까지 담은 집밥 레시피를 함께 볼 수 있어요.">
@@ -67,7 +73,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -555,6 +561,7 @@
     </section>
 
     <footer class="site-footer">
+      <button class="pill-btn install-btn" type="button" data-install hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>냥빵이 앱 설치하기</button>
       <nav aria-label="사이트 안내">
         <a href="recipes/">냥빵이 레시피 모음</a>
         <a href="search.html">레시피 검색</a>
@@ -629,6 +636,7 @@
             <li><a href="search.html" data-track="side_menu" data-track-label="레시피 검색"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M16.5 16.5L21 21"></path></svg>레시피 검색</a></li>
             <li><a href="fridge.html" data-track="side_menu" data-track-label="냉장고 털기"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"></rect><path d="M5 10h14M9 5v2M9 13v3"></path></svg>냉장고 털기</a></li>
             <li><a href="cooked.html" data-track="side_menu" data-track-label="요리 자랑"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>요리 자랑</a></li>
+            <li data-install hidden><a href="#"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>냥빵이 앱 설치하기</a></li>
             <li><a href="board.html" data-track="side_menu" data-track-label="메뉴 건의함"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"></path><path d="M13 7l4 4"></path></svg>메뉴 건의함</a></li>
           </ul>
         </section>
@@ -699,7 +707,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" integrity="sha384-iLddHTLokph6Omwoyid4XKxHaWa6w41BnoEj0q5oOrzmYPpHIKt1wyjReA7s//pP" crossorigin="anonymous"></script>
 <script src="config.js"></script>
 <script src="theme.js?v=1"></script>
-<script src="site.js?v=2"></script>
+<script src="site.js?v=3"></script>
 <script src="common.js?v=7"></script>
 <script>
   // 추천 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음

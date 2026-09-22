@@ -114,6 +114,69 @@
     if (tracked) track(tracked.dataset.track, { label: tracked.dataset.trackLabel || '' });
   });
 
+  // ── 앱으로 설치 (PWA) ──────────────────────────────────
+  // 서비스 워커(sw.js): 한 번 본 페이지는 인터넷이 끊겨도 열리고, 다시 열 때 빨리 뜸
+  if ('serviceWorker' in navigator && (location.hostname === 'meal-project.pages.dev' || location.hostname === 'localhost')) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+  }
+
+  // data-install 이 달린 버튼(아래쪽 링크, 메뉴판)은 설치할 수 있을 때만 보임
+  //   안드로이드·컴퓨터 크롬: 브라우저가 "설치할 수 있음"을 알려 주면 버튼을 보여 주고, 누르면 설치 창
+  //   아이폰: 설치 창이 없어서, 누르면 "공유 → 홈 화면에 추가" 방법을 알려 줌
+  let installPrompt = null;
+  const installed = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const showInstall = show => document.querySelectorAll('[data-install]').forEach(el => { el.hidden = !show; });
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    installPrompt = e;
+    showInstall(true);
+  });
+  window.addEventListener('appinstalled', () => {
+    installPrompt = null;
+    showInstall(false);
+    toast('냥빵이 앱을 설치했어요! 홈 화면에서 열어 보세요.');
+    track('app_installed');
+  });
+  if (isIOS && !installed()) showInstall(true);
+
+  let iosHelp = null;
+  function showIOSHelp() {
+    if (!iosHelp) {
+      iosHelp = document.createElement('dialog');
+      iosHelp.className = 'install-help';
+      const title = document.createElement('h2');
+      title.textContent = '아이폰에 냥빵이 앱 설치하기';
+      const steps = document.createElement('ol');
+      ['화면 아래(또는 위)의 공유 버튼(네모에 위쪽 화살표)을 눌러요.', '목록에서 "홈 화면에 추가"를 눌러요.', '오른쪽 위 "추가"를 누르면 끝! 홈 화면에 냥빵이가 생겨요.']
+        .forEach(text => { const li = document.createElement('li'); li.textContent = text; steps.append(li); });
+      const close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'pill-btn';
+      close.textContent = '알겠어요';
+      close.addEventListener('click', () => iosHelp.close());
+      iosHelp.append(title, steps, close);
+      iosHelp.addEventListener('click', e => { if (e.target === iosHelp) iosHelp.close(); });
+      document.body.append(iosHelp);
+    }
+    iosHelp.showModal();
+  }
+
+  document.addEventListener('click', async e => {
+    if (!e.target.closest('[data-install]')) return;
+    e.preventDefault();   // 메뉴판의 설치 링크가 페이지를 옮기지 않게
+    track('app_install_click', { label: installPrompt ? 'prompt' : (isIOS ? 'ios_help' : 'none') });
+    if (installPrompt) {
+      installPrompt.prompt();
+      const choice = await installPrompt.userChoice;
+      installPrompt = null;
+      if (choice.outcome === 'accepted') showInstall(false);
+    } else if (isIOS) {
+      showIOSHelp();
+    }
+  });
+
   window.SITE_URL = SITE_URL;
   window.track = track;
   window.toast = toast;

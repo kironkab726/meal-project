@@ -45,6 +45,12 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBF3E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241C17" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="냥빵이">
 <link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="../rss.xml">
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
@@ -60,7 +66,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="../style.css?v=9">
+<link rel="stylesheet" href="../style.css?v=10">
 <link rel="stylesheet" href="../pages.css?v=6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Recipe","name":"닭가슴살 샐러드","description":"닭가슴살 샐러드 레시피: 조리 시간 25분, 난이도 쉬움, 2인분 기준. 재료(닭가슴살 2쪽, 올리브유 1큰술, 소금, 후추, 허브 약간 등)와 만드는 법, 냥빵이 팁까지 한눈에 볼 수 있어요.","recipeCategory":"저녁","recipeCuisine":"가볍게","recipeIngredient":["닭가슴살 2쪽","올리브유 1큰술","소금, 후추, 허브 약간","샐러드 채소 2줌","방울토마토 8개","파프리카 1/2개","올리브 약간","드레싱: 올리브유 3큰술, 레몬즙 1큰술, 꿀 1작은술, 홀그레인 머스터드 1작은술, 소금"],"recipeInstructions":[{"@type":"HowToStep","text":"닭가슴살을 두께가 고르게 편 뒤 올리브유, 소금, 후추, 허브로 밑간한다"},{"@type":"HowToStep","text":"중불 팬에 올리고 뚜껑을 덮어 앞뒤로 6~7분씩 굽는다"},{"@type":"HowToStep","text":"한 김 식혀 먹기 좋게 썬다"},{"@type":"HowToStep","text":"채소, 토마토, 파프리카를 그릇에 담는다"},{"@type":"HowToStep","text":"닭가슴살을 올리고 드레싱을 뿌린다"}],"author":{"@type":"Organization","name":"냥빵이의 오늘은 뭐 먹지","url":"https://meal-project.pages.dev/"},"image":["https://commons.wikimedia.org/wiki/Special:FilePath/Chicken_breast_with_salad_of_mixed_greens%2C_tomato%2C_bell_peppers%2C_and_green_olives_-_Massachusetts.jpg?width=800"],"totalTime":"PT25M","recipeYield":"2인분","keywords":"닭가슴살 샐러드, 닭가슴살 샐러드 레시피, 저녁 메뉴, 가볍게, 집밥 레시피","datePublished":"2026-09-17","dateModified":"2026-09-17"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://meal-project.pages.dev/"},{"@type":"ListItem","position":2,"name":"레시피 모음","item":"https://meal-project.pages.dev/recipes/"},{"@type":"ListItem","position":3,"name":"닭가슴살 샐러드 레시피","item":"https://meal-project.pages.dev/recipes/99"}]}</script>
@@ -204,6 +210,7 @@
     </main>
 
     <footer class="site-footer">
+      <button class="pill-btn install-btn" type="button" data-install hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>냥빵이 앱 설치하기</button>
       <nav aria-label="사이트 안내">
         <a href="../recipes/">냥빵이 레시피 모음</a>
         <a href="../search.html">레시피 검색</a>
@@ -219,7 +226,7 @@
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="../theme.js?v=1"></script>
-<script src="../site.js?v=2"></script>
+<script src="../site.js?v=3"></script>
 
 </body>
 </html>

@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "냥빵이의 오늘은 뭐 먹지",
+  "short_name": "냥빵이",
+  "description": "고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 레시피를 알려 줘요.",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "/?utm_source=pwa&utm_medium=app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FBF3E4",
+  "theme_color": "#FBF3E4",
+  "categories": ["food", "lifestyle"],
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "레시피 검색", "url": "/search?utm_source=pwa&utm_medium=app", "icons": [{ "src": "/favicon-192.png", "sizes": "192x192" }] },
+    { "name": "냉장고 털기", "url": "/fridge?utm_source=pwa&utm_medium=app", "icons": [{ "src": "/favicon-192.png", "sizes": "192x192" }] },
+    { "name": "요리 자랑", "url": "/cooked?utm_source=pwa&utm_medium=app", "icons": [{ "src": "/favicon-192.png", "sizes": "192x192" }] }
+  ]
+}

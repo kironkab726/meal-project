@@ -45,6 +45,12 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBF3E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241C17" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="냥빵이">
 <link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="../rss.xml">
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
@@ -60,7 +66,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="../style.css?v=9">
+<link rel="stylesheet" href="../style.css?v=10">
 <link rel="stylesheet" href="../pages.css?v=6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Recipe","name":"김밥","description":"김밥 레시피: 조리 시간 40분, 난이도 보통, 2인분 기준. 재료(밥 3공기, 김밥용 김 4장, 김밥용 햄 4줄 등)와 만드는 법, 냥빵이 팁까지 한눈에 볼 수 있어요.","recipeCategory":"점심","recipeCuisine":"분식","recipeIngredient":["밥 3공기","김밥용 김 4장","김밥용 햄 4줄","단무지 4줄","우엉조림 4줄","게맛살 4줄","달걀 3개","시금치 1줌","당근 1/2개","참기름 2큰술","소금, 깨 약간"],"recipeInstructions":[{"@type":"HowToStep","text":"밥에 참기름, 소금, 깨를 넣어 간한다"},{"@type":"HowToStep","text":"달걀은 도톰하게 부쳐 길게 썰고 시금치는 데쳐 소금과 참기름으로 무친다"},{"@type":"HowToStep","text":"당근은 채 썰어 소금 간해 볶고 햄과 게맛살은 살짝 굽는다"},{"@type":"HowToStep","text":"김 위에 밥을 얇게 펴고 재료를 가지런히 올린다"},{"@type":"HowToStep","text":"김발로 단단하게 말고 겉에 참기름을 바른다"},{"@type":"HowToStep","text":"칼에 물을 묻혀 썬다"}],"author":{"@type":"Organization","name":"냥빵이의 오늘은 뭐 먹지","url":"https://meal-project.pages.dev/"},"image":["https://commons.wikimedia.org/wiki/Special:FilePath/Gimbap_(pixabay).jpg?width=800"],"totalTime":"PT40M","recipeYield":"2인분","keywords":"김밥, 김밥 레시피, 점심 메뉴, 분식, 집밥 레시피","datePublished":"2026-09-17","dateModified":"2026-09-17"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://meal-project.pages.dev/"},{"@type":"ListItem","position":2,"name":"레시피 모음","item":"https://meal-project.pages.dev/recipes/"},{"@type":"ListItem","position":3,"name":"김밥 레시피","item":"https://meal-project.pages.dev/recipes/55"}]}</script>
@@ -208,6 +214,7 @@
     </main>
 
     <footer class="site-footer">
+      <button class="pill-btn install-btn" type="button" data-install hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>냥빵이 앱 설치하기</button>
       <nav aria-label="사이트 안내">
         <a href="../recipes/">냥빵이 레시피 모음</a>
         <a href="../search.html">레시피 검색</a>
@@ -223,7 +230,7 @@
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="../theme.js?v=1"></script>
-<script src="../site.js?v=2"></script>
+<script src="../site.js?v=3"></script>
 
 </body>
 </html>

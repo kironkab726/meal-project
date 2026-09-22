@@ -47,6 +47,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBF3E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241C17" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="냥빵이">
 <link rel="alternate" type="application/rss+xml" title="냥빵이 레시피" href="rss.xml">
 <script>
   // 화면이 그려지기 전에 저장된 테마를 적용해서, 새로고침할 때 깜빡이지 않게 함
@@ -62,7 +68,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <link rel="stylesheet" href="pages.css?v=6">
 
 </head>
@@ -122,7 +128,7 @@
 
       <div>
         <h1 class="page-title">개인정보처리방침</h1>
-        <p class="updated">시행일: 2026년 9월 22일 (사이트에서 바로 탈퇴하기 추가)</p>
+        <p class="updated">시행일: 2026년 9월 22일 (사이트에서 바로 탈퇴하기, 앱 설치 추가)</p>
       </div>
 
       <article class="card prose">
@@ -189,7 +195,7 @@
 
         <h2>4. 쿠키와 브라우저 저장소</h2>
         <ul>
-          <li>사이트는 로그인 상태, 다크/라이트 모드 설정, 냉장고 털기에서 고른 재료를 이용자의 브라우저 저장소(localStorage)에 저장해요. 고른 재료는 그 브라우저에만 남고 서버로 보내지 않아요.</li>
+          <li>사이트는 로그인 상태, 다크/라이트 모드 설정, 냉장고 털기에서 고른 재료를 이용자의 브라우저 저장소(localStorage)에 저장해요. 고른 재료는 그 브라우저에만 남고 서버로 보내지 않아요. 또 앱처럼 설치해 쓰거나 다시 열 때 빨리 뜨도록, 페이지와 디자인 파일 일부를 브라우저 저장소(캐시)에 저장해요. 여기에는 개인정보가 들어가지 않아요.</li>
           <li>구글 애널리틱스와 마이크로소프트 클라리티는 방문 통계를 위해 쿠키를 사용해요. 추천받기, 레시피 열기, 공유하기처럼 어떤 버튼을 눌렀는지도 함께 기록하지만, 이메일 같은 개인 정보는 보내지 않아요.</li>
           <li>레시피의 요리 영상은 유튜브(YouTube) 영상이에요. 미리보기 그림은 유튜브 서버에서 불러오고, 재생 버튼을 누르면 그때 유튜브 플레이어(youtube-nocookie.com)가 열려요. 재생한 뒤부터는 유튜브가 쿠키 등을 쓸 수 있고 <a href="https://policies.google.com/privacy?hl=ko" target="_blank" rel="noopener">구글 개인정보처리방침</a>이 적용돼요.</li>
           <li>브라우저 설정에서 쿠키와 사이트 데이터를 막거나 지울 수 있어요. 구글 애널리틱스는 <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">구글 애널리틱스 차단 부가기능</a>으로도 막을 수 있어요.</li>
@@ -242,6 +248,7 @@
     </main>
 
     <footer class="site-footer">
+      <button class="pill-btn install-btn" type="button" data-install hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>냥빵이 앱 설치하기</button>
       <nav aria-label="사이트 안내">
         <a href="recipes/">냥빵이 레시피 모음</a>
         <a href="search.html">레시피 검색</a>
@@ -257,7 +264,7 @@
   <div class="gingham gingham-bottom" aria-hidden="true"></div>
 
 <script src="theme.js?v=1"></script>
-<script src="site.js?v=2"></script>
+<script src="site.js?v=3"></script>
 
 </body>
 </html>

@@ -4,6 +4,8 @@
 #   favicon.ico            브라우저 탭용 (16 · 32 · 48px 묶음)
 #   favicon-192.png        구글 검색 결과용 큰 파비콘 (구글은 48px보다 큰 것을 권장)
 #   apple-touch-icon.png   휴대폰 홈 화면에 추가할 때 쓰는 180px 아이콘 (모서리는 폰이 둥글게 깎음)
+#   icon-512.png           앱(PWA) 아이콘 512px
+#   icon-maskable-192/512  안드로이드 앱 아이콘 (휴대폰이 모양대로 잘라도 얼굴이 남게 가운데에 작게)
 #   og-image.png           카카오톡·SNS에 링크를 붙였을 때 뜨는 1200x630 미리보기 그림
 #
 # 실행 (프로젝트 폴더에서):
@@ -19,7 +21,9 @@ $Root = Split-Path -Parent $PSScriptRoot
 . (Join-Path $PSScriptRoot 'nyangbbang-draw.ps1')
 
 # size px 짜리 아이콘 한 장 (favicon.svg 와 같은 모양). $square 면 바탕을 둥글리지 않음 (홈 화면 아이콘용)
-function DrawIcon([int]$size, [bool]$square) {
+# $maskable 이면 안드로이드 앱 아이콘용: 휴대폰이 동그랗게·물방울 모양으로 잘라도 얼굴이 남도록 가운데에 작게
+function DrawIcon([int]$size, [bool]$square, [bool]$maskable = $false) {
+  if ($maskable) { $square = $true }
   $scale = 8   # 크게 그린 뒤 줄여야 작은 크기에서도 선이 깔끔함
   $big = New-Object System.Drawing.Bitmap ($size * $scale), ($size * $scale), ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
   $g = [System.Drawing.Graphics]::FromImage($big)
@@ -32,8 +36,14 @@ function DrawIcon([int]$size, [bool]$square) {
   $g.FillPath((Brush '#4A3426'), (RoundRect 0 0 64 64 $radius))
 
   # translate(2 2) scale(0.2) translate(-50 -12): 400 칸 그림의 머리 쪽(50,12 ~ 350,312)을 64 칸 안에
-  $g.TranslateTransform(2, 2)
-  $g.ScaleTransform(0.2, 0.2)
+  # 앱 아이콘(maskable)은 머리 쪽을 가운데 44 칸에만 (잘려도 되는 안전 여백 20%)
+  if ($maskable) {
+    $g.TranslateTransform(10, 10)
+    $g.ScaleTransform(44 / 300, 44 / 300)
+  } else {
+    $g.TranslateTransform(2, 2)
+    $g.ScaleTransform(0.2, 0.2)
+  }
   $g.TranslateTransform(-50, -12)
   DrawNyangbbang $g $false $false
   $g.Dispose()
@@ -61,6 +71,16 @@ function PngBytes($bitmap) {
 $big192 = DrawIcon 192 $false
 $big192.Save((Join-Path $Root 'favicon-192.png'), [System.Drawing.Imaging.ImageFormat]::Png)
 $big192.Dispose()
+
+# 앱(PWA) 아이콘: manifest.webmanifest 가 씀
+$icon512 = DrawIcon 512 $false
+$icon512.Save((Join-Path $Root 'icon-512.png'), [System.Drawing.Imaging.ImageFormat]::Png)
+$icon512.Dispose()
+foreach ($s in @(192, 512)) {
+  $m = DrawIcon $s $true $true
+  $m.Save((Join-Path $Root "icon-maskable-$s.png"), [System.Drawing.Imaging.ImageFormat]::Png)
+  $m.Dispose()
+}
 
 # apple-touch-icon.png
 $touch = DrawIcon 180 $true
@@ -119,4 +139,4 @@ $g.Dispose()
 $og.Save((Join-Path $Root 'og-image.png'), [System.Drawing.Imaging.ImageFormat]::Png)
 $og.Dispose()
 
-Write-Host 'Done: favicon.ico (16, 32, 48px), favicon-192.png, apple-touch-icon.png (180px), og-image.png (1200x630)'
+Write-Host 'Done: favicon.ico (16, 32, 48px), favicon-192.png, icon-512.png, icon-maskable-192/512.png, apple-touch-icon.png (180px), og-image.png (1200x630)'

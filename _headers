@@ -5,3 +5,9 @@
 /*
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+# 앱(PWA): 서비스 워커는 늘 새로 확인하게 (업데이트가 바로 퍼지도록)
+/sw.js
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Content-Type: application/manifest+json

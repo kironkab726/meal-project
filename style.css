@@ -241,3 +241,10 @@ a.accent-btn { color: var(--accent-text); }
 @media (prefers-reduced-motion: reduce) {
   body, .accent-btn { transition: none; }
 }
+
+/* ── 앱 설치 (site.js 가 설치할 수 있을 때만 보여 줌) ── */
+[data-install][hidden] { display: none !important; }
+.install-btn { margin-bottom: 8px; }
+.install-btn .ico { color: var(--accent); }
+dialog.install-help { width: min(380px, calc(100vw - 32px)); }
+.install-help ol { margin: 10px 0 18px; padding-left: 1.3em; font-size: 15px; line-height: 1.7; word-break: keep-all; }
