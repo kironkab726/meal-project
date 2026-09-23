@@ -4,12 +4,12 @@
 # 샌드박스 /home/user/w 에 아래 파일을 받아 두고 python3 make-short.py 실행 → final.mp4, cover.jpg, sheet.jpg
 #   c1.mp4 ~ c8.mp4  장면 영상 (Kling 3.0 std, 5초, 소리 없음, 9:16. 시작 그림은 nano_banana_2 + 냥빵이 요소)
 #   studio.mp4       사이트 /studio 로 만든 룰렛 영상 (끼니와 메뉴를 골라 "영상 만들기")
-#   a1.wav ~ a9.wav  대사 (seed_audio, 목소리 Luna, speech_rate 20). 앞뒤·중간의 긴 쉼은 ffmpeg silenceremove 로 줄임
+#   a1.wav ~ a9.wav  대사 (선택. 장면에 "vo" 가 있을 때만). #1 은 목소리가 AI 같다고 해서 빼고 자막 + 음악만 씀
 #   Jua.ttf          자막 글꼴 (github.com/google/fonts ofl/jua). 가운뎃점(·)과 말줄임표(…)가 없으니 쓰지 말 것
 #   scenes.json      장면 순서, 길이, 자막 (마케팅 폴더 shorts/NN-이름/scenes.json)
 #
-# 소리: 오르골 배경음(C-G-Am-F, 직접 합성이라 저작권 없음) + 대사 + 장면 바뀔 때 "뽁".
-# 대사가 나올 때는 배경음을 60% 줄임.
+# 소리: 오르골 배경음(C-G-Am-F, 직접 합성이라 저작권 없음) + 장면 바뀔 때 "뽁" + "sfx" 로 지정한 "띵".
+# 대사가 있으면 나오는 동안 배경음을 60% 줄임. 마지막에 -16 LUFS 로 소리 크기를 맞춤.
 import json, os, subprocess, sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -117,10 +117,17 @@ def add_wav(f, at, gain):
     x = np.fromfile('tmp.raw', dtype=np.float32)
     a = int(at * SR); b = min(n, a + len(x)); voice[a:b] += gain * x[:b - a]
 
+def ding(at, amp=0.2):   # 당첨·완성 때 "띵" (E6 → A6)
+    for f, dt in ((1318.5, 0), (1760, 0.09)):
+        k = np.arange(int(1.2 * SR)) / SR
+        w = amp * np.sin(2 * np.pi * f * k) * np.exp(-k * 5)
+        a = int((at + dt) * SR); b = min(n, a + len(w)); fx[a:b] += w[:b - a]
+
 for s in cfg['scenes']:
     k = np.arange(int(0.07 * SR)) / SR
     pop = 0.18 * np.sin(2 * np.pi * (700 + 5000 * k) * k) * np.exp(-k * 40)
     a = int(s['start'] * SR); fx[a:a + len(pop)] += pop
+    for at in s.get('ding', []): ding(s['start'] + at)
     if s.get('vo'): add_wav(s['vo'], s['start'] + s.get('vo_at', 0.15), 1.0)
 
 # 대사가 나올 때는 배경음을 낮춤 (덕킹)
@@ -131,7 +138,7 @@ mix = bgm * (1 - 0.6 * env) + voice + fx
 mix = mix[:end]
 peak = np.max(np.abs(mix)); mix = mix / max(peak, 1e-9) * 0.89
 (mix.astype(np.float32)).tofile('mix.raw')
-run(f'ffmpeg -v error -y -f f32le -ar {SR} -ac 1 -i mix.raw -c:a aac -b:a 192k -ac 2 audio.m4a')
+run(f'ffmpeg -v error -y -f f32le -ar {SR} -ac 1 -i mix.raw -af loudnorm=I=-16:TP=-1.5:LRA=11 -ar {SR} -c:a aac -b:a 192k -ac 2 audio.m4a')
 run('ffmpeg -v error -y -i video.mp4 -i audio.m4a -map 0:v -map 1:a -c:v copy -c:a copy -shortest -movflags +faststart final.mp4')
 run('ffmpeg -v error -y -ss 1.2 -i final.mp4 -frames:v 1 -q:v 2 cover.jpg')
 run("ffmpeg -v error -y -i final.mp4 -vf 'fps=0.5,scale=216:-1,tile=9x2:padding=6:color=white' -frames:v 1 sheet.jpg")
