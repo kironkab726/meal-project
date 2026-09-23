@@ -81,7 +81,8 @@ for i, s in enumerate(cfg['scenes']):
     else:
         v = f"-t {D} -i {s['src']}"
         vf = 'scale=1080:-2:flags=lanczos,crop=1080:1920,fps=30'   # 클링 716x1284 → 1080x1920
-    run(f"ffmpeg -v error -y {v} -i ov{i}.png -filter_complex \"[0:v]{vf},setsar=1[b];[b][1:v]overlay=0:0,format=yuv420p[o]\" -map [o] -r 30 -c:v libx264 -preset medium -crf 18 -an seg{i}.mp4")
+    # 장면마다 딱 D초 x 30장 (마지막 장면이 길거나 짧아져서 소리와 어긋나지 않게)
+    run(f"ffmpeg -v error -y {v} -i ov{i}.png -filter_complex \"[0:v]{vf},setsar=1[b];[b][1:v]overlay=0:0,format=yuv420p[o]\" -map [o] -frames:v {round(D * FPS)} -r 30 -c:v libx264 -preset medium -crf 16 -an seg{i}.mp4")
     s['start'] = t
     parts.append(f'seg{i}.mp4')
     t += D
@@ -138,8 +139,12 @@ mix = bgm * (1 - 0.6 * env) + voice + fx
 mix = mix[:end]
 peak = np.max(np.abs(mix)); mix = mix / max(peak, 1e-9) * 0.89
 (mix.astype(np.float32)).tofile('mix.raw')
-run(f'ffmpeg -v error -y -f f32le -ar {SR} -ac 1 -i mix.raw -af loudnorm=I=-16:TP=-1.5:LRA=11 -ar {SR} -c:a aac -b:a 192k -ac 2 audio.m4a')
-run('ffmpeg -v error -y -i video.mp4 -i audio.m4a -map 0:v -map 1:a -c:v copy -c:a copy -shortest -movflags +faststart final.mp4')
+run(f'ffmpeg -v error -y -f f32le -ar {SR} -ac 1 -i mix.raw -af loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000 -ar 48000 -ac 2 -c:a pcm_s16le audio.wav')
+# 마지막에 영상과 소리를 한 번에 다시 인코딩: 정확히 초당 30장(CFR), 1초마다 키프레임, AAC 48kHz,
+# 소리 길이를 영상 길이에 맞춤. 인스타가 다시 변환할 때 소리가 중간에 끊기던 문제 대비 (#1, 2026-09-23)
+run('ffmpeg -v error -y -i video.mp4 -i audio.wav -map 0:v -map 1:a -c:v libx264 -preset medium -crf 18 -profile:v high -level 4.0 '
+    '-pix_fmt yuv420p -r 30 -fps_mode cfr -g 30 -keyint_min 30 -sc_threshold 0 '
+    '-af apad -c:a aac -ar 48000 -ac 2 -b:a 160k -shortest -movflags +faststart final.mp4')
 run('ffmpeg -v error -y -ss 1.2 -i final.mp4 -frames:v 1 -q:v 2 cover.jpg')
 run("ffmpeg -v error -y -i final.mp4 -vf 'fps=0.5,scale=216:-1,tile=9x2:padding=6:color=white' -frames:v 1 sheet.jpg")
 print('total', round(total, 2), 'size', os.path.getsize('final.mp4'))
