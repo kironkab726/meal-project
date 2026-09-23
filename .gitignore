@@ -2,3 +2,6 @@
 tools/youtube-api-key.txt
 *.key
 .env
+
+# 블로그 미리보기 (그림이 통째로 들어 있어 큼, 다시 만들 수 있음)
+marketing/**/preview.html
