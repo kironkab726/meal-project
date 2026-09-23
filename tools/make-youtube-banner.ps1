@@ -1,8 +1,8 @@
-﻿# 냥빵이 유튜브 채널 그림 만들기
+﻿# 냥빵이 유튜브 채널 그림 만들기 (저장: 바탕 화면 "뭐 먹지 프로젝트 마케팅" 폴더, tools\marketing-path.ps1)
 #
-#   marketing\youtube\banner.png            채널 배너 (2048x1152, 유튜브가 요구하는 크기)
-#   marketing\youtube\banner-safe-guide.png 확인용. 휴대폰에서 보이는 칸(1235x338)을 점선으로 표시 — 올리지 마세요
-#   marketing\youtube\profile.png           채널 프로필 사진 (800x800, 동그랗게 잘려도 얼굴이 가운데)
+#   youtube\banner.png            채널 배너 (2048x1152, 유튜브가 요구하는 크기)
+#   youtube\banner-safe-guide.png 확인용. 휴대폰에서 보이는 칸(1235x338)을 점선으로 표시 — 올리지 마세요
+#   youtube\profile.png           채널 프로필 사진 (800x800, 동그랗게 잘려도 얼굴이 가운데)
 #
 # 유튜브는 한 장으로 TV / PC / 휴대폰에 다르게 잘라 씁니다.
 #   - 휴대폰: 가운데 1235x338 만 보임  → 글씨와 냥빵이는 모두 이 칸 안에
@@ -15,8 +15,9 @@ $ErrorActionPreference = 'Stop'
 
 $Root = Split-Path -Parent $PSScriptRoot
 . (Join-Path $PSScriptRoot 'nyangbbang-draw.ps1')
+. (Join-Path $PSScriptRoot 'marketing-path.ps1')
 
-$Out = Join-Path $Root 'marketing\youtube'
+$Out = Join-Path $MarketingDir 'youtube'
 New-Item -ItemType Directory -Force $Out | Out-Null
 
 $px = [System.Drawing.GraphicsUnit]::Pixel

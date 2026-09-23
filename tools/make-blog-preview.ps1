@@ -1,9 +1,10 @@
 ﻿# 요리일기 post.txt + 그림 → 네이버 블로그 모바일처럼 보이는 미리보기 한 장 (preview.html, 그림 내장)
-# 실행: powershell -ExecutionPolicy Bypass -File tools\make-blog-preview.ps1 -Dir marketing\naver-blog\posts\01-dotorimuk
+# 실행: powershell -ExecutionPolicy Bypass -File tools\make-blog-preview.ps1 -Dir naver-blog\posts\01-dotorimuk
+#   (-Dir 는 "뭐 먹지 프로젝트 마케팅" 폴더 기준 경로)
 param([string]$Dir)
 $ErrorActionPreference = 'Stop'
-$Root = Split-Path -Parent $PSScriptRoot
-if (-not [IO.Path]::IsPathRooted($Dir)) { $Dir = Join-Path $Root $Dir }
+. (Join-Path $PSScriptRoot 'marketing-path.ps1')
+if (-not [IO.Path]::IsPathRooted($Dir)) { $Dir = Join-Path $MarketingDir $Dir }
 $lines = [IO.File]::ReadAllLines((Join-Path $Dir 'post.txt'), [Text.Encoding]::UTF8)
 function Enc([string]$s) { [System.Net.WebUtility]::HtmlEncode($s) }
 

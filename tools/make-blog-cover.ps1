@@ -3,19 +3,19 @@
 #   위쪽: "냥빵이 요리일기 #번호" 딱지, 메뉴 이름, 한 줄 소개
 #   아래: 사이트의 냥빵이 그림 + 완성 요리 그림을 동그랗게 잘라 넣음
 #
-# 실행 예 (프로젝트 폴더에서):
+# 실행 예 (프로젝트 폴더에서). -Photo, -Out 은 "뭐 먹지 프로젝트 마케팅" 폴더 기준 경로:
 #   powershell -ExecutionPolicy Bypass -File tools\make-blog-cover.ps1 -Number 1 -Title 도토리묵무침 `
-#     -Sub "추천받은 저녁, 직접 만들어 봤다냥" -Photo marketing\naver-blog\posts\01-dotorimuk\07-done.png `
-#     -CropX 248 -CropY 1114 -CropSize 1072 -Out marketing\naver-blog\posts\01-dotorimuk\00-cover.png
-#   (-CropX/-CropY/-CropSize: 완성 그림에서 동그라미로 보여 줄 정사각형 칸, 픽셀)
+#     -Sub "추천받은 저녁, 직접 만들어 봤다냥" -Photo naver-blog\posts\01-dotorimuk\07-done.jpg `
+#     -CropX 200 -CropY 845 -CropSize 690 -Out naver-blog\posts\01-dotorimuk\00-cover.png
+#   (-CropX/-CropY/-CropSize: 완성 그림에서 동그라미로 보여 줄 정사각형 칸, 픽셀. 원본 그림 크기 기준)
 
 param([int]$Number, [string]$Title, [string]$Sub, [string]$Photo, [int]$CropX, [int]$CropY, [int]$CropSize, [string]$Out)
 $ErrorActionPreference = 'Stop'
 
-$Root = Split-Path -Parent $PSScriptRoot
 . (Join-Path $PSScriptRoot 'nyangbbang-draw.ps1')
-if (-not [IO.Path]::IsPathRooted($Photo)) { $Photo = Join-Path $Root $Photo }
-if (-not [IO.Path]::IsPathRooted($Out)) { $Out = Join-Path $Root $Out }
+. (Join-Path $PSScriptRoot 'marketing-path.ps1')
+if (-not [IO.Path]::IsPathRooted($Photo)) { $Photo = Join-Path $MarketingDir $Photo }
+if (-not [IO.Path]::IsPathRooted($Out)) { $Out = Join-Path $MarketingDir $Out }
 
 $px = [System.Drawing.GraphicsUnit]::Pixel
 function Font([single]$size, [bool]$isBold) {

@@ -1,8 +1,8 @@
-﻿# 냥빵이 네이버 블로그 그림 만들기
+﻿# 냥빵이 네이버 블로그 그림 만들기 (저장: 바탕 화면 "뭐 먹지 프로젝트 마케팅" 폴더, tools\marketing-path.ps1)
 #
-#   marketing\naver-blog\profile.png        프로필 사진 (600x600 정사각형, 동그랗게 잘려도 얼굴이 가운데 오게)
-#   marketing\naver-blog\title-pc.png       PC 블로그 맨 위 타이틀 (966x300)
-#   marketing\naver-blog\cover-mobile.png   모바일 앱 커버 (1080x1300, 아래쪽은 네이버가 블로그 이름을 얹으니 비워 둠)
+#   naver-blog\profile.png        프로필 사진 (600x600 정사각형, 동그랗게 잘려도 얼굴이 가운데 오게)
+#   naver-blog\title-pc.png       PC 블로그 맨 위 타이틀 (966x300)
+#   naver-blog\cover-mobile.png   모바일 앱 커버 (1080x1300, 아래쪽은 네이버가 블로그 이름을 얹으니 비워 둠)
 #
 # 실행 (프로젝트 폴더에서):
 #   powershell -ExecutionPolicy Bypass -File tools\make-blog-images.ps1
@@ -11,8 +11,9 @@ $ErrorActionPreference = 'Stop'
 
 $Root = Split-Path -Parent $PSScriptRoot
 . (Join-Path $PSScriptRoot 'nyangbbang-draw.ps1')
+. (Join-Path $PSScriptRoot 'marketing-path.ps1')
 
-$Out = Join-Path $Root 'marketing\naver-blog'
+$Out = Join-Path $MarketingDir 'naver-blog'
 New-Item -ItemType Directory -Force $Out | Out-Null
 
 $px = [System.Drawing.GraphicsUnit]::Pixel
