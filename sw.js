@@ -5,7 +5,7 @@
 // 저장 방식을 바꾸면 CACHE 이름의 숫자를 올리세요 (예전 저장분은 자동으로 지워짐)
 
 const CACHE = 'nyangbbang-v1';
-const CORE = ['/', '/style.css?v=10', '/pages.css?v=6', '/theme.js?v=1', '/site.js?v=3', '/common.js?v=7', '/config.js', '/favicon.svg', '/favicon-192.png'];
+const CORE = ['/', '/style.css?v=10', '/pages.css?v=7', '/theme.js?v=1', '/site.js?v=3', '/common.js?v=7', '/config.js', '/favicon.svg', '/favicon-192.png'];
 
 const OFFLINE_HTML = `<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

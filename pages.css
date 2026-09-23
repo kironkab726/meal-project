@@ -45,6 +45,9 @@ a.chip:hover { color: var(--text); }
 
 .search-more { align-self: flex-end; font-size: 14px; }
 
+/* 레시피를 어떻게 만들었는지 알리는 한 줄 (AI 정리 + 사람 확인) */
+.made-note { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); word-break: keep-all; }
+
 /* 제목 아래 버튼 줄 (레시피 공유하기 등) */
 .page-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .page-actions .ico { color: var(--accent); }

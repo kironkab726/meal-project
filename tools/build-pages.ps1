@@ -151,7 +151,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
 <link rel="stylesheet" href="{{PREFIX}}style.css?v=10">
-<link rel="stylesheet" href="{{PREFIX}}pages.css?v=6">
+<link rel="stylesheet" href="{{PREFIX}}pages.css?v=7">
 {{EXTRA_HEAD}}
 </head>
 <body>
@@ -610,6 +610,7 @@ $($stepHtml -join "`n")
         </section>
 
 $tipHtml
+        <p class="made-note">이 레시피는 아래 영상과 자료를 보고 AI(Claude)가 정리하고 사람이 확인했어요. 조리 전에 영상도 함께 확인하고, 분량과 익힘은 상황에 맞게 조절해 주세요.</p>
         <div class="done-box">
           <p>레시피대로 다 만들었냥? 완성한 요리를 기록하고 자랑해 줘냥!</p>
           <a class="accent-btn" href="../cooked.html?menu=$($m.id)" data-track="cook_done_cta" data-track-label="recipe_page">완성했다냥!</a>
