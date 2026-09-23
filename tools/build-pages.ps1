@@ -150,7 +150,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=10">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=11">
 <link rel="stylesheet" href="{{PREFIX}}pages.css?v=7">
 {{EXTRA_HEAD}}
 </head>
@@ -208,6 +208,11 @@ $HeadTemplate = @'
 
     <footer class="site-footer">
       <button class="pill-btn install-btn" type="button" data-install hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>냥빵이 앱 설치하기</button>
+      <ul class="sns-links" aria-label="냥빵이 SNS">
+        <li><a href="https://blog.naver.com/nyangbbang_2ki" target="_blank" rel="noopener" aria-label="냥빵이 네이버 블로그 (새 창)" data-track="sns" data-track-label="네이버 블로그"><svg class="sns-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6" fill="#03C75A"></rect><path d="M9 6.5v11" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"></path><circle cx="13" cy="13.5" r="3.8" fill="none" stroke="#FFFFFF" stroke-width="2.4"></circle></svg>블로그</a></li>
+        <li><a href="https://www.youtube.com/@nayangbbang" target="_blank" rel="noopener" aria-label="냥빵이 유튜브 채널 (새 창)" data-track="sns" data-track-label="유튜브"><svg class="sns-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="4.5" width="21" height="15" rx="4.5" fill="#FF0000"></rect><path d="M10 8.7v6.6l5.7-3.3z" fill="#FFFFFF"></path></svg>유튜브</a></li>
+        <li><a href="https://www.instagram.com/nayangbbang/" target="_blank" rel="noopener" aria-label="냥빵이 인스타그램 (새 창)" data-track="sns" data-track-label="인스타그램"><svg class="sns-ico" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="ig-foot" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FEDA75"></stop><stop offset=".35" stop-color="#FA7E1E"></stop><stop offset=".65" stop-color="#D62976"></stop><stop offset="1" stop-color="#4F5BD5"></stop></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-foot)"></rect><rect x="6.2" y="6.2" width="11.6" height="11.6" rx="3.6" fill="none" stroke="#FFFFFF" stroke-width="1.8"></rect><circle cx="12" cy="12" r="2.8" fill="none" stroke="#FFFFFF" stroke-width="1.8"></circle><circle cx="15.5" cy="8.5" r="0.9" fill="#FFFFFF"></circle></svg>인스타</a></li>
+      </ul>
       <nav aria-label="사이트 안내">
         <a href="{{PREFIX}}recipes/">냥빵이 레시피 모음</a>
         <a href="{{PREFIX}}search.html">레시피 검색</a>
@@ -1083,6 +1088,12 @@ $llms = @(
   '- [냉장고 털기](' + $SiteUrl + '/fridge): 집에 있는 재료를 고르면 바로 만들 수 있는 레시피를 찾아 주는 도구'
   '- [레시피 검색](' + $SiteUrl + '/search): 메뉴 이름, 재료, 초성으로 레시피를 찾는 검색 (예: ' + $SiteUrl + '/search?q=두부)'
   '- [사이트 소개](' + $SiteUrl + '/about): 사이트가 하는 일, 사진 출처, 문의처'
+  ''
+  '## 냥빵이 SNS'
+  ''
+  '- [네이버 블로그](https://blog.naver.com/nyangbbang_2ki): 냥빵이 요리일기 (추천받은 메뉴를 직접 만들어 보는 글)'
+  '- [유튜브](https://www.youtube.com/@nayangbbang)'
+  '- [인스타그램](https://www.instagram.com/nayangbbang/)'
 )
 foreach ($meal in $presentMeals) {
   $llms += ''

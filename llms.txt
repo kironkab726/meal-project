@@ -14,6 +14,12 @@
 - [레시피 검색](https://meal-project.pages.dev/search): 메뉴 이름, 재료, 초성으로 레시피를 찾는 검색 (예: https://meal-project.pages.dev/search?q=두부)
 - [사이트 소개](https://meal-project.pages.dev/about): 사이트가 하는 일, 사진 출처, 문의처
 
+## 냥빵이 SNS
+
+- [네이버 블로그](https://blog.naver.com/nyangbbang_2ki): 냥빵이 요리일기 (추천받은 메뉴를 직접 만들어 보는 글)
+- [유튜브](https://www.youtube.com/@nayangbbang)
+- [인스타그램](https://www.instagram.com/nayangbbang/)
+
 ## 아침 레시피
 
 - [누룽지 레시피](https://meal-project.pages.dev/recipes/1): 한식 · 15분 · 쉬움

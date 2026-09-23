@@ -180,6 +180,13 @@ a.accent-btn { color: var(--accent-text); }
 .site-footer nav a:hover { text-decoration: underline; }
 .site-footer p { margin: 0; font-size: 13px; }
 
+/* ── 냥빵이 SNS (블로그·유튜브·인스타그램, 페이지 아래와 메뉴판) ── */
+.sns-links { list-style: none; margin: 0 0 6px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.sns-links a { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px 0 11px; border: 2px solid var(--border); border-radius: 999px; background: var(--paper); color: var(--text); font-family: 'Jua', sans-serif; font-size: 16px; text-decoration: none; }
+.sns-links a:hover { border-color: var(--accent); }
+.sns-links a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sns-ico { width: 24px; height: 24px; flex-shrink: 0; }
+
 /* ── 쿠팡 파트너스 재료 링크 (파트너스 링크를 넣은 레시피에만 보임) ── */
 .shop-box { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 14px; border: 2px dashed var(--border); border-radius: 14px; }
 .shop-box .pill-btn .ico { color: var(--accent); }
