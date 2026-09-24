@@ -1,12 +1,15 @@
 ﻿# 실제 사이트 화면을 휴대폰 크기로 캡처 (블로그·SNS용). 백그라운드 크롬(DevTools)으로 버튼까지 눌러 줌
 #   -Mode pick : 메인 페이지에서 -Meal(아침/점심/저녁), -Cat(한식 등)을 고르고 -Target 메뉴가 나올 때까지 추천받기를 눌러 결과를 찍음
 #   -Mode page : -Url 페이지를 열어 위쪽(-ScrollTo px 로 내려서)을 찍음
+#   -Js "..."  : (page에서) 찍기 전에 페이지에서 돌릴 코드. 버튼 누르기 등. Promise면 끝날 때까지 기다림
+#   -Scale     : 화면 배율 (기본 3 = 390px 화면이 1170px 그림). 스토어 그림처럼 정확한 크기가 필요하면 1
 #   -Out 은 "뭐 먹지 프로젝트 마케팅" 폴더 기준 경로 (tools\marketing-path.ps1)
 # 예: powershell -ExecutionPolicy Bypass -File tools\site-screenshot.ps1 -Meal 저녁 -Cat 가볍게 -Target 도토리묵무침 `
 #       -Out naver-blog\posts\01-dotorimuk\02-site-pick.png
 # 이 스크립트가 띄운 크롬(cdp-shot-profile)만 끄고, 평소 쓰는 크롬은 건드리지 않음
 param([string]$Mode = 'pick', [string]$Url = 'https://meal-project.pages.dev/', [string]$Meal = '', [string]$Cat = '',
-      [string]$Target = '', [string]$Out, [int]$W = 390, [int]$H = 844, [int]$ScrollTo = -1)
+      [string]$Target = '', [string]$Out, [int]$W = 390, [int]$H = 844, [int]$ScrollTo = -1,
+      [string]$Js = '', [double]$Scale = 3)
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'marketing-path.ps1')
 if (-not [IO.Path]::IsPathRooted($Out)) { $Out = Join-Path $MarketingDir $Out }
@@ -43,7 +46,7 @@ try {
   }
   function Eval($js) { (Send 'Runtime.evaluate' @{ expression = $js; awaitPromise = $true; returnByValue = $true }).result.result.value }
 
-  Send 'Emulation.setDeviceMetricsOverride' @{ width = $W; height = $H; deviceScaleFactor = 3; mobile = $true } | Out-Null
+  Send 'Emulation.setDeviceMetricsOverride' @{ width = $W; height = $H; deviceScaleFactor = $Scale; mobile = $true } | Out-Null
   Send 'Page.enable' $null | Out-Null
   Send 'Page.navigate' @{ url = $Url } | Out-Null
   Start-Sleep -Seconds 4
@@ -74,6 +77,9 @@ try {
 "@
     $name = Eval $js
     Write-Host "picked: $name"
+  } elseif ($Js) {
+    Write-Host ('js: ' + (Eval $Js))
+    Start-Sleep -Milliseconds 800
   } elseif ($ScrollTo -ge 0) {
     Eval "window.scrollTo(0, $ScrollTo); 1" | Out-Null
     Start-Sleep -Milliseconds 800
