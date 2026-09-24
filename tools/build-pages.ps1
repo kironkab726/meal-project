@@ -150,7 +150,7 @@ $HeadTemplate = @'
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="{{PREFIX}}style.css?v=11">
+<link rel="stylesheet" href="{{PREFIX}}style.css?v=12">
 <link rel="stylesheet" href="{{PREFIX}}pages.css?v=7">
 {{EXTRA_HEAD}}
 </head>
@@ -220,6 +220,7 @@ $HeadTemplate = @'
         <a href="{{PREFIX}}cooked.html">요리 자랑</a>
         <a href="{{PREFIX}}about.html">사이트 소개</a>
         <a href="{{PREFIX}}privacy.html">개인정보처리방침</a>
+        <a href="{{PREFIX}}terms.html">이용 규칙</a>
       </nav>
       <p>음식 사진: 위키미디어 공용 · 레시피: 냥빵이</p>
     </footer>
@@ -964,6 +965,7 @@ Save 'search.html' (Page @{
 $staticPages = @(
   @{ File = 'about';   Title = "사이트 소개 | $SiteName";     Description = '고양이 요리사 냥빵이가 아침·점심·저녁 메뉴를 골라 주고, 집에서 따라 하기 쉬운 레시피를 알려 주는 사이트예요.' }
   @{ File = 'privacy'; Title = "개인정보처리방침 | $SiteName"; Description = ($SiteName + '가 어떤 개인정보를 왜 모으고 어떻게 보호하는지 알려 드려요.') }
+  @{ File = 'terms';   Title = "이용 규칙 | $SiteName";         Description = ($SiteName + '를 쓸 때 지킬 약속, 올리면 안 되는 글과 사진, 신고와 차단 방법을 알려 드려요.') }
 )
 # 광고·제휴 안내: 쿠팡 파트너스 링크가 하나라도 켜져 있을 때와 아닐 때 문구가 다름
 if ($shopLinks.Count) {
@@ -1023,6 +1025,7 @@ $entries = @(
   @{ Loc = "$SiteUrl/fridge"; Mod = $latestDay }
   @{ Loc = "$SiteUrl/about" }
   @{ Loc = "$SiteUrl/privacy" }
+  @{ Loc = "$SiteUrl/terms" }
 ) + @($items | ForEach-Object {
   $t = Touched $_
   @{ Loc = "$SiteUrl/recipes/" + $_.id; Mod = $(if ($t) { $t.ToString('yyyy-MM-dd') } else { $latestDay }) }
@@ -1110,6 +1113,7 @@ $llms += ''
 $llms += '## 그 밖의 안내'
 $llms += ''
 $llms += '- [개인정보처리방침](' + $SiteUrl + '/privacy)'
+$llms += '- [이용 규칙](' + $SiteUrl + '/terms): 요리 자랑·메뉴 건의함에 올리면 안 되는 내용, 신고와 차단'
 $llms += '- [사이트맵](' + $SiteUrl + '/sitemap.xml)'
 Save 'llms.txt' (($llms -join "`n") + "`n")
 

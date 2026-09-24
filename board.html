@@ -56,7 +56,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=12">
 <style>
   /* ── 건의함 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -109,6 +109,9 @@
   .mine-badge { padding: 1px 8px; border-radius: 999px; background: var(--chip-on-bg); color: var(--chip-on-text); font-size: 12px; font-weight: 700; }
   .delete-btn { width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border: 2px solid transparent; border-radius: 50%; background: none; color: var(--muted); cursor: pointer; }
   .delete-btn:hover { border-color: var(--border); color: var(--text); }
+  .item-actions { display: flex; gap: 2px; }
+  .delete-btn:disabled { opacity: 0.45; cursor: default; border-color: transparent; }
+  .rules { margin: 4px 0 0; font-size: 13px; line-height: 1.6; color: var(--muted); text-align: center; word-break: keep-all; }
 
   @media (min-width: 700px) {
     .board-title { font-size: 40px; }
@@ -273,6 +276,8 @@
           <div class="meal-tabs" id="request-filters"></div>
           <p class="requests-empty" id="requests-empty" hidden></p>
           <ol class="request-list" id="request-list"></ol>
+          <details class="blocked-box" id="blocked-box" hidden></details>
+          <p class="rules">메뉴 이름만 적어 주세요. 욕설·광고·개인정보가 담긴 건의는 깃발 버튼으로 신고해 주세요. 서로 다른 집사 3명이 신고하면 자동으로 가려지고, 운영자가 지울 수 있어요. 보고 싶지 않은 집사는 차단 버튼으로 가릴 수 있어요. 자세한 내용은 <a href="terms.html">이용 규칙</a>에 있어요.</p>
         </section>
       </div>
     </main>
@@ -291,6 +296,7 @@
         <a href="cooked.html">요리 자랑</a>
         <a href="about.html">사이트 소개</a>
         <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용 규칙</a>
       </nav>
       <p>음식 사진: 위키미디어 공용 · 레시피: 냥빵이</p>
     </footer>
@@ -308,13 +314,13 @@
       <label>비밀번호 (6자 이상)
         <input type="password" name="password" autocomplete="current-password" minlength="6" required>
       </label>
-      <label class="auth-age"><input type="checkbox" name="age14">만 14세 이상이에요 (회원가입할 때 체크)</label>
+      <label class="auth-age"><input type="checkbox" name="age14"><span>만 14세 이상이고 <a href="terms.html" target="_blank">이용 규칙</a>에 동의해요 (회원가입할 때 체크)</span></label>
       <p class="auth-message" id="auth-message" role="status"></p>
       <div class="auth-actions">
         <button type="submit" value="login" class="primary">로그인</button>
         <button type="submit" value="signup">회원가입</button>
       </div>
-      <p class="auth-legal">가입하면 <a href="privacy.html">개인정보처리방침</a>에 동의하게 돼요. 만 14세 미만은 가입할 수 없어요.</p>
+      <p class="auth-legal">가입하면 <a href="terms.html">이용 규칙</a>과 <a href="privacy.html">개인정보처리방침</a>에 동의하게 돼요. 만 14세 미만은 가입할 수 없어요.</p>
       <button type="button" class="auth-close" id="auth-close" aria-label="닫기">×</button>
     </form>
   </dialog>
@@ -326,6 +332,8 @@
     <svg class="ico" data-icon="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
     <svg class="ico" data-icon="user" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21 C4 16 8 14 12 14 C16 14 20 16 20 21"></path></svg>
     <svg class="ico" data-icon="trash" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"></path></svg>
+    <svg class="ico" data-icon="flag" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"></path></svg>
+    <svg class="ico" data-icon="block" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg>
   </template>
 
 <!-- 로그인·데이터베이스 부품: 버전을 고정하고, 파일이 바뀌면 브라우저가 실행을 거부하게 지문(integrity)을 붙임 -->
@@ -333,7 +341,7 @@
 <script src="config.js"></script>
 <script src="theme.js?v=1"></script>
 <script src="site.js?v=3"></script>
-<script src="common.js?v=7"></script>
+<script src="common.js?v=8"></script>
 <script>
   // 건의함 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
 
@@ -352,8 +360,10 @@
   const listEl = document.getElementById('request-list');
   const emptyEl = document.getElementById('requests-empty');
   const countEl = document.getElementById('requests-count');
+  const blockedBox = document.getElementById('blocked-box');
 
   let requests = [];     // 불러온 건의 글 (최신순)
+  let reported = new Set();   // 내가 신고한 건의 번호
   let filter = '전체';
 
 
@@ -414,26 +424,44 @@
     li.append(iconWrap, body);
 
     if (mine) {
-      const del = document.createElement('button');
-      del.type = 'button';
-      del.className = 'delete-btn';
-      del.setAttribute('aria-label', `${row.menu_name} 건의 지우기`);
-      del.title = '지우기';
-      del.append(icon('trash'));
-      del.addEventListener('click', () => deleteRequest(row));
-      li.append(del);
+      li.append(itemButton('trash', `${row.menu_name} 건의 지우기`, () => deleteRequest(row)));
+    } else {
+      // 남의 건의: 신고(3명이 신고하면 자동으로 가려짐), 차단(이 기기에서 그 집사 건의를 모두 숨김)
+      const done = reported.has(row.id);
+      const flag = itemButton('flag', done ? '신고했어요' : `${row.menu_name} 건의 신고하기`, () => reportRequest(row));
+      flag.disabled = done;
+      const actions = document.createElement('span');
+      actions.className = 'item-actions';
+      actions.append(flag, itemButton('block', '이 건의를 쓴 집사 차단하기', () => blockRequest(row)));
+      li.append(actions);
     }
     return li;
   }
 
+  function itemButton(iconName, label, onClick) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'delete-btn';
+    b.setAttribute('aria-label', label);
+    b.title = label;
+    b.append(icon(iconName));
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
   function renderRequests() {
-    const shown = filter === '전체' ? requests : requests.filter(r => r.meal === filter);
+    const visible = requests.filter(r => !isBlocked(r.user_id));   // 차단한 집사 건의는 빼고
+    const shown = filter === '전체' ? visible : visible.filter(r => r.meal === filter);
     listEl.replaceChildren(...shown.map(requestItem));
-    countEl.textContent = requests.length ? `모두 ${requests.length}개` : '';
+    countEl.textContent = visible.length ? `모두 ${visible.length}개` : '';
     emptyEl.hidden = shown.length > 0;
-    emptyEl.textContent = requests.length
+    emptyEl.textContent = visible.length
       ? `${filter} 건의는 아직 없다냥`
       : '아직 건의가 없다냥. 첫 번째로 적어 줘냥!';
+  }
+
+  function renderBlocked() {
+    renderBlockedBox(blockedBox, renderRequests);
   }
 
   async function loadRequests() {
@@ -465,6 +493,36 @@
     }
     requests = requests.filter(r => r.id !== row.id);
     renderRequests();
+  }
+
+  // 신고 테이블은 supabase-board.sql (request_reports)
+  async function loadReports() {
+    const { data, error } = await db.from('request_reports').select('request_id');
+    if (error) return console.error(error);
+    reported = new Set(data.map(r => r.request_id));
+    renderRequests();
+  }
+
+  async function reportRequest(row) {
+    if (!confirm(`"${row.menu_name}" 건의를 신고할까요? 서로 다른 집사 3명이 신고하면 자동으로 가려져요.`)) return;
+    const { error } = await db.from('request_reports').insert({ request_id: row.id, user_id: currentUser.id });
+    if (error && error.code !== '23505') {   // 23505 = 이미 신고함
+      console.error(error);
+      return alert('신고하지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+    }
+    reported.add(row.id);
+    renderRequests();
+    toast('신고했어요. 알려 줘서 고마워요.');
+    track('report_request', { meal: row.meal });
+  }
+
+  function blockRequest(row) {
+    if (!confirm('이 건의를 쓴 집사를 차단할까요? 그 집사의 건의가 이 기기에서 모두 보이지 않아요. 목록 아래 "차단한 집사"에서 언제든 풀 수 있어요.')) return;
+    blockUser(row.user_id, `"${row.menu_name}" 건의를 쓴 집사`);
+    renderRequests();
+    renderBlocked();
+    toast('차단했어요.');
+    track('block_user', { label: 'request' });
   }
 
   // "3분 전" 같은 시간 표시를 1분마다 새로 고침
@@ -523,9 +581,12 @@
       countEl.textContent = '';
       emptyEl.textContent = '건의를 불러오는 중이에요…';
       emptyEl.hidden = false;
-      loadRequests();
+      reported = new Set();
+      renderBlocked();
+      loadRequests().then(loadReports);
     } else {
       requests = [];
+      reported = new Set();
       listEl.replaceChildren();
       requestForm.reset();
       formMessageEl.textContent = '';

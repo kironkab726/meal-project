@@ -33,6 +33,7 @@
   const writeMessage = $('write-message');
   const writeSubmit = $('write-submit');
   const photoDialog = $('photo-dialog');
+  const blockedBox = $('blocked-box');
 
   const params = new URLSearchParams(location.search);
   let tab = params.get('tab') === 'mine' ? 'mine' : 'all';
@@ -134,7 +135,7 @@
       const done = reported.has(row.id);
       const b = actionButton('flag', done ? '신고했어요' : '신고하기', () => reportCook(row));
       b.disabled = done;
-      foot.append(b);
+      foot.append(b, actionButton('block', `${nicknameOf(row)}님 차단하기`, () => blockCook(row)));
     }
     li.append(foot);
     return li;
@@ -152,7 +153,8 @@
       nicknameEl.textContent = profile ? profile.nickname : '아직 없음';
     }
 
-    listEl.replaceChildren(...(needLogin ? [] : feed.rows.map(cookCard)));
+    const shown = needLogin ? [] : feed.rows.filter(r => !isBlocked(r.user_id));   // 차단한 집사 글은 빼고
+    listEl.replaceChildren(...shown.map(cookCard));
     loginBtn.hidden = !needLogin;
     moreBtn.hidden = needLogin || feed.done || feed.loading || !feed.rows.length;
 
@@ -160,13 +162,19 @@
     if (!db) status = connectionProblem();
     else if (needLogin) status = '로그인하면 내가 만든 요리를 모아 볼 수 있다냥.';
     else if (feed.error) status = feed.error;
-    else if (feed.loading && !feed.rows.length) status = '요리를 불러오는 중이에요…';
+    else if (feed.loading && !shown.length) status = '요리를 불러오는 중이에요…';
     else if (!feed.rows.length && feed.done) {
       status = tab === 'mine'
         ? '아직 남긴 요리가 없다냥. 레시피대로 만들고 "완성했다냥!"을 눌러 줘냥!'
         : '아직 자랑한 요리가 없다냥. 첫 번째 자랑을 올려 줘냥!';
+    } else if (!shown.length) {
+      status = '차단한 집사의 글만 있어서 보여 줄 요리가 없다냥.';
     }
     statusEl.textContent = status;
+  }
+
+  function renderBlocked() {
+    renderBlockedBox(blockedBox, render);
   }
 
   async function loadMore() {
@@ -271,6 +279,17 @@
     render();
     toast('신고했어요. 알려 줘서 고마워요.');
     track('report_cook', { menu_name: row.menu_name });
+  }
+
+  // 차단은 로그인 없이도 됨 (이 기기에만 저장, common.js)
+  function blockCook(row) {
+    const name = nicknameOf(row);
+    if (!confirm(`${name}님을 차단할까요? ${name}님이 올린 요리가 이 기기에서 모두 보이지 않아요. 페이지 아래 "차단한 집사"에서 언제든 풀 수 있어요.`)) return;
+    blockUser(row.user_id, name);
+    render();
+    renderBlocked();
+    toast(`${name}님을 차단했어요.`);
+    track('block_user', { label: 'cook' });
   }
 
   $('rename-btn').addEventListener('click', async () => {
@@ -604,6 +623,7 @@
   });
 
   render();
+  renderBlocked();
   if (db) {
     loadMore();
     loadMenus();

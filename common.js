@@ -64,6 +64,67 @@ function timeAgo(iso) {
 }
 
 
+// ── 차단한 집사 ── 요리 자랑·건의함에서 그 사람 글을 내 화면에서 모두 숨김
+// 목록은 이 기기(브라우저 저장소)에만 둠. 저장소를 못 쓰는 브라우저에서는 이 페이지를 보는 동안만 기억
+
+const BLOCK_KEY = 'nb-blocked';
+let blockedMemory = null;
+
+function blockedUsers() {
+  if (blockedMemory) return blockedMemory;
+  try {
+    const list = JSON.parse(localStorage.getItem(BLOCK_KEY) || '[]');
+    blockedMemory = Array.isArray(list) ? list.filter(b => b && typeof b.id === 'string') : [];
+  } catch (e) {
+    blockedMemory = [];
+  }
+  return blockedMemory;
+}
+
+function saveBlocked(list) {
+  blockedMemory = list;
+  try { localStorage.setItem(BLOCK_KEY, JSON.stringify(list)); } catch (e) { /* 이 페이지에서만 기억 */ }
+}
+
+function isBlocked(userId) {
+  return blockedUsers().some(b => b.id === userId);
+}
+
+function blockUser(userId, name) {
+  if (!userId || isBlocked(userId)) return;
+  saveBlocked([...blockedUsers(), { id: userId, name: String(name || '집사').slice(0, 40) }]);
+}
+
+function unblockUser(userId) {
+  saveBlocked(blockedUsers().filter(b => b.id !== userId));
+}
+
+// 페이지 아래 "차단한 집사 N명" 상자(<details>)를 그림. 차단을 풀면 onChange()로 목록을 다시 그리게 함
+function renderBlockedBox(box, onChange) {
+  const list = blockedUsers();
+  box.hidden = !list.length;
+  if (!list.length) return box.replaceChildren();
+  const ul = document.createElement('ul');
+  ul.append(...list.map(b => {
+    const li = document.createElement('li');
+    const undo = textEl('button', 'text-btn', '차단 풀기');
+    undo.type = 'button';
+    undo.addEventListener('click', () => {
+      unblockUser(b.id);
+      renderBlockedBox(box, onChange);
+      onChange();
+    });
+    li.append(textEl('span', '', b.name), undo);
+    return li;
+  }));
+  box.replaceChildren(
+    textEl('summary', '', `차단한 집사 ${list.length}명`),
+    textEl('p', '', '차단한 집사의 글은 이 기기에서 보이지 않아요.'),
+    ul,
+  );
+}
+
+
 // 다크/라이트 모드 버튼은 theme.js에 있음
 
 
@@ -131,8 +192,9 @@ authForm.addEventListener('submit', async e => {
   const buttons = authForm.querySelectorAll('.auth-actions button');
 
   // 만 14세 미만은 법정대리인 동의 없이 가입할 수 없어서, 가입할 때 나이를 확인받음
+  // 같은 체크로 이용 규칙(올리면 안 되는 글, 신고와 차단) 동의도 받음. 구글 플레이 정책: 글을 올리기 전에 약관 동의
   if (mode === 'signup' && authForm.elements.age14 && !authForm.elements.age14.checked) {
-    authMessageEl.textContent = '만 14세 이상만 가입할 수 있어요. 맞다면 "만 14세 이상이에요"에 체크해 주세요.';
+    authMessageEl.textContent = '회원가입하려면 만 14세 이상이고 이용 규칙에 동의한다는 칸에 체크해 주세요.';
     return;
   }
 

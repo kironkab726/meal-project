@@ -255,3 +255,12 @@ a.accent-btn { color: var(--accent-text); }
 .install-btn .ico { color: var(--accent); }
 dialog.install-help { width: min(380px, calc(100vw - 32px)); }
 .install-help ol { margin: 10px 0 18px; padding-left: 1.3em; font-size: 15px; line-height: 1.7; word-break: keep-all; }
+
+/* ── 차단한 집사 상자 (요리 자랑·건의함 아래, common.js의 renderBlockedBox가 채움) ── */
+.blocked-box { align-self: stretch; padding: 0 16px; border: 2px dashed var(--border); border-radius: 16px; font-size: 14px; color: var(--muted); }
+.blocked-box summary { padding: 12px 0; cursor: pointer; font-family: 'Jua', sans-serif; font-size: 16px; color: var(--text); }
+.blocked-box p { margin: 0 0 4px; word-break: keep-all; }
+.blocked-box ul { list-style: none; margin: 0 0 8px; padding: 0; }
+.blocked-box li { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid var(--border-soft); }
+.blocked-box li span { min-width: 0; overflow-wrap: anywhere; color: var(--text); }
+.blocked-box .text-btn { flex-shrink: 0; min-height: 44px; padding: 0 4px; border: none; background: none; color: var(--link); font-family: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }

@@ -74,7 +74,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Jua&display=swap">
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=12">
 <style>
   /* ── 추천 페이지 전용 (공통 스타일은 style.css) ── */
 
@@ -575,6 +575,7 @@
         <a href="cooked.html">요리 자랑</a>
         <a href="about.html">사이트 소개</a>
         <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용 규칙</a>
       </nav>
       <p>음식 사진: 위키미디어 공용 · 레시피: 냥빵이</p>
     </footer>
@@ -674,13 +675,13 @@
       <label>비밀번호 (6자 이상)
         <input type="password" name="password" autocomplete="current-password" minlength="6" required>
       </label>
-      <label class="auth-age"><input type="checkbox" name="age14">만 14세 이상이에요 (회원가입할 때 체크)</label>
+      <label class="auth-age"><input type="checkbox" name="age14"><span>만 14세 이상이고 <a href="terms.html" target="_blank">이용 규칙</a>에 동의해요 (회원가입할 때 체크)</span></label>
       <p class="auth-message" id="auth-message" role="status"></p>
       <div class="auth-actions">
         <button type="submit" value="login" class="primary">로그인</button>
         <button type="submit" value="signup">회원가입</button>
       </div>
-      <p class="auth-legal">가입하면 <a href="privacy.html">개인정보처리방침</a>에 동의하게 돼요. 만 14세 미만은 가입할 수 없어요.</p>
+      <p class="auth-legal">가입하면 <a href="terms.html">이용 규칙</a>과 <a href="privacy.html">개인정보처리방침</a>에 동의하게 돼요. 만 14세 미만은 가입할 수 없어요.</p>
       <button type="button" class="auth-close" id="auth-close" aria-label="닫기">×</button>
     </form>
   </dialog>
@@ -722,7 +723,7 @@
 <script src="config.js"></script>
 <script src="theme.js?v=1"></script>
 <script src="site.js?v=3"></script>
-<script src="common.js?v=7"></script>
+<script src="common.js?v=8"></script>
 <script>
   // 추천 페이지 전용 코드. db, currentUser, openAuth, icon 같은 공통 부분은 common.js에 있음
 

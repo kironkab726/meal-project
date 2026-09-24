@@ -281,4 +281,5 @@
 ## 그 밖의 안내
 
 - [개인정보처리방침](https://meal-project.pages.dev/privacy)
+- [이용 규칙](https://meal-project.pages.dev/terms): 요리 자랑·메뉴 건의함에 올리면 안 되는 내용, 신고와 차단
 - [사이트맵](https://meal-project.pages.dev/sitemap.xml)
