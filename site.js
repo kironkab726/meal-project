@@ -28,6 +28,18 @@
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
   }
 
+  // 운영자 기기 빼기 (?nb_me=1 켜기 / ?nb_me=0 끄기). 실제 스위치는 각 페이지 <head> 맨 위 코드가 켬
+  // 여기서는 잘 됐다고 알려 주고, 주소에서 표시를 지움 (공유할 때 딸려 가지 않게)
+  const meParam = new URLSearchParams(location.search).get('nb_me');
+  if (meParam === '1' || meParam === '0') {
+    const url = new URL(location.href);
+    url.searchParams.delete('nb_me');
+    history.replaceState(null, '', url);
+    setTimeout(() => toast(meParam === '1'
+      ? '이 기기는 이제 방문 통계에서 빠져요.'
+      : '이 기기도 다시 방문 통계에 들어가요.'), 500);
+  }
+
   async function copyText(text) {
     try {
       await navigator.clipboard.writeText(text);
