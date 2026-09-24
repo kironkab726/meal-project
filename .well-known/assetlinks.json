@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.nyangbbang.app",
+      "sha256_cert_fingerprints": [
+        "84:E4:3A:B4:3B:5C:64:A7:8A:B5:BF:6D:40:A3:36:FD:E2:D2:A9:99:7E:DC:45:AA:68:A9:C0:13:7E:80:F1:24"
+      ]
+    }
+  }
+]
