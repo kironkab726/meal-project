@@ -16,6 +16,7 @@
 #   src 가 그림(.png/.jpg)이면 AI 영상 대신 그림을 편집으로 움직임 (3편부터, 크레딧 아끼기)
 #     move: zoom_in / zoom_out / pop(툭 커졌다 천천히 확대) / pan_left / pan_right / pan_up / pan_down / shake(칼질·볶기)
 #     focus: [가로, 세로] 확대할 중심 (0~1, 기본 [0.5, 0.5])
+#     zoom: [시작, 끝] 확대 배율을 직접 정함 (예: [1.7, 1.85] = 클로즈업). 그림 한 장을 "넓게 → 가까이" 두 컷으로 나눌 때 씀 (4편부터)
 #   title(false 면 딱지 없음), title_text, big(큰 흰 글씨 줄들), big_y, main, sub, step(번호), box_y, note, note_y
 #   pop(false 면 글자가 튀어나오는 효과 없음, 첫 장면 등)
 #   효과음: ding[초...], ticks {from,to,start,end}(룰렛 딸깍, 초당 횟수가 start→end로), chops[초...](칼질), sizzle [from,to](볶는 소리)
@@ -92,7 +93,7 @@ def overlay_files(i, s):
 
 # ── 그림 한 장을 움직이는 장면 (카메라가 다가가거나 옆으로 흐르거나 흔들리는 효과) ──
 # 프레임마다 소수점 위치로 잘라서(아핀 변환) 확대할 때 덜덜 떨리지 않음
-def still_frames(path, D, move, focus):
+def still_frames(path, D, move, focus, zoom=None):
     img = Image.open(path).convert('RGB')
     iw, ih = img.size
     s0 = max(W / iw, H / ih)                  # 화면을 꽉 채우는 기본 배율
@@ -117,11 +118,15 @@ def still_frames(path, D, move, focus):
             z = 1.08 + 0.03 * e
             ox = 9 * np.sin(2 * np.pi * 6.5 * t)
             oy = 7 * np.sin(2 * np.pi * 8.5 * t + 1.3)
+        if zoom: z = zoom[0] + (zoom[1] - zoom[0]) * e     # 배율 직접 지정 (흔들기는 그대로 얹힘)
         k = 1 / (s0 * z)                        # 화면 1픽셀 = 그림 k픽셀
         half_w, half_h = W * k / 2, H * k / 2
         mx, my = iw / 2 - half_w, ih / 2 - half_h   # 가운데에서 움직일 수 있는 여유
-        cx = iw / 2 + (fx - 0.5) * iw * (z - 1) / z    # focus 점이 화면에서 제자리에 있도록
-        cy = ih / 2 + (fy - 0.5) * ih * (z - 1) / z
+        if zoom:                                         # 클로즈업: focus 점을 화면 가운데로
+            cx, cy = fx * iw, fy * ih
+        else:                                            # 보통: focus 점이 화면에서 제자리에 있도록
+            cx = iw / 2 + (fx - 0.5) * iw * (z - 1) / z
+            cy = ih / 2 + (fy - 0.5) * ih * (z - 1) / z
         if move.startswith('pan'): cx += ox * mx * 0.9; cy += oy * my * 0.9
         else: cx += ox * k; cy += oy * k
         cx = min(max(cx, half_w), iw - half_w)
@@ -135,7 +140,7 @@ def still_segment(i, s, ov_in):
            f"-filter_complex \"[0:v]setsar=1[b];[b][1:v]overlay=0:0,format=yuv420p[o]\" -map [o] "
            f"-frames:v {round(D * FPS)} -r 30 -c:v libx264 -preset medium -crf 16 -an seg{i}.mp4")
     pr = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-    for b in still_frames(s['src'], D, s.get('move', 'zoom_in'), s.get('focus', [0.5, 0.5])):
+    for b in still_frames(s['src'], D, s.get('move', 'zoom_in'), s.get('focus', [0.5, 0.5]), s.get('zoom')):
         pr.stdin.write(b)
     pr.stdin.close()
     err = pr.stderr.read().decode()
